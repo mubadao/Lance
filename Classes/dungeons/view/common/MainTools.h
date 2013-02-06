@@ -28,6 +28,7 @@ private:
 	CCControlButton* mAttributeBtn;
 	CCControlButton* mOpenboxBtn;
 	CCControlButton* mShopBtn;
+	CCControlButton* mChallengeBtn;
 
 	void onBtnBg(CCObject * pSender, CCControlEvent pCCControlEvent);
 	void onTaskBtnClick(CCObject * pSender, CCControlEvent pCCControlEvent);
@@ -36,6 +37,7 @@ private:
 	void onAttributeBtnClick(CCObject * pSender, CCControlEvent pCCControlEvent);
 	void onOpenboxBtnClick(CCObject * pSender, CCControlEvent pCCControlEvent);
 	void onShopBtnClick(CCObject * pSender, CCControlEvent pCCControlEvent);
+	void onChallengeBtnClick(CCObject * pSender, CCControlEvent pCCControlEvent);
 };
 
 #endif

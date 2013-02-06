@@ -43,20 +43,24 @@ SEL_CCControlHandler BuyMoneyDialog::onResolveCCBCCControlSelector( CCObject * p
 void BuyMoneyDialog::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
 {
 	CCLOG("BuyMoneyDialog::%s()", __FUNCTION__);
+	
+	mScrollView->setTouchPriority(touch_priority_4);
+	mBtnClose->setDefaultTouchPriority(touch_priority_5);
+
 	CCArray* nameList = CCArray::create(ccs(kNCBuyMoney),NULL);
 	RegisterObservers(this, nameList, callfuncO_selector(BuyMoneyDialog::_onNotification));
 
 	mTitle->setString(gls("175"));
 
 	BuyMoneyStaticList list = StaticShop::shared()->getBuyMoneyStaticList();
-	CCPoint contentPos = ccp(0, list.size() * 124);
+	CCPoint contentPos = ccp(0, list.size() * 128);
 	mScrollView->setContentSize(CCSizeMake(640, contentPos.y));
 	mScrollView->setContentOffset(ccp(0, mScrollView->getViewSize().height - contentPos.y));
 	for(int i = 0; i < list.size(); i++)
 	{
 		BuyMoneyItem* item = BuyMoneyItem::create(NULL);
 		item->setData(i);
-		item->setPosition(ccp(0, contentPos.y - (i + 1) * 124));
+		item->setPosition(ccp(-10, contentPos.y - (i + 1) * 128));
 		mScrollView->getContainer()->addChild(item);
 	}
 }

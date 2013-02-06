@@ -26,9 +26,16 @@ void StaticDungeons::parse()
 	path += "Task.xml";
 
 	if (target == kTargetWindows)
-		path = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("config/Task.xml");
+		path = CCFileUtils::sharedFileUtils()->fullPathForFilename("config/Task.xml");
     
-	xmlDocPtr doc = xmlReadFile(path.c_str(), "utf-8", XML_PARSER_EOF);
+    if(!isFileExistsInWritablePath("Task.xml"))
+        assert(false);
+    
+    unsigned long size;
+    unsigned char* pBytes = CCFileUtils::sharedFileUtils()->getFileData(path.c_str(), "rb", &size);
+	
+	xmlDocPtr doc = xmlReadMemory((const char*)pBytes, size, NULL, "utf-8", XML_PARSE_RECOVER);
+//	xmlDocPtr doc = xmlReadFile(path.c_str(), "utf-8", XML_PARSER_EOF);
 	if(NULL == doc)
 		CCLOG("Task xml parse failed!");
 
@@ -78,9 +85,15 @@ void StaticDungeons::parse()
 	path += "Dungeon.xml";
 
 	if (target == kTargetWindows)
-		path = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("config/Dungeon.xml");
+		path = CCFileUtils::sharedFileUtils()->fullPathForFilename("config/Dungeon.xml");
 
-	doc = xmlReadFile(path.c_str(), "utf-8", XML_PARSER_EOF);
+    if(!isFileExistsInWritablePath("Dungeon.xml"))
+        assert(false);
+    
+    pBytes = CCFileUtils::sharedFileUtils()->getFileData(path.c_str(), "rb", &size);
+	
+	doc = xmlReadMemory((const char*)pBytes, size, NULL, "utf-8", XML_PARSE_RECOVER);
+//	doc = xmlReadFile(path.c_str(), "utf-8", XML_PARSER_EOF);
 	if(NULL == doc)
 		CCLOG("Dungeons xml parse failed!");
 

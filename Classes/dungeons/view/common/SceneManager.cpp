@@ -26,7 +26,6 @@
 // Dialog
 #include "MainTools.h"
 #include "EquipDetailDialogLoader.h"
-#include "EquipLevelUpDialogLoader.h"
 #include "LevelUpDialogLoader.h"
 #include "AwardEquipDialogLoader.h"
 #include "AlertDialogLoader.h"
@@ -40,7 +39,8 @@
 #include "GetEquipEventDialogLoader.h"
 #include "GetMoneyEventDialogLoader.h"
 #include "AlertTitleDialogLoader.h"
-
+#include "MeltOkDialogLoader.h"
+#include "MeltResultDialogLoader.h"
 
 SceneManager::SceneManager()
 {
@@ -94,6 +94,8 @@ CCLayer* SceneManager::getState(const string& name)
 	}
 	else if(name == "PlayerDetailScene")
 	{
+		pLoaderLibrary->registerCCNodeLoader("UserInfo", UserInfoLoader::loader());
+		pLoaderLibrary->registerCCNodeLoader("MainMenu", MainMenuLoader::loader());
 		pLoaderLibrary->registerCCNodeLoader("PlayerDetailContent", PlayerDetailContentLoader::loader());
 		pLoaderLibrary->registerCCNodeLoader("PlayerDetailScene", PlayerDetailSceneLoader::loader());
 	}
@@ -120,11 +122,11 @@ Dialog* SceneManager::getDialog(const string& name)
 	
 	if (name == "EquipDetailDialog")
 	{
+		pLoaderLibrary->registerCCNodeLoader("EquipIcon", EquipIconLoader::loader());
+		pLoaderLibrary->registerCCNodeLoader("EquipDetailContent", EquipDetailContentLoader::loader());
+		pLoaderLibrary->registerCCNodeLoader("EquipDetail", EquipDetailLoader::loader());
+		pLoaderLibrary->registerCCNodeLoader("MoneyIcon", MoneyIconLoader::loader());
 		pLoaderLibrary->registerCCNodeLoader("EquipDetailDialog", EquipDetailDialogLoader::loader());
-	}
-	else if (name == "EquipLevelUpDialog")
-	{
-		pLoaderLibrary->registerCCNodeLoader("EquipLevelUpDialog", EquipLevelUpDialogLoader::loader());
 	}
 	else if (name == "LevelUpDialog")
 	{
@@ -151,6 +153,9 @@ Dialog* SceneManager::getDialog(const string& name)
 	}
 	else if (name == "FightSucceedDialog")
 	{
+		pLoaderLibrary->registerCCNodeLoader("EquipIcon", EquipIconLoader::loader());
+		pLoaderLibrary->registerCCNodeLoader("EquipDetailContent", EquipDetailContentLoader::loader());
+		pLoaderLibrary->registerCCNodeLoader("EquipDetail", EquipDetailLoader::loader());
 		pLoaderLibrary->registerCCNodeLoader("FightSucceedDialog", FightSucceedDialogLoader::loader());
 	}
 	else if (name == "FightFailedDialog")
@@ -167,11 +172,23 @@ Dialog* SceneManager::getDialog(const string& name)
 	}
 	else if (name == "GetEquipEventDialog")
 	{
+		pLoaderLibrary->registerCCNodeLoader("EquipIcon", EquipIconLoader::loader());
+		pLoaderLibrary->registerCCNodeLoader("EquipDetailContent", EquipDetailContentLoader::loader());
+		pLoaderLibrary->registerCCNodeLoader("EquipDetail", EquipDetailLoader::loader());
+		pLoaderLibrary->registerCCNodeLoader("MoneyIcon", MoneyIconLoader::loader());
 		pLoaderLibrary->registerCCNodeLoader("GetEquipEventDialog", GetEquipEventDialogLoader::loader());
 	}
 	else if (name == "GetMoneyEventDialog")
 	{
 		pLoaderLibrary->registerCCNodeLoader("GetMoneyEventDialog", GetMoneyEventDialogLoader::loader());
+	}
+    else if (name == "MeltOkDialog")
+	{
+		pLoaderLibrary->registerCCNodeLoader("MeltOkDialog", MeltOkDialogLoader::loader());
+	}
+    else if (name == "MeltResultDialog")
+	{
+		pLoaderLibrary->registerCCNodeLoader("MeltResultDialog", MeltResultDialogLoader::loader());
 	}
 	else if (name == "MainTools")
 	{

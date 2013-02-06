@@ -19,6 +19,7 @@ public:
     string mResourceUrl;
     string mHtmlUrl;
     long getAllEnergyTime();
+    long getAllPowerTime();
     int getEnergyMax();
 	void saveUserInfo();
 };

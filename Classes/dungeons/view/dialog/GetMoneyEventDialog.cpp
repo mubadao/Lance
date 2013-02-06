@@ -7,10 +7,12 @@ GetMoneyEventDialog::GetMoneyEventDialog()
 	, mCoin(NULL)
 	, mCloseBtn(NULL)
 {
+	CCLOG("GetMoneyEventDialog::%s()", __FUNCTION__);
 }
 
 GetMoneyEventDialog::~GetMoneyEventDialog()
 {
+	CCLOG("GetMoneyEventDialog::%s()", __FUNCTION__);
 	CC_SAFE_RELEASE(mDesc);
 	CC_SAFE_RELEASE(mExp);
 	CC_SAFE_RELEASE(mCoin);
@@ -39,6 +41,9 @@ SEL_CCControlHandler GetMoneyEventDialog::onResolveCCBCCControlSelector( CCObjec
 
 void GetMoneyEventDialog::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
 {
+	CCLOG("GetMoneyEventDialog::%s()", __FUNCTION__);
+	mCloseBtn->setDefaultTouchPriority(touch_priority_5);
+
 	Award& awardInfo = FightProxy::shared()->awardInfo;
 	mDesc->setString(fls("167", awardInfo.eventCoin));
 	mExp->setString(fcs("+%d", awardInfo.exp));

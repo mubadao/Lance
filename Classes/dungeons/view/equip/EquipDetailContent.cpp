@@ -10,6 +10,7 @@ EquipDetailContent::EquipDetailContent()
 	, mCurProperty(NULL)
 	, mEquipIcon(NULL)
 {
+	CCLOG("EquipDetailContent::%s()", __FUNCTION__);
 	for (int i = 0; i < 6; i++)
 	{
 		mAffixTitle[i] = NULL;
@@ -19,6 +20,7 @@ EquipDetailContent::EquipDetailContent()
 
 EquipDetailContent::~EquipDetailContent(void)
 {
+	CCLOG("EquipDetailContent::%s()", __FUNCTION__);
 	CC_SAFE_RELEASE(mName);
 	CC_SAFE_RELEASE(mLevel);
 	CC_SAFE_RELEASE(mType);
@@ -56,6 +58,7 @@ bool EquipDetailContent::onAssignCCBMemberVariable( CCObject * pTarget, const ch
 
 void EquipDetailContent::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
 {
+	CCLOG("EquipDetailContent::%s()", __FUNCTION__);
 	EquipStatic* equipStatic = StaticItem::shared()->getEquipInfo(gsEquipInfo->id);
 	
 	mName->setColor(gsEquipInfo->getNameColor());

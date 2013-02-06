@@ -4,10 +4,12 @@ MoneyIcon::MoneyIcon()
 : mIcon(NULL)
 	, mCount(NULL)
 {
+	CCLOG("MoneyIcon::%s()", __FUNCTION__);
 }
 
 MoneyIcon::~MoneyIcon()
 {
+	CCLOG("MoneyIcon::%s()", __FUNCTION__);
 	CC_SAFE_RELEASE(mIcon);
 	CC_SAFE_RELEASE(mCount);
 }
@@ -22,9 +24,13 @@ bool MoneyIcon::onAssignCCBMemberVariable( CCObject * pTarget, const char * pMem
 void MoneyIcon::setType(MoneyType type)
 {
 	if (type == MONEY_TYPE_GOLD)
-		mIcon->setDisplayFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("money_gold.png"));
+	{
+		mIcon->initWithFile("money_gold.png");
+	}
 	else if(type == MONEY_TYPE_MONEY)
-		mIcon->setDisplayFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("money_money.png"));
+	{
+		mIcon->initWithFile("money_money.png");
+	}
 }
 
 void MoneyIcon::setCount(int value)

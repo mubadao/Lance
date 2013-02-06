@@ -12,10 +12,12 @@ ShopItem::ShopItem(void)
 	, mBg(NULL)
 	, mRect(NULL)
 {
+	CCLOG("ShopItem::%s()", __FUNCTION__);
 }
 
 ShopItem::~ShopItem(void)
 {
+	CCLOG("ShopItem::%s()", __FUNCTION__);
 	CC_SAFE_RELEASE(mFree);
 	CC_SAFE_RELEASE(mUseBtn);
 	CC_SAFE_RELEASE(mBg);
@@ -46,6 +48,7 @@ SEL_CCControlHandler ShopItem::onResolveCCBCCControlSelector( CCObject * pTarget
 
 void ShopItem::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
 {
+	CCLOG("ShopItem::%s()", __FUNCTION__);
 }
 
 void ShopItem::setData(BoxStatic* data)

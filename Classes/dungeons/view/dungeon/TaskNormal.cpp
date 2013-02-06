@@ -12,10 +12,12 @@ TaskNormal::TaskNormal()
 	, mEnergy(NULL)
 	, mDoItBtn(NULL)
 {
+	CCLOG("TaskNormal::%s()", __FUNCTION__);
 }
 
 TaskNormal::~TaskNormal()
 {
+	CCLOG("TaskNormal::%s()", __FUNCTION__);
 	CC_SAFE_RELEASE(mLifeTitle);
 	CC_SAFE_RELEASE(mProgressTitle);
 	CC_SAFE_RELEASE(mExp);
@@ -48,6 +50,7 @@ SEL_CCControlHandler TaskNormal::onResolveCCBCCControlSelector(CCObject* pTarget
 
 void TaskNormal::onNodeLoaded(CCNode* pNode, CCNodeLoader* pNodeLoader)
 {
+	CCLOG("TaskNormal::%s()", __FUNCTION__);
 	mLifeProgress = ProgressText::create("progress_03.png", DEFAULT_FONT, 28);
 	mLifeProgress->setMode(PROGRESS_TEXT_FORMAT_CURMAX);
 	mLifeProgress->setRange(0, 100);

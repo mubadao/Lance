@@ -5,10 +5,12 @@
 EquipDetail::EquipDetail()
 	:mScrollView(NULL)
 {
+	CCLOG("EquipDetail::%s()", __FUNCTION__);
 }
 
 EquipDetail::~EquipDetail()
 {
+	CCLOG("EquipDetail::%s()", __FUNCTION__);
 	CC_SAFE_RELEASE(mScrollView);
 }
 
@@ -20,6 +22,7 @@ bool EquipDetail::onAssignCCBMemberVariable( CCObject * pTarget, const char * pM
 
 void EquipDetail::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
 {
+	CCLOG("EquipDetail::%s()", __FUNCTION__);
 	mScrollView->setTouchPriority(touch_priority_4);
 	EquipDetailContent* content = (EquipDetailContent*)mScrollView->getContainer();
 	mScrollView->setContentOffset(ccp(0, mScrollView->getViewSize().height - content->getContentSize().height));

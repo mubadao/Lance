@@ -16,10 +16,12 @@ AlertTitleDialog::AlertTitleDialog()
 	, mOkBtn(NULL)
 	, mCancelBtn(NULL)
 {
+	CCLOG("AlertTitleDialog::%s()", __FUNCTION__);
 }
 
 AlertTitleDialog::~AlertTitleDialog()
 {
+	CCLOG("AlertTitleDialog::%s()", __FUNCTION__);
 	CC_SAFE_RELEASE(mTitle);
 	CC_SAFE_RELEASE(mContent);
 	CC_SAFE_RELEASE(mOkBtn);
@@ -49,6 +51,11 @@ SEL_CCControlHandler AlertTitleDialog::onResolveCCBCCControlSelector( CCObject *
 
 void AlertTitleDialog::onNodeLoaded(CCNode* pNode, CCNodeLoader* pNodeLoader)
 {
+	CCLOG("AlertTitleDialog::%s()", __FUNCTION__);
+
+	mOkBtn->setDefaultTouchPriority(touch_priority_5);
+	mCancelBtn->setDefaultTouchPriority(touch_priority_5);
+	
 	mTitle->setString(msTitle.c_str());
 	mContent->setString(msContent.c_str());
 	

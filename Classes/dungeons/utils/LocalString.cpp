@@ -9,15 +9,28 @@ void LocalString::parse()
     path += "LocalString.xml";
     
 	if (target == kTargetWindows)
-		path = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("config/LocalString.xml");
+		path = CCFileUtils::sharedFileUtils()->fullPathForFilename("config/LocalString.xml");
+	
+    if(!isFileExistsInWritablePath("LocalString.xml"))
+        return;
     
-	xmlDoc = xmlReadFile(path.c_str(), "utf-8", XML_PARSER_EOF);
+    unsigned long size;
+    unsigned char* pBytes = CCFileUtils::sharedFileUtils()->getFileData(path.c_str(), "rb", &size);
+    
+	xmlDoc = xmlReadMemory((const char*)pBytes, size, NULL, "utf-8", XML_PARSE_RECOVER);
+//	xmlDoc = xmlReadFile(path.c_str(), "utf-8", XML_PARSER_EOF);
 	if(NULL == xmlDoc)
+	{
 		CCLOG("LocalString xml parse failed!");
+		return;
+	}
 
 	rootNode = xmlDocGetRootElement(xmlDoc);
 	if(NULL == xmlDoc)
+	{
 		CCLOG("LocalString xml root null!");
+		return;
+	}
 
 	childNode = rootNode->children;
 }

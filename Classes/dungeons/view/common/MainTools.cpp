@@ -10,11 +10,15 @@ MainTools::MainTools()
 	, mAttributeBtn(NULL)
 	, mOpenboxBtn(NULL)
 	, mShopBtn(NULL)
+	, mChallengeBtn(NULL)
 {
+	CCLOG("MainTools::%s()", __FUNCTION__);
 }
 
 MainTools::~MainTools()
 {
+	CCLOG("MainTools::%s()", __FUNCTION__);
+
 	CC_SAFE_RELEASE(mBtnBg);
 	CC_SAFE_RELEASE(mTaskBtn);
 	CC_SAFE_RELEASE(mDungeonListBtn);
@@ -22,6 +26,7 @@ MainTools::~MainTools()
 	CC_SAFE_RELEASE(mAttributeBtn);
 	CC_SAFE_RELEASE(mShopBtn);
 	CC_SAFE_RELEASE(mOpenboxBtn);
+	CC_SAFE_RELEASE(mChallengeBtn);
 }
 
 bool MainTools::onAssignCCBMemberVariable(CCObject* pTarget, const char* pMemberVariableName, CCNode* pNode)
@@ -33,6 +38,7 @@ bool MainTools::onAssignCCBMemberVariable(CCObject* pTarget, const char* pMember
 	CCB_CONTROLBUTTON_GLUE(this, "mAttributeBtn", mAttributeBtn, gls("91"));
 	CCB_CONTROLBUTTON_GLUE(this, "mDungeonListBtn", mDungeonListBtn, gls("141"));
 	CCB_CONTROLBUTTON_GLUE(this, "mOpenboxBtn", mOpenboxBtn, gls("174"));
+	CCB_CONTROLBUTTON_GLUE(this, "mChallengeBtn", mChallengeBtn, gls("87"));
 	return false;
 }
 
@@ -50,11 +56,14 @@ SEL_CCControlHandler MainTools::onResolveCCBCCControlSelector( CCObject * pTarge
 	CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onShopBtnClick", MainTools::onShopBtnClick);
 	CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onDungeonListBtnClick", MainTools::onDungeonListBtnClick);
 	CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onOpenboxBtnClick", MainTools::onOpenboxBtnClick);
+	CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onChallengeBtnClick", MainTools::onChallengeBtnClick);
 	return NULL;
 }
 
 void MainTools::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
 {
+	CCLOG("MainTools::%s()", __FUNCTION__);
+
 	addChild(Mask::create(50));
 	
 	mBtnBg->setDefaultTouchPriority(touch_priority_4);
@@ -64,6 +73,7 @@ void MainTools::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
 	mAttributeBtn->setDefaultTouchPriority(touch_priority_5);
 	mOpenboxBtn->setDefaultTouchPriority(touch_priority_5);
 	mShopBtn->setDefaultTouchPriority(touch_priority_5);
+	mChallengeBtn->setDefaultTouchPriority(touch_priority_5);
 }
 
 void MainTools::onTaskBtnClick( CCObject * pSender, CCControlEvent pCCControlEvent )
@@ -101,6 +111,12 @@ void MainTools::onOpenboxBtnClick( CCObject * pSender, CCControlEvent pCCControl
 {
 	ShopScene::msCurTab = SHOP_TAB_LOTTERY;
 	FRAMEWORK->changeState("ShopScene");
+	close();
+}
+
+void MainTools::onChallengeBtnClick( CCObject * pSender, CCControlEvent pCCControlEvent )
+{
+	FRAMEWORK->changeState("ChallengeScene");
 	close();
 }
 

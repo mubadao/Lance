@@ -41,6 +41,7 @@ private:
     void _sellItem();
     void _buyEnergy();
     void _buyLife();
+    void _buyFusion();
     void _forceUpgrade();
 };
 

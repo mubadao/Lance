@@ -592,7 +592,7 @@ void TableTextView::setColor(const ccColor3B& var)
 	}
 }
 
-ccColor3B TableTextView::getColor(void)
+const ccColor3B& TableTextView::getColor(void)
 {
 	return m_tColor;
 }

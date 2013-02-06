@@ -23,7 +23,9 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     CCLog("AppDelegate::applicationDidFinishLaunching() frameWidth:%f, frameHeight:%f", screenSize.width, screenSize.height);
     
-    CCFileUtils::sharedFileUtils()->setResourceDirectory("images");
+	vector<string> searchPaths;
+	searchPaths.push_back("images");
+    CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
     pDirector->setContentScaleFactor(1);
 //    if (screenSize.width > 640)
 //        CCEGLView::sharedOpenGLView()->setDesignResolutionSize(768, 1024, kResolutionExactFit);

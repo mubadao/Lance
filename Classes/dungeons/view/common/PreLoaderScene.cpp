@@ -12,10 +12,12 @@
 PreLoaderScene::PreLoaderScene()
 : mFileCount(0)
 {
+	CCLOG("PreLoaderScene::%s()", __FUNCTION__);
 }
 
 PreLoaderScene::~PreLoaderScene()
 {
+	CCLOG("PreLoaderScene::%s()", __FUNCTION__);
 	RemoveObserver(this);
 }
 
@@ -39,6 +41,8 @@ void PreLoaderScene::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
 
 void PreLoaderScene::_onNotification(CCObject* object)
 {
+	CCLOG("PreLoaderScene::%s()", __FUNCTION__);
+
 	NotificationObserver* notification = (NotificationObserver*)object;
 	string name = notification->getName();
 	CCObject* params = notification->getObject();
@@ -50,7 +54,6 @@ void PreLoaderScene::_onNotification(CCObject* object)
 	}
 	else if (name == kNCRegist || name == kNCGetSelfInfo)
 	{
-		CCLOG("PreLoaderScene::_onNotification()");
 		getParent()->runAction(CCSequence::create(CCDelayTime::create(0.2), CCCallFunc::create(this, callfunc_selector(PreLoaderScene::_delayComplete)), NULL));
 	}
 }

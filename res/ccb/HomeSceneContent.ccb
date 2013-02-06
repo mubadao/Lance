@@ -962,7 +962,7 @@
 						<key>value</key>
 						<array>
 							<real>240</real>
-							<real>91.68646240234375</real>
+							<real>92</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -981,7 +981,7 @@
 						<string>SpriteFrame</string>
 						<key>value</key>
 						<array>
-							<string>sheet1.plist</string>
+							<string></string>
 							<string>btn_30.png</string>
 						</array>
 					</dict>
@@ -1004,7 +1004,7 @@
 						<string>SpriteFrame</string>
 						<key>value</key>
 						<array>
-							<string>sheet1.plist</string>
+							<string></string>
 							<string>btn_30_d.png</string>
 						</array>
 					</dict>
@@ -1027,7 +1027,7 @@
 						<string>SpriteFrame</string>
 						<key>value</key>
 						<array>
-							<string>sheet1.plist</string>
+							<string></string>
 							<string>btn_30.png</string>
 						</array>
 					</dict>
@@ -1044,6 +1044,8 @@
 						</array>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>
@@ -1590,8 +1592,6 @@
 				<false/>
 			</dict>
 		</array>
-		<key>selected</key>
-		<true/>
 	</dict>
 	<key>notes</key>
 	<array/>

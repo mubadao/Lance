@@ -122,11 +122,15 @@ struct ItemInfo
         index = info->index;
         count = info->count;
     }
+    ItemInfo():index(0),id(0),count(0){}
 };
 
 typedef vector<Affix*> AffixList;
 struct EquipInfo : public ItemInfo
 {
+    EquipInfo():quality(0),state(0),level(0),exp(0),atkMin(0),atkMax(0),defMin(0),defMax(0),life(0),intensifyNum(0),intensifyValue(0){}
+    ~EquipInfo(){clearAffix();}
+    
     int state;
 	int level;
 	int exp;
@@ -282,7 +286,7 @@ struct EquipInfo : public ItemInfo
                     //+血量（单体）%：单件装备血量的百分比
                     break;
                 case AFFIX_TYPE_MF_PER:
-                    //+血量
+                    //+血量（单体）%：单件装备血量的百分比
                     break;
                 case AFFIX_TYPE_GET_COIN_PER:
                     //+铜币获得量%：只增加地下城，神秘洞穴战斗时金币的获得
@@ -571,9 +575,6 @@ struct EquipInfo : public ItemInfo
         EquipStatic* equipStatic = StaticItem::shared()->getEquipInfo(id);
         return int(30*level*equipStatic->quality*(1+affixs.size()*0.15));
     }
-
-	EquipInfo():quality(0){}
-    ~EquipInfo(){clearAffix();}
 };
 
 struct BagInfo
@@ -595,9 +596,15 @@ struct BagInfo
     }
 };
 
-typedef vector<EquipInfo*> EquipList;
-typedef vector<ItemInfo*> ItemList;
+struct IntensifyResult
+{
+    int perfect;
+    int addProperty;
+    IntensifyResult():perfect(0),addProperty(0){}
+};
 
+typedef std::vector<EquipInfo*> EquipList;
+typedef std::vector<ItemInfo*> ItemList;
 class ItemProxy : public Singleton<ItemProxy>
 {
 	void testData();
@@ -617,6 +624,10 @@ public:
 	EquipInfo* lastQiangHuaEquip;
 	EquipInfo* curQiangHuaEquip;
 	vector<int> mSelectList;
+    vector<int> mMeltList;
+    
+    //强化结果
+    IntensifyResult mIntensifyResult;
 
 	EquipList& getEquipList();
     ItemList& getItemList();
@@ -670,6 +681,8 @@ public:
 
     void setLastQiangHuaEquip(EquipInfo* equipInfo);
 	void getPropertyValue(EquipInfo* equipInfo, string& ret);
+	void getAffixTitle(Affix* affix, string& ret);
+	void getAffixValue(Affix* affix, string& ret);
 
 	const char* getTypeTitle(int id);
     

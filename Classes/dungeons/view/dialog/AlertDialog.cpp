@@ -12,10 +12,12 @@ AlertDialog::AlertDialog()
     , mOkBtn(NULL)
     , mCancelBtn(NULL)
 {
+	CCLOG("AlertDialog::%s()", __FUNCTION__);
 }
 
 AlertDialog::~AlertDialog()
 {
+	CCLOG("AlertDialog::%s()", __FUNCTION__);
 	CC_SAFE_RELEASE(mContent);
 	CC_SAFE_RELEASE(mOkBtn);
 	CC_SAFE_RELEASE(mCancelBtn);
@@ -43,6 +45,7 @@ SEL_CCControlHandler AlertDialog::onResolveCCBCCControlSelector( CCObject * pTar
 
 void AlertDialog::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
 {
+	CCLOG("AlertDialog::%s()", __FUNCTION__);
     mOkBtn->setDefaultTouchPriority(touch_priority_5);
     mCancelBtn->setDefaultTouchPriority(touch_priority_5);
     

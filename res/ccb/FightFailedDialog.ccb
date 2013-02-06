@@ -1906,7 +1906,7 @@
 						<string>SpriteFrame</string>
 						<key>value</key>
 						<array>
-							<string>sheet1.plist</string>
+							<string></string>
 							<string>btn_30.png</string>
 						</array>
 					</dict>
@@ -1929,7 +1929,7 @@
 						<string>SpriteFrame</string>
 						<key>value</key>
 						<array>
-							<string>sheet1.plist</string>
+							<string></string>
 							<string>btn_30_d.png</string>
 						</array>
 					</dict>
@@ -1952,7 +1952,7 @@
 						<string>SpriteFrame</string>
 						<key>value</key>
 						<array>
-							<string>sheet1.plist</string>
+							<string></string>
 							<string>btn_30.png</string>
 						</array>
 					</dict>
@@ -2114,7 +2114,7 @@
 						<string>SpriteFrame</string>
 						<key>value</key>
 						<array>
-							<string>sheet1.plist</string>
+							<string></string>
 							<string>btn_30.png</string>
 						</array>
 					</dict>
@@ -2137,7 +2137,7 @@
 						<string>SpriteFrame</string>
 						<key>value</key>
 						<array>
-							<string>sheet1.plist</string>
+							<string></string>
 							<string>btn_30_d.png</string>
 						</array>
 					</dict>
@@ -2160,7 +2160,7 @@
 						<string>SpriteFrame</string>
 						<key>value</key>
 						<array>
-							<string>sheet1.plist</string>
+							<string></string>
 							<string>btn_30.png</string>
 						</array>
 					</dict>

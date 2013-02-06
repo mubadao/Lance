@@ -2,6 +2,7 @@
 #include "UserProxy.h"
 #include "NetController.h"
 #include "NotifyDefine.h"
+#include "MeltOkDialog.h"
 
 EquipDetailDialog::EquipDetailDialog()
 	: mEquipBtn(NULL)
@@ -10,14 +11,20 @@ EquipDetailDialog::EquipDetailDialog()
 	, mEquipDetail(NULL)
 	, mMoneyIcon(NULL)
 	, mSellTitle(NULL)
+	, mUpgradeBtn(NULL)
+	, mMeltBtn(NULL)
 {
+	CCLOG("EquipDetailDialog::%s()", __FUNCTION__);
 }
 
 EquipDetailDialog::~EquipDetailDialog()
 {
+	CCLOG("EquipDetailDialog::%s()", __FUNCTION__);
 	CC_SAFE_RELEASE(mEquipBtn);
 	CC_SAFE_RELEASE(mSellBtn);
 	CC_SAFE_RELEASE(mCloseBtn);
+	CC_SAFE_RELEASE(mUpgradeBtn);
+	CC_SAFE_RELEASE(mMeltBtn);
 	CC_SAFE_RELEASE(mSellTitle);
 	CC_SAFE_RELEASE(mEquipDetail);
 	CC_SAFE_RELEASE(mMoneyIcon);
@@ -27,6 +34,8 @@ bool EquipDetailDialog::onAssignCCBMemberVariable( CCObject * pTarget, const cha
 {
 	CCB_CONTROLBUTTON_GLUE(this, "mEquipBtn", mEquipBtn, gls("70"));
 	CCB_CONTROLBUTTON_GLUE(this, "mSellBtn", mSellBtn, gls("76"));
+	CCB_CONTROLBUTTON_GLUE(this, "mUpgradeBtn", mUpgradeBtn, gls("72"));
+	CCB_CONTROLBUTTON_GLUE(this, "mMeltBtn", mMeltBtn, gls("73"));
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mCloseBtn", CCControlButton*, mCloseBtn);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mEquipDetail", EquipDetail*, mEquipDetail);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mMoneyIcon", MoneyIcon*, mMoneyIcon);
@@ -39,6 +48,8 @@ SEL_CCControlHandler EquipDetailDialog::onResolveCCBCCControlSelector( CCObject 
 	CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onEquipBtnClick", EquipDetailDialog::onEquipBtnClick);
 	CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onSellBtnClick", EquipDetailDialog::onSellBtnClick);
 	CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onCloseBtnClick", EquipDetailDialog::onCloseBtnClick);
+	CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onUpgradeBtnClick", EquipDetailDialog::onUpgradeBtnClick);
+	CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onMeltBtnClick", EquipDetailDialog::onMeltBtnClick);
 	return NULL;
 }
 
@@ -47,8 +58,15 @@ SEL_MenuHandler EquipDetailDialog::onResolveCCBCCMenuItemSelector(CCObject * pTa
 	return NULL;
 }
 
-void EquipDetailDialog::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
+void EquipDetailDialog::onNodeLoaded(CCNode* pNode, CCNodeLoader* pNodeLoader)
 {
+	CCLOG("EquipDetailDialog::%s()", __FUNCTION__);
+	mCloseBtn->setDefaultTouchPriority(touch_priority_5);
+	mEquipBtn->setDefaultTouchPriority(touch_priority_5);
+	mSellBtn->setDefaultTouchPriority(touch_priority_5);
+	mUpgradeBtn->setDefaultTouchPriority(touch_priority_5);
+	mMeltBtn->setDefaultTouchPriority(touch_priority_5);
+
 	bool isPutOn = ItemProxy::shared()->isEquipPutOn(gsEquipInfo->index);
 
 	if(!isPutOn)
@@ -101,3 +119,18 @@ void EquipDetailDialog::onCloseBtnClick(CCObject * pSender, CCControlEvent pCCCo
 {
 	close();
 }
+
+void EquipDetailDialog::onUpgradeBtnClick(CCObject * pSender, CCControlEvent pCCControlEvent)
+{
+	ItemProxy::shared()->curQiangHuaEquip = gsEquipInfo;
+	FRAMEWORK->changeState("EquipMergeScene");
+	close();
+}
+
+void EquipDetailDialog::onMeltBtnClick(CCObject * pSender, CCControlEvent pCCControlEvent)
+{
+	MeltOkDialog::msEquipInfo = gsEquipInfo;
+	FRAMEWORK->popup("MeltOkDialog");
+    close();
+}
+

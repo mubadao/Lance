@@ -200,7 +200,7 @@ bool isFileExistsInResourcePath(const char* name)
     
     bool notif=utils->isPopupNotify();
     utils->setPopupNotify(false);
-    unsigned char * pBytes = utils->getFileData(utils->fullPathFromRelativePath(name), "rb", &size);
+    unsigned char * pBytes = utils->getFileData(utils->fullPathForFilename(name).c_str(), "rb", &size);
     utils->setPopupNotify(notif);
 
     if (pBytes) {

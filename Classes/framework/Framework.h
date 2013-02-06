@@ -26,6 +26,9 @@ public:
 
     // 切换主场景
     void changeState(const string& name);
+	
+	// 切换到上一场景
+	void changeToLastState();
 
     // 弹出对话框
 	void popup(const string& name);

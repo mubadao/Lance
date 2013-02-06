@@ -11,6 +11,9 @@ struct ChallengeEnemyInfo
 	int level;//等级
 	int atkMin;//最小攻击力
 	int atkMax;//最大攻击力
+    int defMin;//最小攻击力
+	int defMax;//最大攻击力
+    int life;
 	int succeedExp;//挑战成功后获得的经验
 	int succeedGold;//挑战成功后获得的金币
 	int failedGold;//挑战失败后获得的金币
@@ -19,12 +22,16 @@ struct ChallengeEnemyInfo
 	ChallengeEnemyInfo():time(0),gold(0){}
 };
 
+typedef std::vector<ChallengeEnemyInfo*> ChallengeEnemyList;
+
 struct ChallengeResult
 {
-	int result;
+	int result; //结果
+    int succeedExp;//挑战成功后获得的经验
+	int succeedGold;//挑战成功后获得的金币
+	int failedGold;//挑战失败后获得的金币
 };
 
-typedef std::vector<ChallengeEnemyInfo*> ChallengeEnemyList;
 
 class ChanllengeProxy : public Singleton<ChanllengeProxy>
 {

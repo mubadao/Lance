@@ -7,10 +7,12 @@ GetEnergyEventDialog::GetEnergyEventDialog()
 	, mCoin(NULL)
 	, mCloseBtn(NULL)
 {
+	CCLOG("GetEnergyEventDialog::%s()", __FUNCTION__);
 }
 
 GetEnergyEventDialog::~GetEnergyEventDialog()
 {
+	CCLOG("GetEnergyEventDialog::%s()", __FUNCTION__);
 	CC_SAFE_RELEASE(mDesc);
 	CC_SAFE_RELEASE(mExp);
 	CC_SAFE_RELEASE(mCoin);
@@ -39,6 +41,9 @@ SEL_CCControlHandler GetEnergyEventDialog::onResolveCCBCCControlSelector( CCObje
 
 void GetEnergyEventDialog::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
 {
+	CCLOG("GetEnergyEventDialog::%s()", __FUNCTION__);
+	mCloseBtn->setDefaultTouchPriority(touch_priority_5);
+
 	Award& awardInfo = FightProxy::shared()->awardInfo;
 	mDesc->setString(fls("168", awardInfo.energy));
 	mExp->setString(fcs("+%d", awardInfo.exp));

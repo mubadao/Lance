@@ -610,7 +610,7 @@ void TableView::setColor(const ccColor3B& var)
 	}
 }
 
-ccColor3B TableView::getColor(void)
+const ccColor3B& TableView::getColor(void)
 {
 	return m_tColor;
 }

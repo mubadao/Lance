@@ -9,11 +9,13 @@ DungeonsScene::DungeonsScene()
 	, mTaskBoss(NULL)
 	, mTaskNormal(NULL)
 {	
+	CCLOG("DungeonsScene::%s()", __FUNCTION__);
 }
 
 
 DungeonsScene::~DungeonsScene()
 {
+	CCLOG("DungeonsScene::%s()", __FUNCTION__);
 	RemoveObserver(this);
 
 	CC_SAFE_RELEASE(mTaskDesc);
@@ -31,6 +33,7 @@ bool DungeonsScene::onAssignCCBMemberVariable(CCObject* pTarget, const char* pMe
 
 void DungeonsScene::onNodeLoaded(CCNode* pNode, CCNodeLoader* pNodeLoader)
 {
+	CCLOG("DungeonsScene::%s()", __FUNCTION__);
 	mTaskBoss->setTaskDesc(mTaskDesc);
 
 	CCArray* nameList = CCArray::create(
@@ -66,7 +69,7 @@ void DungeonsScene::refresh()
 
 void DungeonsScene::_onNotification( CCObject* object )
 {
-	CCLOG("DungeonsScene::_onNotification[%x]", this);
+	CCLOG("DungeonsScene::%s()", __FUNCTION__);
 
 	NotificationObserver* notification = (NotificationObserver*)object;
 	string name = string(notification->getName());
@@ -77,6 +80,7 @@ void DungeonsScene::_onNotification( CCObject* object )
 		if (win == 1)		//战斗胜利
 		{
 			mTaskBoss->reset();
+			gsEquipInfo = FightProxy::shared()->awardInfo.equipList[0];
 			FRAMEWORK->popup("FightSucceedDialog");
 		}
 		else if(win == 2 )	//战斗失败
@@ -95,7 +99,10 @@ void DungeonsScene::_onNotification( CCObject* object )
 			else if(award.eventType == EVENT_TYPE_GET_ENERGY)
 				FRAMEWORK->popup("GetEnergyEventDialog");
 			else if(award.eventType == EVENT_TYPE_GET_EQUIP)
+			{
+				gsEquipInfo = award.equipList[0];
 				FRAMEWORK->popup("GetEquipEventDialog");
+			}
 			refresh();
 			mTaskDesc->shakeScene();
 		}

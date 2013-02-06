@@ -6,14 +6,12 @@
 ItemProxy::ItemProxy()
 {
 //	testData();
+    lastQiangHuaEquip = new EquipInfo();
 }
 
 ItemProxy::~ItemProxy()
 {
-	if (lastQiangHuaEquip != NULL)
-	{
-		delete lastQiangHuaEquip;
-	}
+    delete lastQiangHuaEquip;
 }
 
 void ItemProxy::testData()
@@ -267,11 +265,29 @@ void ItemProxy::clearMergeList()
 
 void ItemProxy::setLastQiangHuaEquip( EquipInfo* equipInfo )
 {
-	if (lastQiangHuaEquip == NULL)
+//    lastQiangHuaEquip = equipInfo;
+    this->lastQiangHuaEquip->convert(equipInfo);
+}
+
+void ItemProxy::getAffixTitle( Affix* affix, string& ret )
+{
+	switch (affix->type)
 	{
-		lastQiangHuaEquip = new EquipInfo();
+//	case AFFIX_TYPE_HURT:
+//		ret = gls("hurt");
+//		break;
+//	case AFFIX_TYPE_HIT:
+//		ret = gls("hit");
+//		break;
+//    case AFFIX_TYPE_ATTACK:
+//    case AFFIX_TYPE_DEFENSE:
+//        break;
 	}
-    lastQiangHuaEquip->convert(equipInfo);
+}
+
+void ItemProxy::getAffixValue( Affix* affix, string& ret )
+{
+
 }
 
 int ItemProxy::getPutonCount()

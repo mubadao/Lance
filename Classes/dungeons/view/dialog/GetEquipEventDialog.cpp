@@ -2,6 +2,7 @@
 #include "FightProxy.h"
 #include "NotifyDefine.h"
 #include "NetController.h"
+#include "MeltOkDialog.h"
 
 GetEquipEventDialog::GetEquipEventDialog()
 	: mDesc(NULL)
@@ -11,13 +12,16 @@ GetEquipEventDialog::GetEquipEventDialog()
 	, mSellTitle(NULL)
 	, mCloseBtn(NULL)
 	, mSellBtn(NULL)
+	, mMeltBtn(NULL)
 	, mEquipDetail(NULL)
 	, mMoneyIcon(NULL)
 {
+	CCLOG("GetEquipEventDialog::%s()", __FUNCTION__);
 }
 
 GetEquipEventDialog::~GetEquipEventDialog()
 {
+	CCLOG("GetEquipEventDialog::%s()", __FUNCTION__);
 	CC_SAFE_RELEASE(mDesc);
 	CC_SAFE_RELEASE(mExp);
 	CC_SAFE_RELEASE(mCoin);
@@ -40,6 +44,7 @@ bool GetEquipEventDialog::onAssignCCBMemberVariable( CCObject * pTarget, const c
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mMoneyIcon", MoneyIcon*, mMoneyIcon);
 	CCB_CONTROLBUTTON_GLUE(this, "mCloseBtn", mCloseBtn, gls("77"));
 	CCB_CONTROLBUTTON_GLUE(this, "mSellBtn", mSellBtn, gls("76"));
+    CCB_CONTROLBUTTON_GLUE(this, "mMeltBtn", this->mMeltBtn, gls("73"));
 	return false;
 }
 
@@ -50,6 +55,7 @@ SEL_MenuHandler GetEquipEventDialog::onResolveCCBCCMenuItemSelector(CCObject * p
 
 SEL_CCControlHandler GetEquipEventDialog::onResolveCCBCCControlSelector( CCObject * pTarget, const char * pSelectorName )
 {
+	CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onMeltBtnClick", GetEquipEventDialog::onMeltBtnClick);
 	CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onCloseBtnClick", GetEquipEventDialog::onCloseBtnClick);
 	CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onSellBtnClick", GetEquipEventDialog::onSellBtnClick);
 	return NULL;
@@ -57,6 +63,11 @@ SEL_CCControlHandler GetEquipEventDialog::onResolveCCBCCControlSelector( CCObjec
 
 void GetEquipEventDialog::onNodeLoaded(CCNode* pNode, CCNodeLoader* pNodeLoader)
 {
+	CCLOG("GetEquipEventDialog::%s()", __FUNCTION__);	
+	mSellBtn->setDefaultTouchPriority(touch_priority_5);
+	mCloseBtn->setDefaultTouchPriority(touch_priority_5);
+	mMeltBtn->setDefaultTouchPriority(touch_priority_5);
+
 	Award& awardInfo = FightProxy::shared()->awardInfo;
 	gsEquipInfo = awardInfo.equipList[0];
 	EquipStatic* equipStatic = StaticItem::shared()->getEquipInfo(gsEquipInfo->id);
@@ -82,4 +93,13 @@ void GetEquipEventDialog::onSellBtnClick(CCObject * pSender, CCControlEvent pCCC
 	sellList.push_back(equipInfo->index);
 	Post_Net_Notification(kVCSellEquip, NULL);
 	close();
+}
+
+void GetEquipEventDialog::onMeltBtnClick( CCObject * pSender, CCControlEvent pCCControlEvent )
+{
+    Award& awardInfo = FightProxy::shared()->awardInfo;
+    EquipInfo* equipInfo = awardInfo.equipList[0];
+	MeltOkDialog::msEquipInfo = equipInfo;
+	FRAMEWORK->popup("MeltOkDialog");
+    close();
 }

@@ -10,9 +10,16 @@ void StaticItem::parse()
     path += "Equipage.xml";
     
 	if (target == kTargetWindows)
-		path = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("config/Equipage.xml");
+		path = CCFileUtils::sharedFileUtils()->fullPathForFilename("config/Equipage.xml");
 
-	xmlDocPtr doc = xmlReadFile(path.c_str(), "utf-8", XML_PARSER_EOF);
+    if(!isFileExistsInWritablePath("Equipage.xml"))
+        assert(false);
+    
+    unsigned long size;
+    unsigned char* pBytes = CCFileUtils::sharedFileUtils()->getFileData(path.c_str(), "rb", &size);
+	
+	xmlDocPtr doc = xmlReadMemory((const char*)pBytes, size, NULL, "utf-8", XML_PARSE_RECOVER);
+//	xmlDocPtr doc = xmlReadFile(path.c_str(), "utf-8", XML_PARSER_EOF);
 	if(NULL == doc)
 		CCLOG("Equipage xml parse failed!");
 

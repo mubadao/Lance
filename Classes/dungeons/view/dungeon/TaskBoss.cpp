@@ -23,10 +23,12 @@ TaskBoss::TaskBoss()
 	, mLifeProgress(NULL)
 	, mCurStep(1)
 {
+	CCLOG("TaskBoss::%s()", __FUNCTION__);
 }
 
 TaskBoss::~TaskBoss()
 {
+	CCLOG("TaskBoss::%s()", __FUNCTION__);
 	CC_SAFE_RELEASE(mBossName);
 	CC_SAFE_RELEASE(mBossAttack);
 	CC_SAFE_RELEASE(mBossDefense);
@@ -71,6 +73,7 @@ bool TaskBoss::onAssignCCBMemberVariable(CCObject* pTarget, const char* pMemberV
 
 void TaskBoss::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
 {
+	CCLOG("TaskBoss::%s()", __FUNCTION__);
 //    CCB_CONTROLBUTTON_GLUE(this, "mFightBtn", mFightBtn, gls("140"));
 
 	mLifeProgress = ProgressText::create("progress_03.png", DEFAULT_FONT, 28);

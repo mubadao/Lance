@@ -706,7 +706,7 @@
 						<string>SpriteFrame</string>
 						<key>value</key>
 						<array>
-							<string>sheet1.plist</string>
+							<string></string>
 							<string>money_gold.png</string>
 						</array>
 					</dict>
@@ -850,7 +850,7 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>80</real>
+							<real>30</real>
 							<real>140</real>
 							<integer>0</integer>
 						</array>
@@ -966,7 +966,7 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>180</real>
+							<real>130</real>
 							<real>140</real>
 							<integer>0</integer>
 						</array>
@@ -993,8 +993,6 @@
 						<string>MoneyIcon.ccb</string>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>
@@ -1018,7 +1016,7 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>460</real>
+							<real>520</real>
 							<real>75</real>
 							<integer>0</integer>
 						</array>
@@ -1140,7 +1138,7 @@
 						<string>SpriteFrame</string>
 						<key>value</key>
 						<array>
-							<string>sheet1.plist</string>
+							<string></string>
 							<string>btn_30.png</string>
 						</array>
 					</dict>
@@ -1163,7 +1161,7 @@
 						<string>SpriteFrame</string>
 						<key>value</key>
 						<array>
-							<string>sheet1.plist</string>
+							<string></string>
 							<string>btn_30_d.png</string>
 						</array>
 					</dict>
@@ -1186,7 +1184,7 @@
 						<string>SpriteFrame</string>
 						<key>value</key>
 						<array>
-							<string>sheet1.plist</string>
+							<string></string>
 							<string>btn_30.png</string>
 						</array>
 					</dict>
@@ -1226,7 +1224,7 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>180</real>
+							<real>120</real>
 							<real>75</real>
 							<integer>0</integer>
 						</array>
@@ -1348,7 +1346,7 @@
 						<string>SpriteFrame</string>
 						<key>value</key>
 						<array>
-							<string>sheet1.plist</string>
+							<string></string>
 							<string>btn_30.png</string>
 						</array>
 					</dict>
@@ -1371,7 +1369,7 @@
 						<string>SpriteFrame</string>
 						<key>value</key>
 						<array>
-							<string>sheet1.plist</string>
+							<string></string>
 							<string>btn_30_d.png</string>
 						</array>
 					</dict>
@@ -1394,7 +1392,7 @@
 						<string>SpriteFrame</string>
 						<key>value</key>
 						<array>
-							<string>sheet1.plist</string>
+							<string></string>
 							<string>btn_30.png</string>
 						</array>
 					</dict>
@@ -1408,6 +1406,214 @@
 							<integer>239</integer>
 							<integer>227</integer>
 							<integer>130</integer>
+						</array>
+					</dict>
+				</array>
+			</dict>
+			<dict>
+				<key>baseClass</key>
+				<string>CCControlButton</string>
+				<key>children</key>
+				<array/>
+				<key>customClass</key>
+				<string></string>
+				<key>displayName</key>
+				<string>CCControlButton</string>
+				<key>memberVarAssignmentName</key>
+				<string>mMeltBtn</string>
+				<key>memberVarAssignmentType</key>
+				<integer>1</integer>
+				<key>properties</key>
+				<array>
+					<dict>
+						<key>name</key>
+						<string>position</string>
+						<key>type</key>
+						<string>Position</string>
+						<key>value</key>
+						<array>
+							<real>320</real>
+							<real>75</real>
+							<integer>0</integer>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>anchorPoint</string>
+						<key>type</key>
+						<string>Point</string>
+						<key>value</key>
+						<array>
+							<real>0.5</real>
+							<real>0.5</real>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>scale</string>
+						<key>type</key>
+						<string>ScaleLock</string>
+						<key>value</key>
+						<array>
+							<real>1</real>
+							<real>1</real>
+							<false/>
+							<integer>0</integer>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>ignoreAnchorPointForPosition</string>
+						<key>type</key>
+						<string>Check</string>
+						<key>value</key>
+						<false/>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>ccControl</string>
+						<key>type</key>
+						<string>BlockCCControl</string>
+						<key>value</key>
+						<array>
+							<string>onMeltBtnClick</string>
+							<integer>1</integer>
+							<integer>32</integer>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>enabled</string>
+						<key>type</key>
+						<string>Check</string>
+						<key>value</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>title|1</string>
+						<key>type</key>
+						<string>String</string>
+						<key>value</key>
+						<string>熔炼</string>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>titleTTF|1</string>
+						<key>type</key>
+						<string>FontTTF</string>
+						<key>value</key>
+						<string>Helvetica</string>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>titleTTFSize|1</string>
+						<key>type</key>
+						<string>FloatScale</string>
+						<key>value</key>
+						<array>
+							<real>32</real>
+							<integer>0</integer>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>labelAnchorPoint</string>
+						<key>type</key>
+						<string>Point</string>
+						<key>value</key>
+						<array>
+							<real>0.5</real>
+							<real>0.34999999403953552</real>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>preferedSize</string>
+						<key>type</key>
+						<string>Size</string>
+						<key>value</key>
+						<array>
+							<real>200</real>
+							<real>80</real>
+							<integer>0</integer>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>zoomOnTouchDown</string>
+						<key>type</key>
+						<string>Check</string>
+						<key>value</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>backgroundSpriteFrame|1</string>
+						<key>type</key>
+						<string>SpriteFrame</string>
+						<key>value</key>
+						<array>
+							<string></string>
+							<string>btn_30.png</string>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>titleColor|1</string>
+						<key>type</key>
+						<string>Color3</string>
+						<key>value</key>
+						<array>
+							<integer>255</integer>
+							<integer>255</integer>
+							<integer>0</integer>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>backgroundSpriteFrame|2</string>
+						<key>type</key>
+						<string>SpriteFrame</string>
+						<key>value</key>
+						<array>
+							<string></string>
+							<string>btn_30_d.png</string>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>titleColor|2</string>
+						<key>type</key>
+						<string>Color3</string>
+						<key>value</key>
+						<array>
+							<integer>255</integer>
+							<integer>255</integer>
+							<integer>0</integer>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>backgroundSpriteFrame|3</string>
+						<key>type</key>
+						<string>SpriteFrame</string>
+						<key>value</key>
+						<array>
+							<string></string>
+							<string>btn_30.png</string>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>titleColor|3</string>
+						<key>type</key>
+						<string>Color3</string>
+						<key>value</key>
+						<array>
+							<integer>255</integer>
+							<integer>255</integer>
+							<integer>0</integer>
 						</array>
 					</dict>
 				</array>

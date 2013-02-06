@@ -552,11 +552,13 @@
 						<string>SpriteFrame</string>
 						<key>value</key>
 						<array>
-							<string>sheet1.plist</string>
+							<string></string>
 							<string>money_gold.png</string>
 						</array>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>
@@ -830,7 +832,7 @@
 						<string>SpriteFrame</string>
 						<key>value</key>
 						<array>
-							<string>sheet1.plist</string>
+							<string></string>
 							<string>btn_30.png</string>
 						</array>
 					</dict>
@@ -853,7 +855,7 @@
 						<string>SpriteFrame</string>
 						<key>value</key>
 						<array>
-							<string>sheet1.plist</string>
+							<string></string>
 							<string>btn_30_d.png</string>
 						</array>
 					</dict>
@@ -876,7 +878,7 @@
 						<string>SpriteFrame</string>
 						<key>value</key>
 						<array>
-							<string>sheet1.plist</string>
+							<string></string>
 							<string>btn_30.png</string>
 						</array>
 					</dict>
@@ -1059,8 +1061,6 @@
 						<string>你教训了它们,它们一边跑一边嚷嚷着:你给我等着。</string>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>

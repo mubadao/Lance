@@ -46,6 +46,7 @@
 #define kNCBuyLife                        "BuyLife"
 #define kNCBuyCoin                        "BuyCoin"
 #define kNCBuyMoney                       "BuyMoney"
+#define kNCBuyFusion                      "BuyFusion"
 
 //抢夺+合成
 #define kNCGetComposeList                 "GetComposeList"
@@ -119,6 +120,7 @@
 #define kNCErrorDollar                    (0x2000000b)    //玩家美金不足
 #define kNCErrorReceipt                   (0x2000000c)    //玩家花费验证码错误
 #define kNCErrorBagFull                   (0x2000000d)    //玩家背包已满
+#define kNCErrorIntenfityLack             (0x2000000f)    //玩家熔炼值不足
 
 /**
  * @brief 背包中装备元素数组的索引定义。

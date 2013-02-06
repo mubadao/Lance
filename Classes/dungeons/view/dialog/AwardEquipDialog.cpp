@@ -5,10 +5,12 @@ AwardEquipDialog::AwardEquipDialog()
 	, mEquipDetail(NULL)
 	, mCloseBtn(NULL)
 {
+	CCLOG("AwardEquipDialog::%s()", __FUNCTION__);
 }
 
 AwardEquipDialog::~AwardEquipDialog()
 {
+	CCLOG("AwardEquipDialog::%s()", __FUNCTION__);
 	CC_SAFE_RELEASE(mTitle);
 	CC_SAFE_RELEASE(mCloseBtn);
 	CC_SAFE_RELEASE(mEquipDetail);
@@ -35,6 +37,7 @@ SEL_CCControlHandler AwardEquipDialog::onResolveCCBCCControlSelector( CCObject *
 
 void AwardEquipDialog::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
 {
+	CCLOG("AwardEquipDialog::%s()", __FUNCTION__);
 	mCloseBtn->setDefaultTouchPriority(touch_priority_5);
 }
 

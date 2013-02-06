@@ -21,9 +21,16 @@ void StaticShop::parse()
 	path += "BuyMoney.xml";
 
 	if (target == kTargetWindows)
-		path = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("config/BuyMoney.xml");
+		path = CCFileUtils::sharedFileUtils()->fullPathForFilename("config/BuyMoney.xml");
 
-	xmlDocPtr doc = xmlReadFile(path.c_str(), "utf-8", XML_PARSER_EOF);
+    if(!isFileExistsInWritablePath("BuyMoney.xml"))
+        assert(false);
+    
+    unsigned long size;
+    unsigned char* pBytes = CCFileUtils::sharedFileUtils()->getFileData(path.c_str(), "rb", &size);
+	
+	xmlDocPtr doc = xmlReadMemory((const char*)pBytes, size, NULL, "utf-8", XML_PARSE_RECOVER);
+//	xmlDocPtr doc = xmlReadFile(path.c_str(), "utf-8", XML_PARSER_EOF);
 	if(NULL == doc)
 		CCLOG("BuyMoney xml parse failed!");
 
@@ -64,9 +71,15 @@ void StaticShop::parse()
 	path += "Supplement.xml";
 
     if (target == kTargetWindows)
-        path = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("config/Supplement.xml");
+        path = CCFileUtils::sharedFileUtils()->fullPathForFilename("config/Supplement.xml");
 
-	doc = xmlReadFile(path.c_str(), "utf-8", XML_PARSER_EOF);
+    if(!isFileExistsInWritablePath("Supplement.xml"))
+        assert(false);
+    
+    pBytes = CCFileUtils::sharedFileUtils()->getFileData(path.c_str(), "rb", &size);
+	
+	doc = xmlReadMemory((const char*)pBytes, size, NULL, "utf-8", XML_PARSE_RECOVER);
+//	doc = xmlReadFile(path.c_str(), "utf-8", XML_PARSER_EOF);
 	if(NULL == doc)
 		CCLOG("Supplement xml parse failed!");
 
@@ -114,6 +127,39 @@ void StaticShop::parse()
 					elem = elem->next;
 				}
 			}
+            else if (name == "buyfusion")
+			{
+                xmlNodePtr elem = curNode->children;
+				while (NULL != elem)
+				{
+					if (!xmlStrcmp(elem->name, BAD_CAST "Item"))
+					{
+						mBuyFusionStatic.count = attriToInt(elem, "count");
+						mBuyFusionStatic.costType.money = attriToInt(elem, "money");
+                        mBuyFusionStatic.costType.coin = attriToInt(elem, "coin");
+                        mBuyFusionStatic.costType.free = attriToInt(elem, "free");
+						mBuyFusionStatic.id = attriToInt(elem, "id");
+					}
+					elem = elem->next;
+				}
+            }
+            else if (name == "buycatalyst")
+			{
+                xmlNodePtr elem = curNode->children;
+				while (NULL != elem)
+				{
+					if (!xmlStrcmp(elem->name, BAD_CAST "Item"))
+					{
+						BuyZhuRongStatic* itemStatic;
+						itemStatic = new BuyZhuRongStatic();
+						itemStatic->count = attriToInt(elem, "count");
+						itemStatic->money = attriToInt(elem, "money");
+						itemStatic->id = attriToInt(elem, "id");
+						mBuyZhuRongStaticMap[itemStatic->count] = itemStatic;
+					}
+					elem = elem->next;
+				}
+            }
 		}
 		curNode = curNode->next;
 	}
@@ -124,9 +170,15 @@ void StaticShop::parse()
     path += "Box.xml";
     
 	if (target == kTargetWindows)
-		path = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("config/Box.xml");
+		path = CCFileUtils::sharedFileUtils()->fullPathForFilename("config/Box.xml");
     
-	doc = xmlReadFile(path.c_str(), "utf-8", XML_PARSE_NOBLANKS);
+    if(!isFileExistsInWritablePath("Box.xml"))
+        assert(false);
+    
+    pBytes = CCFileUtils::sharedFileUtils()->getFileData(path.c_str(), "rb", &size);
+	
+	doc = xmlReadMemory((const char*)pBytes, size, NULL, "utf-8", XML_PARSE_RECOVER);
+//	doc = xmlReadFile(path.c_str(), "utf-8", XML_PARSE_NOBLANKS);
 	if(NULL == doc)
 		CCLOG("Box xml parse failed!");
     
@@ -187,5 +239,10 @@ int StaticShop::getSupplyCostCount( SupplyType type )
 BuyCoinStatic* StaticShop::getBuyCoinStatic( int id )
 {
 	return mBuyCoinStaticMap[id];
+}
+
+BuyZhuRongStatic* StaticShop::getBuyZhuRongStatic(int count)
+{
+	return mBuyZhuRongStaticMap[count];
 }
 

@@ -10,10 +10,12 @@ EquipItem::EquipItem()
 	, mEquipIcon(NULL)
 	, mInfo(NULL)
 {
+	CCLOG("EquipItem::%s()", __FUNCTION__);
 }
 
 EquipItem::~EquipItem()
 {
+	CCLOG("EquipItem::%s()", __FUNCTION__);
 	CC_SAFE_RELEASE(mName);
 	CC_SAFE_RELEASE(mLevel);
 	CC_SAFE_RELEASE(mProperty);
@@ -44,10 +46,12 @@ SEL_CCControlHandler EquipItem::onResolveCCBCCControlSelector( CCObject * pTarge
 
 void EquipItem::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
 {
+	CCLOG("EquipItem::%s()", __FUNCTION__);
 }
 
 void EquipItem::setInfo(EquipInfo* data)
 {
+	mInfo = data;
 	EquipStatic* itemInfo = StaticItem::shared()->getEquipInfo(data->id);
 
 	mName->setColor(data->getNameColor());

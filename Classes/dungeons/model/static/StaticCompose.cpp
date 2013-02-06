@@ -24,15 +24,28 @@ void StaticCompose::parse()
     path += "Compose.xml";
     
 	if (target == kTargetWindows)
-		path = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("config/Compose.xml");
+		path = CCFileUtils::sharedFileUtils()->fullPathForFilename("config/Compose.xml");
+	
+    if(!isFileExistsInWritablePath("Compose.xml"))
+        assert(false);
+    
+    unsigned long size;
+    unsigned char* pBytes = CCFileUtils::sharedFileUtils()->getFileData(path.c_str(), "rb", &size);
 
-	xmlDocPtr doc = xmlReadFile(path.c_str(), "utf-8", XML_PARSER_EOF);
+	xmlDocPtr doc = xmlReadMemory((const char*)pBytes, size, NULL, "utf-8", XML_PARSE_RECOVER);
+//	xmlDocPtr doc = xmlReadFile(path.c_str(), "utf-8", XML_PARSER_EOF);
 	if(NULL == doc)
+	{
 		CCLOG("Dungeons xml parse failed!");
+		return;
+	}
 
 	xmlNodePtr rootNode = xmlDocGetRootElement(doc);
 	if(NULL == rootNode)
+	{
 		CCLOG("Dungeons xml root null!");
+		return;
+	}
 
 	xmlNodePtr curNode = rootNode->children;
 	while(NULL != curNode)

@@ -28,6 +28,8 @@ private:
 	CCControlButton* mEquipBtn;
 	CCControlButton* mSellBtn;
 	CCControlButton* mCloseBtn;
+	CCControlButton* mUpgradeBtn;
+	CCControlButton* mMeltBtn;
 	CCLabelTTF* mSellTitle;
 	EquipDetail* mEquipDetail;
 	MoneyIcon* mMoneyIcon;
@@ -35,6 +37,8 @@ private:
 	void onEquipBtnClick(CCObject * pSender, CCControlEvent pCCControlEvent);
 	void onSellBtnClick(CCObject * pSender, CCControlEvent pCCControlEvent);
 	void onCloseBtnClick(CCObject * pSender, CCControlEvent pCCControlEvent);
+	void onMeltBtnClick(CCObject * pSender, CCControlEvent pCCControlEvent);
+	void onUpgradeBtnClick(CCObject * pSender, CCControlEvent pCCControlEvent);
 };
 
 #endif

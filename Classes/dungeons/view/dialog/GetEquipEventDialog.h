@@ -31,12 +31,14 @@ private:
 	
 	CCControlButton* mCloseBtn;
 	CCControlButton* mSellBtn;
-
+	CCControlButton* mMeltBtn;
+	
 	EquipDetail* mEquipDetail;
 	MoneyIcon* mMoneyIcon;
 
 	void onCloseBtnClick(CCObject * pSender, CCControlEvent pCCControlEvent);
 	void onSellBtnClick(CCObject * pSender, CCControlEvent pCCControlEvent);
+	void onMeltBtnClick(CCObject * pSender, CCControlEvent pCCControlEvent);
 };
 
 #endif

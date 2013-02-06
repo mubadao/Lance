@@ -76,11 +76,13 @@
 						<string>SpriteFrame</string>
 						<key>value</key>
 						<array>
-							<string>sheet1.plist</string>
+							<string></string>
 							<string>money_money.png</string>
 						</array>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>

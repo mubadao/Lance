@@ -10,10 +10,12 @@ BuyMoneyItem::BuyMoneyItem()
 	, mMoney(NULL)
 	, mDollor(NULL)
 {
+	CCLOG("BuyMoneyItem::%s()", __FUNCTION__);
 }
 
 BuyMoneyItem::~BuyMoneyItem()
 {
+	CCLOG("BuyMoneyItem::%s()", __FUNCTION__);
 	CC_SAFE_RELEASE(mMoney);
 	CC_SAFE_RELEASE(mDollor);
 	CC_SAFE_RELEASE(mBuyBtn);
@@ -40,6 +42,7 @@ SEL_CCControlHandler BuyMoneyItem::onResolveCCBCCControlSelector( CCObject * pTa
 
 void BuyMoneyItem::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
 {
+	CCLOG("BuyMoneyItem::%s()", __FUNCTION__);
 //    mBuyBtn->setDefaultTouchPriority(￼)
 }
 

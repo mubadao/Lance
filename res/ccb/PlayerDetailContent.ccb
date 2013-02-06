@@ -2612,8 +2612,6 @@
 						<string>Energy Recover Rate:</string>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>
@@ -2626,6 +2624,18 @@
 		<integer>0</integer>
 		<key>properties</key>
 		<array>
+			<dict>
+				<key>name</key>
+				<string>contentSize</string>
+				<key>type</key>
+				<string>Size</string>
+				<key>value</key>
+				<array>
+					<real>640</real>
+					<real>1038</real>
+					<integer>0</integer>
+				</array>
+			</dict>
 			<dict>
 				<key>name</key>
 				<string>anchorPoint</string>
@@ -2699,6 +2709,8 @@
 				<false/>
 			</dict>
 		</array>
+		<key>selected</key>
+		<true/>
 	</dict>
 	<key>notes</key>
 	<array/>

@@ -3,10 +3,12 @@
 PlayerDetailScene::PlayerDetailScene()
 	: mScrollView(NULL)
 {
+	CCLOG("PlayerDetailScene::%s()", __FUNCTION__);
 }
 
 PlayerDetailScene::~PlayerDetailScene()
 {
+	CCLOG("PlayerDetailScene::%s()", __FUNCTION__);
 	CC_SAFE_RELEASE(mScrollView);
 }
 

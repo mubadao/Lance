@@ -19,10 +19,12 @@ LevelUpDialog::LevelUpDialog()
 	, mMaxEnergyTitle(NULL)
 	, mCloseBtn(NULL)
 {
+	CCLOG("LevelUpDialog::%s()", __FUNCTION__);
 }
 
 LevelUpDialog::~LevelUpDialog()
 {
+	CCLOG("LevelUpDialog::%s()", __FUNCTION__);
 	CC_SAFE_RELEASE(mLevel);
 	CC_SAFE_RELEASE(mMinAttack);
 	CC_SAFE_RELEASE(mMinDefense);
@@ -77,6 +79,9 @@ SEL_CCControlHandler LevelUpDialog::onResolveCCBCCControlSelector( CCObject * pT
 
 void LevelUpDialog::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
 {
+	CCLOG("LevelUpDialog::%s()", __FUNCTION__);
+	mCloseBtn->setDefaultTouchPriority(touch_priority_5);
+	
 	UserVO& userVO1 = UserProxy::shared()->userVO;
 	UserVO& userVO2 = UserProxy::shared()->mLastUserVO;
 	mLevel->setString(fcs("%d-->%d", userVO2.level, userVO1.level));

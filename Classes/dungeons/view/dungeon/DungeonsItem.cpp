@@ -11,10 +11,12 @@ DungeonsItem::DungeonsItem()
 	, mGoBtn(NULL)
 	, mNodeBg(NULL)
 {
+	CCLOG("DungeonsItem::%s()", __FUNCTION__);
 }
 
 DungeonsItem::~DungeonsItem()
 {
+	CCLOG("DungeonsItem::%s()", __FUNCTION__);
 	CC_SAFE_RELEASE(mNodeBg);
 	CC_SAFE_RELEASE(mName);
 	CC_SAFE_RELEASE(mLock);
@@ -43,6 +45,7 @@ bool DungeonsItem::onAssignCCBMemberVariable(CCObject* pTarget, const char* pMem
 
 void DungeonsItem::onNodeLoaded(CCNode* pNode, CCNodeLoader* pNodeLoader)
 {
+	CCLOG("DungeonsItem::%s()", __FUNCTION__);
 }
 
 void DungeonsItem::setInfo(int dungeonId, int floorId)

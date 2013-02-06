@@ -57,10 +57,25 @@ struct BoxStatic
     CostType costType;
 };
 
+struct BuyCountStatic
+{
+    int id;
+    int count;
+    CostType costType;
+};
+
+struct BuyZhuRongStatic
+{
+	int id;
+	int count;
+	int money;
+};
+
 typedef std::vector<BuyMoneyStatic*> BuyMoneyStaticList;
 typedef std::map<int, BuyEnergyOrPowerStatic*> BuyEnergyOrPowerStaticMap;
 typedef std::map<int, BuyCoinStatic*> BuyCoinStaticMap;
 typedef std::vector<BoxStatic*> BoxStaticList;
+typedef std::map<int, BuyZhuRongStatic*> BuyZhuRongStaticMap;
 
 class StaticShop : public Singleton<StaticShop>
 {
@@ -77,11 +92,14 @@ public:
 	BuyEnergyOrPowerStaticMap mBuyEnergyOrPowerStaticMap;
 	BuyCoinStaticMap mBuyCoinStaticMap;
     BoxStaticList mBoxStaticList;
+    BuyCountStatic mBuyFusionStatic;
+    BuyZhuRongStaticMap mBuyZhuRongStaticMap;
 
 	BuyMoneyStaticList& getBuyMoneyStaticList();
 	MoneyType getSupplyMoneyType(SupplyType type);
 	int getSupplyCostCount(SupplyType type);
 	BuyCoinStatic* getBuyCoinStatic(int id);
+    BuyZhuRongStatic* getBuyZhuRongStatic(int count);
 
 };
 #endif // _StaticShop_h__

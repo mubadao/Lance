@@ -9,10 +9,12 @@ FightSucceedDialog::FightSucceedDialog()
 	, mReturnBtn(NULL)
 	, mTalk(NULL)
 {
+	CCLOG("FightSucceedDialog::%s()", __FUNCTION__);
 }
 
 FightSucceedDialog::~FightSucceedDialog()
 {
+	CCLOG("FightSucceedDialog::%s()", __FUNCTION__);
 	RemoveObserver(this);
 	
 	CC_SAFE_RELEASE(mGold);
@@ -43,6 +45,9 @@ SEL_CCControlHandler FightSucceedDialog::onResolveCCBCCControlSelector( CCObject
 
 void FightSucceedDialog::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
 {
+	CCLOG("FightSucceedDialog::%s()", __FUNCTION__);
+	mReturnBtn->setDefaultTouchPriority(touch_priority_5);
+
 	CCArray* nameList = CCArray::create(ccs(kNCDungeonStart),NULL);
 	RegisterObservers(this, nameList, callfuncO_selector(FightSucceedDialog::_onNotification));
 
@@ -63,6 +68,7 @@ void FightSucceedDialog::onReturnBtnClick( CCObject * pSender, CCControlEvent pC
 
 void FightSucceedDialog::_onNotification( CCObject* object )
 {
+	CCLOG("FightSucceedDialog::%s()", __FUNCTION__);
 	NotificationObserver* notification = (NotificationObserver*)object;
 	string name = string(notification->getName());
 	

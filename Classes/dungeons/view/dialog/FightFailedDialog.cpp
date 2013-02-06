@@ -16,10 +16,14 @@ FightFailedDialog::FightFailedDialog()
 	, mRestartBtn(NULL)
 	, mBuyLifeBtn(NULL)
 {
+	CCLOG("FightFailedDialog::%s()", __FUNCTION__);
 }
 
 FightFailedDialog::~FightFailedDialog()
 {
+	CCLOG("FightFailedDialog::%s()", __FUNCTION__);
+	RemoveObserver(this);
+	
 	CC_SAFE_RELEASE(mSelfAttack);
 	CC_SAFE_RELEASE(mSelfDefense);
 	CC_SAFE_RELEASE(mSelfLife);
@@ -52,7 +56,7 @@ bool FightFailedDialog::onAssignCCBMemberVariable(CCObject* pTarget, const char*
 	return false;
 }
 
-cocos2d::extension::SEL_CCControlHandler FightFailedDialog::onResolveCCBCCControlSelector(CCObject* pTarget, const char* pSelectorName)
+SEL_CCControlHandler FightFailedDialog::onResolveCCBCCControlSelector(CCObject* pTarget, const char* pSelectorName)
 {
 	CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onRestartBtnClick", FightFailedDialog::onRestartBtnClick);
 	CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onBuyLifeBtnClick", FightFailedDialog::onBuyLifeBtnClick);
@@ -61,6 +65,10 @@ cocos2d::extension::SEL_CCControlHandler FightFailedDialog::onResolveCCBCCContro
 
 void FightFailedDialog::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
 {
+	CCLOG("FightFailedDialog::%s()", __FUNCTION__);
+	mRestartBtn->setDefaultTouchPriority(touch_priority_5);
+	mBuyLifeBtn->setDefaultTouchPriority(touch_priority_5);
+	
 	CCArray* nameList = CCArray::create(ccs(kNCDungeonStart),ccs(kNCBuyLife),NULL);
 	RegisterObservers(this, nameList, callfuncO_selector(FightFailedDialog::_onNotification));
 
@@ -89,6 +97,8 @@ void FightFailedDialog::onBuyLifeBtnClick( CCObject * pSender, CCControlEvent pC
 
 void FightFailedDialog::_onNotification( CCObject* object )
 {
+	CCLOG("FightFailedDialog::%s()", __FUNCTION__);
+
 	NotificationObserver* notification = (NotificationObserver*)object;
 	string name = string(notification->getName());
 	

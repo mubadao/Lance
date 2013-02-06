@@ -2,12 +2,10 @@
 #include "UserProxy.h"
 #include "AlertDialog.h"
 #include "AlertTitleDialog.h"
-//#include "dialog/BuyMoneyDialog.h"
 #include "NetController.h"
 #include "StaticRole.h"
 #include "StaticShop.h"
 #include "CommonHelper.h"
-//#include "model/proxy/ItemProxy.h"
 
 CommonNotify::CommonNotify()
 {
@@ -22,6 +20,7 @@ void CommonNotify::registerNotify()
 {
 	CCArray* nameList = CCArray::create(
 		ccs(kVCLevelUp),
+		ccs(kVCBuyMoney),
 		ccs(kNCVersionError),
 		ccs(kVCSellEquip),
 		ccs(kNCNetError),
@@ -43,6 +42,10 @@ void CommonNotify::_onNotification(CCObject* object)
 			FRAMEWORK->popup("LevelUpDialog");
 		}
 	}
+    else if(name == kVCBuyMoney)
+    {
+        FRAMEWORK->popup("BuyMoneyDialog");
+    }
     else if (name == kNCVersionError)
 	{
         AlertDialog::initContent(gls("185"), true, this, callfunc_selector(CommonNotify::_forceUpgrade));
@@ -100,6 +103,20 @@ void CommonNotify::_onNotification(CCObject* object)
         {
             AlertDialog::initContent(gls("190"));
 			FRAMEWORK->popup("AlertDialog");
+        }
+        else if(netError->errorCode == kNCErrorIntenfityLack)
+        {
+            BuyCountStatic& buyFusionStatic = StaticShop::shared()->mBuyFusionStatic;
+            AlertTitleDialog::initContent(
+				gls("213"),
+				fls("214", buyFusionStatic.costType.getCostCount(), buyFusionStatic.count),
+				false,
+				this,
+				callfunc_selector(CommonNotify::_buyFusion),
+				NULL,
+				NULL,
+				gls("133"));
+            FRAMEWORK->popup("AlertTitleDialog");
         }
 		else
 		{
@@ -188,6 +205,31 @@ void CommonNotify::unregisterAllEnergyTimeCall( CCObject* target, SEL_SCHEDULE s
 
 void CommonNotify::powerTimeUpdate( float lastTime )
 {
+    UserVO& userVO = UserProxy::shared()->userVO;
+
+	if(userVO.powerCur == userVO.powerMax ||
+       userVO.powerMax == 0 ||
+       userVO.powerTime <= 0)
+		return;
+	
+	float time = (float)(userVO.powerTime);
+	time -= lastTime;
+	if (time < 0)
+	{
+		userVO.powerCur++;
+		LevelInfo* levelInfo = StaticRole::shared()->getLevelInfo(userVO.level);
+		if(userVO.powerCur < userVO.powerMax)
+			time = float(levelInfo->powertime);
+		Post_Net_Notification(kVCRefreshPower, NULL);
+	}
+	
+	userVO.powerTime = (int)time;
+	vector<CallFunc0Selector>::iterator iter = mPowerSelector.begin();
+	while(iter != mPowerSelector.end())
+	{
+		iter->activate(time);
+		++iter;
+	}
 }
 
 void CommonNotify::energyTimeUpdate( float lastTime )
@@ -298,4 +340,19 @@ void CommonNotify::_sellItem()
 {
 	vector<int>& sellList = ItemProxy::shared()->sellList;
 	NetController::shared()->sellEquipage(sellList);
+}
+
+void CommonNotify::_buyFusion()
+{
+    BuyCountStatic& buyFusionStatic = StaticShop::shared()->mBuyFusionStatic;
+    UserVO& userVO = UserProxy::shared()->userVO;
+	if(buyFusionStatic.costType.getCostCount() > userVO.money)
+    {
+        Post_Net_Notification(kVCBuyMoney, NULL);
+    }
+    else
+    {
+        NetController::shared()->buyFusion(buyFusionStatic.costType.getMoneyType());
+    }
+    
 }

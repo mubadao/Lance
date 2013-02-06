@@ -54,8 +54,41 @@ public:
     bool resetEquipage(int index);
     bool fusionEquipage(const vector<int>& indexArray);
     bool intensifyEquipage(int index, int number);
-    bool findChallengePlayerByName(const string& name);
-    bool findChallengePlayerByPid(int pid);
+    
+    /**
+     * @brief     购买熔炼值命令函数。
+     * @param[in] index  装备在用户背包中的索引。
+     * @param[in] number 助溶剂数量。
+     * @return    true   成功。
+     * @return    false  失败。
+     * @note      发送熔炼装备命令到服务器。
+     */
+    bool buyFusion(int type);
+
+    /**
+     * @brief     搜素需要挑战的玩家命令函数。
+     * @param[in] name  需要挑战的玩家名称。
+     * @return    true  成功。
+     * @return    false 失败。
+     * @note      发送搜素需要挑战的玩家命令到服务器。
+     */
+    bool findChallengePlayerByName(const std::string& name);
+
+    /**
+     * @brief     搜素需要挑战的玩家命令函数。
+     * @param[in] pid  需要挑战的pid。
+     * @return    true  成功。
+     * @return    false 失败。
+     * @note      发送搜素需要挑战的玩家命令到服务器。
+     */
+    bool findChallengePlayerByPid(const int pid);
+
+    /**
+     * @brief  请求挑战玩家列表命令函数。
+     * @return true  成功。
+     * @return false 失败。
+     * @note   发送请求挑战玩家列表命令到服务器。
+     */
     bool getChallengeList();
     bool getChallengeEnemyList();
     bool challengePlayer(int pid);
@@ -126,6 +159,18 @@ private:
     void _parseResetEquipage(void* params);
     void _parseFusionEquipage(void* params);
     void _parseIntensifyEquipage(void* params);
+    
+    /**
+     * @brief     购买熔炼值命令返回数据解析函数。
+     * @param[in] params 接收到的数据。
+     */
+    void _parseBuyFusion(void* params);
+
+    /**
+     * @brief      获取挑战玩家列表函数。
+     * @param[in]  data 任务数据。
+     * @param[out] info 任务信息。
+     */
     void _parseGetChallengeList(void* params);
     void _parseChallengePlayer(void* params);
     void _parseGetChallengeEnemyList(void* params);

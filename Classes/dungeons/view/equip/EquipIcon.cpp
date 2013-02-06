@@ -5,10 +5,12 @@ EquipIcon::EquipIcon()
 	: mBg(NULL)
 	, mIcon(NULL)
 {
+	CCLOG("EquipIcon::%s()", __FUNCTION__);
 }
 
 EquipIcon::~EquipIcon()
 {
+	CCLOG("EquipIcon::%s()", __FUNCTION__);
 	RemoveObserver(this);
 
 	CC_SAFE_RELEASE(mBg);
@@ -24,12 +26,13 @@ bool EquipIcon::onAssignCCBMemberVariable( CCObject * pTarget, const char * pMem
 
 void EquipIcon::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
 {
+	CCLOG("EquipIcon::%s()", __FUNCTION__);
 	RegisterObserver(this, callfuncO_selector(EquipIcon::_onNotification), FileDownload::notificationName, NULL);
 }
 
 void EquipIcon::_onNotification(CCObject* object)
 {
-	CCLOG("EquipIcon::_onNotification");
+	CCLOG("EquipIcon::%s()", __FUNCTION__);
 	
 	NotificationObserver* notification = (NotificationObserver*)object;
 	string name = notification->getName();

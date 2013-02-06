@@ -9,9 +9,9 @@ Waitting::Waitting()
 	addChild(mMask);
 	
 	CCSize size = CCDirector::sharedDirector()->getWinSize();  //获取界面大小
-	
-	mLoading1 = CCSprite::createWithSpriteFrameName("loading_4.png");
-	mLoading2 = CCSprite::createWithSpriteFrameName("loading_4.png");
+
+	mLoading1 = CCSprite::create("loading_4.png");
+	mLoading2 = CCSprite::create("loading_4.png");
 	addChild(mLoading1);
 	addChild(mLoading2);
 	mLoading2->setRotation(180);

@@ -9,10 +9,12 @@ PacketScene::PacketScene()
 	: mScrollView(NULL)
 	, mBagCount(NULL)
 {
+	CCLOG("PacketScene::%s()", __FUNCTION__);
 }
 
 PacketScene::~PacketScene()
 {
+	CCLOG("PacketScene::%s()", __FUNCTION__);
 	RemoveObserver(this);
 
 	CC_SAFE_RELEASE(mScrollView);
@@ -28,6 +30,7 @@ bool PacketScene::onAssignCCBMemberVariable(CCObject* pTarget, const char* pMemb
 
 void PacketScene::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
 {
+	CCLOG("PacketScene::%s()", __FUNCTION__);
 	ComboBox* combobox = ComboBox::create("commobox_upskin.png","commobox_downskin.png","commobox_item_upskin.png","commobox_item_downskin.png");
 	combobox->addItem(gls("helm"), EQUIP_FILTER_BY_HELM);
 	combobox->addItem(gls("necklace"), EQUIP_FILTER_BY_NECKLACE);
@@ -62,17 +65,22 @@ void PacketScene::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
 
 void PacketScene::_onNotification(CCObject* object)
 {
+	CCLOG("PacketScene::%s()", __FUNCTION__);
 	NotificationObserver* observer = (NotificationObserver*)object;
 	string name(observer->getName());
 	
 	if (name == kNCLoadEquipage || name == kNCUnloadEquipage || name == kNCSellEquipage || name == kNCFusionEquipage)
-	{
-		_refresh();
-
+	{		
 		if(name == kNCLoadEquipage)
 			FloatText::shared()->playAnim(gls("195"));
 		else if(name == kNCUnloadEquipage)
 			FloatText::shared()->playAnim(gls("196"));
+		else if(name == kNCSellEquipage)
+		{
+			mLastScrollPos.y -= 158;
+		}
+		_refresh();
+		
 	}
 }
 

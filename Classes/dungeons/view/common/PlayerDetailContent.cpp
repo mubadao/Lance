@@ -28,10 +28,12 @@ PlayerDetailContent::PlayerDetailContent()
 	, mEquipageDropRatio(NULL)
 	, mEnergyRecoverRatio(NULL)
 {
+	CCLOG("PlayerDetailContent::%s()", __FUNCTION__);
 }
 
 PlayerDetailContent::~PlayerDetailContent()
 {
+	CCLOG("PlayerDetailContent::%s()", __FUNCTION__);
 	RemoveObserver(this);
 	CommonNotify::shared()->unregisterEnergyTimeCall(this, schedule_selector(PlayerDetailContent::updateEnergyTime));
 	CommonNotify::shared()->unregisterAllEnergyTimeCall(this, schedule_selector(PlayerDetailContent::updateAllEnergyTime));
@@ -97,6 +99,8 @@ bool PlayerDetailContent::onAssignCCBMemberVariable( CCObject * pTarget, const c
 
 void PlayerDetailContent::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
 {
+	CCLOG("PlayerDetailContent::%s()", __FUNCTION__);
+
 	CCArray* nameList = CCArray::create(ccs(kVCRefreshEnergy),NULL);
 	RegisterObservers(this, nameList, callfuncO_selector(PlayerDetailContent::_onNotification));
 	CommonNotify::shared()->registerEnergyTimeCall(this, schedule_selector(PlayerDetailContent::updateEnergyTime));

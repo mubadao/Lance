@@ -7,10 +7,12 @@ LostLifeEventDialog::LostLifeEventDialog()
 	, mCoin(NULL)
 	, mCloseBtn(NULL)
 {
+	CCLOG("LostLifeEventDialog::%s()", __FUNCTION__);
 }
 
 LostLifeEventDialog::~LostLifeEventDialog()
 {
+	CCLOG("LostLifeEventDialog::%s()", __FUNCTION__);
 	CC_SAFE_RELEASE(mDesc);
 	CC_SAFE_RELEASE(mExp);
 	CC_SAFE_RELEASE(mCoin);
@@ -39,6 +41,9 @@ SEL_CCControlHandler LostLifeEventDialog::onResolveCCBCCControlSelector( CCObjec
 
 void LostLifeEventDialog::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
 {
+	CCLOG("LostLifeEventDialog::%s()", __FUNCTION__);
+	mCloseBtn->setDefaultTouchPriority(touch_priority_5);
+
 	Award& awardInfo = FightProxy::shared()->awardInfo;
 	mDesc->setString(fls("165", -awardInfo.life));
 	mExp->setString(fcs("+%d", awardInfo.exp));

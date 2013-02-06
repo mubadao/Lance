@@ -10,10 +10,12 @@ TaskDesc::TaskDesc()
 	, mNodeBg(NULL)
 	, mBtnList(NULL)
 {
+	CCLOG("TaskDesc::%s()", __FUNCTION__);
 }
 
 TaskDesc::~TaskDesc()
 {
+	CCLOG("TaskDesc::%s()", __FUNCTION__);
 	CC_SAFE_RELEASE(mName);
 	CC_SAFE_RELEASE(mDesc);
 	CC_SAFE_RELEASE(mSelect);
@@ -44,6 +46,7 @@ SEL_CCControlHandler TaskDesc::onResolveCCBCCControlSelector(CCObject* pTarget, 
 
 void TaskDesc::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
 {
+	CCLOG("TaskDesc::%s()", __FUNCTION__);
 	mSelect->runAction(CCRepeatForever::create(CCRotateBy::create(5, 360)));
 	mSelect->runAction(CCRepeatForever::create((CCActionInterval*)CCSequence::create(
 		CCFadeTo::create(0.8, 160), CCFadeTo::create(0.8, 255), NULL)));
@@ -78,10 +81,10 @@ void TaskDesc::onBtnList(CCObject* pSender, CCControlEvent pCCControlEvent)
 void TaskDesc::shakeScene()
 {
 	CCSequence* sequence1 = (CCSequence*)CCSequence::create(
-		CCRotateTo::create(0.05, -5),
-		CCRotateTo::create(0.05, 0),
-		CCRotateTo::create(0.05, 5),
-		CCRotateTo::create(0.05, 0),
+		CCRotateBy::create(0.05, -5),
+		CCRotateBy::create(0.05, 5),
+		CCRotateBy::create(0.05, 5),
+		CCRotateBy::create(0.05, -5),
 		NULL);
 
 	CCSequence* sequence2 = (CCSequence*)CCSequence::create(

@@ -5,10 +5,12 @@ DungeonsListScene::DungeonsListScene()
 	: mScrollView(NULL)
 	, mReturnBtn(NULL)
 {
+	CCLOG("DungeonsListScene::%s()", __FUNCTION__);
 }
 
 DungeonsListScene::~DungeonsListScene()
 {
+	CCLOG("DungeonsListScene::%s()", __FUNCTION__);
 	RemoveObserver(this);
 
 	CC_SAFE_RELEASE(mScrollView);
@@ -35,6 +37,7 @@ bool DungeonsListScene::onAssignCCBMemberVariable(CCObject* pTarget, const char*
 
 void DungeonsListScene::onNodeLoaded(CCNode* pNode, CCNodeLoader* pNodeLoader)
 {
+	CCLOG("DungeonsListScene::%s()", __FUNCTION__);
 	CCArray* nameList = CCArray::create(ccs(kNCDungeonStart), NULL);
 	RegisterObservers(this, nameList, callfuncO_selector(DungeonsListScene::_onNotification));
 
@@ -55,7 +58,7 @@ void DungeonsListScene::onNodeLoaded(CCNode* pNode, CCNodeLoader* pNodeLoader)
 
 void DungeonsListScene::_onNotification( CCObject* object )
 {
-	CCLOG("DungeonsListScene::_onNotification[%x]", this);
+	CCLOG("DungeonsListScene::%s()", __FUNCTION__);
 	NotificationObserver* notification = (NotificationObserver*)object;
 	string name = string(notification->getName());
 

@@ -326,7 +326,7 @@
 						<string>Size</string>
 						<key>value</key>
 						<array>
-							<real>512</real>
+							<real>560</real>
 							<real>80</real>
 							<integer>0</integer>
 						</array>
@@ -337,7 +337,7 @@
 						<key>type</key>
 						<string>IntegerLabeled</string>
 						<key>value</key>
-						<integer>0</integer>
+						<integer>1</integer>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -611,7 +611,7 @@
 						<string>SpriteFrame</string>
 						<key>value</key>
 						<array>
-							<string>sheet1.plist</string>
+							<string></string>
 							<string>money_gold.png</string>
 						</array>
 					</dict>
@@ -877,7 +877,7 @@
 						<string>SpriteFrame</string>
 						<key>value</key>
 						<array>
-							<string>sheet1.plist</string>
+							<string></string>
 							<string>btn_30.png</string>
 						</array>
 					</dict>
@@ -900,7 +900,7 @@
 						<string>SpriteFrame</string>
 						<key>value</key>
 						<array>
-							<string>sheet1.plist</string>
+							<string></string>
 							<string>btn_30_d.png</string>
 						</array>
 					</dict>
@@ -923,7 +923,7 @@
 						<string>SpriteFrame</string>
 						<key>value</key>
 						<array>
-							<string>sheet1.plist</string>
+							<string></string>
 							<string>btn_30.png</string>
 						</array>
 					</dict>
@@ -940,6 +940,8 @@
 						</array>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>

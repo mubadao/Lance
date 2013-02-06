@@ -50,6 +50,7 @@ void Framework::init()
 
 void Framework::changeState(const string& name)
 {
+//	CCPoolManager::sharedPoolManager()->purgePoolManager();
 	assert(mStateManager);
     assert(!name.empty());
     
@@ -82,5 +83,13 @@ void Framework::popupNext()
 		Dialog* dlg = mStateManager->getDialog(mDialogList.front());
 		dlg->popup();
 		mDialogList.pop();
+	}
+}
+
+void Framework::changeToLastState()
+{
+	if (!mLastStateName.empty())
+	{
+		changeState(mLastStateName);
 	}
 }

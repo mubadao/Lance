@@ -44,7 +44,7 @@ bool NetController::init(const char* url)
 
 void NetController::parseData(void* data)
 {
-    CCLOG("%s start", __FUNCTION__);
+    CCLOG("NetController::%s() start", __FUNCTION__);
     
     isWaitReceive = false;
     
@@ -145,6 +145,7 @@ void NetController::parseData(void* data)
         else if (cmd == kNCBuyLife)                 _parseBuyLife(&data);
         else if (cmd == kNCBuyMoney)                _parseBuyMoney(&data);
         else if (cmd == kNCBuyCoin)                 _parseBuyCoin(&data);
+		else if (cmd == kNCBuyFusion)				_parseBuyFusion(&data);
 	}
     else
     {
@@ -153,7 +154,7 @@ void NetController::parseData(void* data)
 
     _sendNext();
     
-    CCLOG("%s end", __FUNCTION__);    
+    CCLOG("NetController::%s() end", __FUNCTION__);    
 }
 
 void NetController::receiveError()
@@ -308,6 +309,14 @@ bool NetController::buyCoin(int id)
     Json::Value params;
     params["id"] = id;
     return _sendCommand(kNCBuyCoin, &params);
+}
+
+// 购买(补充)生命命令函数。(0:免费;1:游戏币;2:付费币)
+bool NetController::buyFusion(int type)
+{
+    Json::Value params;
+    params["type"] = type;
+    return _sendCommand(kNCBuyFusion, &params);
 }
 
 bool NetController::snatchPlayer(int pid, int itemID)
@@ -622,14 +631,30 @@ void NetController::_parseResetEquipage(void* params)
     ItemProxy::shared()->addEquip(&equipInfo);
     ItemProxy::shared()->setLastQiangHuaEquip(ItemProxy::shared()->getEquip(equipInfo.index));
 
+	UserVO& userVO = UserProxy::shared()->userVO;
+	userVO.life = _readJsonInt(data["life"]);
+	userVO.atkMin = _readJsonInt(data["atkMin"]);
+	userVO.atkMax = _readJsonInt(data["atkMax"]);
+	userVO.defMin = _readJsonInt(data["defMin"]);
+	userVO.defMax = _readJsonInt(data["defMax"]);
+	userVO.coin = _readJsonInt(data["coin"]);
+	
     Post_Net_Notification(kNCResetEquipage, NULL);
 }
 
 void NetController::_parseFusionEquipage(void* params)
 {
-//    Json::Value& data = (Json::Value&)*params;
+    Json::Value& data = (Json::Value&)*params;
 //    int fusion = data["fusion"].asInt();
-    vector<int>& items = ItemProxy::shared()->mSelectList;
+
+	UserVO& userVO = UserProxy::shared()->userVO;
+	userVO.fusion = _readJsonInt(data["allFusion"]);
+	userVO.life = _readJsonInt(data["life"]);
+	userVO.atkMin = _readJsonInt(data["atkMin"]);
+	userVO.atkMax = _readJsonInt(data["atkMax"]);
+	userVO.defMin = _readJsonInt(data["defMin"]);
+	userVO.defMax = _readJsonInt(data["defMax"]);
+	vector<int>& items = ItemProxy::shared()->mMeltList;
     for(int i = 0; i < items.size(); i++)
         ItemProxy::shared()->removeEquip(items[i]);
 
@@ -641,13 +666,16 @@ void NetController::_parseIntensifyEquipage(void* params)
     Json::Value& data = (Json::Value&)*params;
     UserVO& userVO = UserProxy::shared()->userVO;
     userVO.coin = _readJsonInt(data["coin"]);
-    userVO.energyCur = _readJsonInt(data["energyCur"]);
+//    userVO.energyCur = _readJsonInt(data["energyCur"]);
     userVO.fusion = _readJsonInt(data["fusion"]);
 
+	IntensifyResult& intensifyResult = ItemProxy::shared()->mIntensifyResult;
+	intensifyResult.perfect = _readJsonInt(data["intensifyValue"]);
+	
     EquipInfo equipInfo;
     _parseEquipageInfo(&data["equipage"], &equipInfo);
-    ItemProxy::shared()->addEquip(&equipInfo, true);
-    ItemProxy::shared()->curQiangHuaEquip = ItemProxy::shared()->getEquip(equipInfo.index);
+	ItemProxy::shared()->setLastQiangHuaEquip(ItemProxy::shared()->getEquip(equipInfo.index));
+	ItemProxy::shared()->addEquip(&equipInfo, true);
 
     Post_Net_Notification(kNCIntensifyEquipage, NULL);
 }
@@ -786,9 +814,9 @@ void NetController::_parseChallengePlayer(void* params)
     Json::Value& data = (Json::Value&)*params;
     Json::Value& challenge = data["challenge"];
 
-    ChallengeResult& mChallengeResult = ChanllengeProxy::shared()->mChallengeResult;
+    ChallengeResult& challengeResult = ChanllengeProxy::shared()->mChallengeResult;
     //1: 玩家为获胜方, 2: 对手为获胜方
-    mChallengeResult.result = _readJsonInt(challenge["win"]);
+    challengeResult.result = _readJsonInt(challenge["win"]);
     Json::Value& roundInfo = challenge["round"];
     for (int i = 0; i < roundInfo.size(); i++)
     {
@@ -798,9 +826,9 @@ void NetController::_parseChallengePlayer(void* params)
 //        int life = _readJsonInt(roundInfo[i][3]);    //攻击对于life造成的伤害
     }
 
-    ChanllengeProxy::shared()->mCurChallengeEnemyInfo->succeedExp = _readJsonInt(data["succeedExp"]);
-    ChanllengeProxy::shared()->mCurChallengeEnemyInfo->succeedGold = _readJsonInt(data["succeedGold"]);
-    ChanllengeProxy::shared()->mCurChallengeEnemyInfo->failedGold = _readJsonInt(data["failedGold"]);
+	challengeResult.succeedExp = _readJsonInt(data["succeedExp"]);
+	challengeResult.succeedGold = _readJsonInt(data["succeedGold"]);
+	challengeResult.failedGold = _readJsonInt(data["failedGold"]);
 
     Json::Value& asyncInfo = data["asyncInfo"];
     UserVO& userVO = UserProxy::shared()->userVO;
@@ -891,14 +919,15 @@ void NetController::_parseChallengeEnemyInfo(void* data, ChallengeEnemyInfo* inf
     //TODO: 多传了数据
 //    _readJsonInt(p["sex"]);
 //    _readJsonInt(p["exp"]);
-//    _readJsonInt(p["defMin"]);
-//    _readJsonInt(p["defMax"]);
     info->gid           = _readJsonInt(p["gid"]);
     info->name          = p["name"].asString();
     info->avatar        = _readJsonInt(p["avata"]);
     info->level         = _readJsonInt(p["level"]);
     info->atkMin        = _readJsonInt(p["atkMin"]);
     info->atkMax        = _readJsonInt(p["atkMax"]);
+	info->defMin		= _readJsonInt(p["defMin"]);
+	info->defMax		= _readJsonInt(p["defMax"]);
+	info->life			= _readJsonInt(p["life"]);
     info->succeedExp    = _readJsonInt(p["succeedExp"]);
     info->succeedGold   = _readJsonInt(p["succeedGold"]);
     info->failedGold    = _readJsonInt(p["failedGold"]);
@@ -1044,6 +1073,19 @@ void NetController::_syncEquipInfo(void* params)
     
     userVO.expGainRatio = _readJsonInt(player["expGainRatio"]);
     userVO.coinGainRatio = _readJsonInt(player["coinGainRatio"]);
+}
+
+// 解析购买熔炼值信息函数
+void NetController::_parseBuyFusion(void* params)
+{
+    Json::Value& data = (Json::Value&)*params;
+	
+	UserVO& userVO = UserProxy::shared()->userVO;
+	userVO.fusion = _readJsonInt(data["fusion"]);
+	userVO.coin = _readJsonInt(data["coin"]);
+	userVO.money = _readJsonInt(data["money"]);
+	
+    Post_Net_Notification(kNCBuyFusion, NULL);
 }
 
 #pragma mark - 私有函数

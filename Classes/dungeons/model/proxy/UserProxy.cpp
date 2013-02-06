@@ -45,6 +45,14 @@ long UserProxy::getAllEnergyTime()
 	return long(userVO.energyTime+energy*levelInfo->energytime);
 }
 
+long UserProxy::getAllPowerTime()
+{
+    LevelInfo* levelInfo = StaticRole::shared()->getLevelInfo(userVO.level);
+	int power = userVO.powerMax-userVO.powerCur;
+	power = power > 0 ? power - 1 : 0;
+	return long(userVO.powerTime+power*levelInfo->powertime);
+}
+
 int UserProxy::getEnergyMax()
 {
     return 0;

@@ -12,10 +12,12 @@ ShopScene::ShopScene(void)
 	: mTableView(NULL)
 	, mScrollView(NULL)
 {
+	CCLOG("ShopScene::%s()", __FUNCTION__);
 }
 
 ShopScene::~ShopScene(void)
 {
+	CCLOG("ShopScene::%s()", __FUNCTION__);
 	RemoveObserver(this);
 	msCurTab = SHOP_TAB_LOTTERY;
 
@@ -30,6 +32,7 @@ bool ShopScene::onAssignCCBMemberVariable( CCObject * pTarget, const char * pMem
 
 void ShopScene::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
 {
+	CCLOG("ShopScene::%s()", __FUNCTION__);
 	mTableView = TableTextView::create(DEFAULT_FONT, TAB_FONT_SIZE, TAB_FONT_COLOR
 		,"btn_33.png", "btn_33_d.png", SHOP_TAB_LOTTERY, gls("184")
 		, "btn_32.png", "btn_32_d.png", SHOP_TAB_SHOP, gls("66")
@@ -86,7 +89,7 @@ void ShopScene::refresh()
 	else if(msCurTab == SHOP_TAB_SHOP || msCurTab == SHOP_TAB_ITEM)
 	{
 		BuyMoneyStaticList list = StaticShop::shared()->getBuyMoneyStaticList();
-		CCPoint contentPos = ccp(0, list.size() * 124);
+		CCPoint contentPos = ccp(0, list.size() * 128);
 		CCLayer* content = CCLayer::create();
 		content->setContentSize(CCSizeMake(640, contentPos.y));
 		mScrollView->setContainer(content);
@@ -96,7 +99,7 @@ void ShopScene::refresh()
 		{
 			BuyMoneyItem* item = BuyMoneyItem::create(NULL);
 			item->setData(i);
-			item->setPosition(ccp(0, contentPos.y - (i + 1) * 124));
+			item->setPosition(ccp(9, contentPos.y - (i + 1) * 128));
 			content->addChild(item);
 		}
 	}
@@ -104,6 +107,7 @@ void ShopScene::refresh()
 
 void ShopScene::_onNotification( CCObject* object )
 {
+	CCLOG("ShopScene::%s()", __FUNCTION__);
 	NotificationObserver* notification = (NotificationObserver*)object;
 	string name = string(notification->getName());
 	

@@ -15,12 +15,14 @@ HomeSceneContent::HomeSceneContent()
 	, mLifeTitle(NULL)
 	, mAttributeBtn(NULL)
 {
+	CCLOG("HomeSceneContent::%s()", __FUNCTION__);
 	for (int i = 0; i < 6; i++)
 		mNodeEquip[i] = NULL;
 }
 
 HomeSceneContent::~HomeSceneContent()
 {
+	CCLOG("HomeSceneContent::%s()", __FUNCTION__);
 	RemoveObserver(this);
 
 	CC_SAFE_RELEASE(mAttack);
@@ -66,6 +68,7 @@ SEL_CCControlHandler HomeSceneContent::onResolveCCBCCControlSelector( CCObject *
 
 void HomeSceneContent::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
 {
+	CCLOG("HomeSceneContent::%s()", __FUNCTION__);
 	CCArray* nameList = CCArray::create(ccs(kNCRegist), ccs(kNCGetSelfInfo), NULL);
 	RegisterObservers(this, nameList, callfuncO_selector(HomeSceneContent::_onNotification));
 
@@ -99,7 +102,7 @@ void HomeSceneContent::_refresh()
 
 void HomeSceneContent::_onNotification(CCObject* object)
 {
-	CCLOG("HomeSceneContent::_onNotification[%x]", this);
+	CCLOG("HomeSceneContent::%s()", __FUNCTION__);
 	
 	NotificationObserver* notification = (NotificationObserver*)object;
 	string name = notification->getName();

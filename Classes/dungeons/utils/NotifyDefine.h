@@ -7,5 +7,6 @@
 #define kVCRefreshPower		"kVCRefreshPower"
 #define kVCRefreshEnergy	"kVCRefreshEnergy"
 #define kVCSellEquip		"kVCSellEquip"
+#define kVCBuyMoney			"kVCBuyMoney"
 
 #endif

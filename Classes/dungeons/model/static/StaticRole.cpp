@@ -7,10 +7,17 @@ void StaticRole::parse()
     std::string path = CCFileUtils::sharedFileUtils()->getWriteablePath();
     path += "Boss.xml";
 
-//	if (target == kTargetWindows)
-		path = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("config/Boss.xml");
+	if (target == kTargetWindows)
+		path = CCFileUtils::sharedFileUtils()->fullPathForFilename("config/Boss.xml");
 
-	xmlDocPtr doc = xmlReadFile(path.c_str(), "utf-8", XML_PARSER_EOF);
+    if(!isFileExistsInWritablePath("Boss.xml"))
+        assert(false);
+    
+    unsigned long size;
+    unsigned char* pBytes = CCFileUtils::sharedFileUtils()->getFileData(path.c_str(), "rb", &size);
+	
+	xmlDocPtr doc = xmlReadMemory((const char*)pBytes, size, NULL, "utf-8", XML_PARSE_RECOVER);
+//	xmlDocPtr doc = xmlReadFile(path.c_str(), "utf-8", XML_PARSER_EOF);
 	if(NULL == doc)
 		CCLOG("Boss xml parse failed!");
 
@@ -55,9 +62,15 @@ void StaticRole::parse()
     path += "Player.xml";
 
 	if (target == kTargetWindows)
-		path = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("config/Player.xml");
+		path = CCFileUtils::sharedFileUtils()->fullPathForFilename("config/Player.xml");
 
-	doc = xmlReadFile(path.c_str(), "utf-8", XML_PARSER_EOF);
+    if(!isFileExistsInWritablePath("Player.xml"))
+        assert(false);
+    
+    pBytes = CCFileUtils::sharedFileUtils()->getFileData(path.c_str(), "rb", &size);
+	
+	doc = xmlReadMemory((const char*)pBytes, size, NULL, "utf-8", XML_PARSE_RECOVER);
+//	doc = xmlReadFile(path.c_str(), "utf-8", XML_PARSER_EOF);
 	if(NULL == doc)
 		CCLOG("Player xml parse failed!");
 
