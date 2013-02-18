@@ -44,10 +44,10 @@ void GetEnergyEventDialog::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoa
 	CCLOG("GetEnergyEventDialog::%s()", __FUNCTION__);
 	mCloseBtn->setDefaultTouchPriority(touch_priority_5);
 
-	Award& awardInfo = FightProxy::shared()->awardInfo;
-	mDesc->setString(fls("168", awardInfo.energy));
-	mExp->setString(fcs("+%d", awardInfo.exp));
-	mCoin->setString(fcs("+%d", awardInfo.getCoin()));
+	ExploreEvent& info = FightProxy::shared()->mEventInfo;
+	mDesc->setString(fls("168", info.energy));
+	mExp->setString(fcs("+%d", info.exp));
+	mCoin->setString(fcs("+%d", info.getCoin()));
 }
 
 void GetEnergyEventDialog::onCloseBtnClick( CCObject * pSender, CCControlEvent pCCControlEvent )

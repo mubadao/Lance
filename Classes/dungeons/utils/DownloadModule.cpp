@@ -100,7 +100,7 @@ bool DownloadModule::_isValid(const char* fliename)
             xmlChar* item = xmlGetProp(curNode, BAD_CAST "name");
 			if (!xmlStrcmp(item, BAD_CAST "version"))
 			{
-				string version = attriToChar(curNode, "version");
+				string version = attrToChar(curNode, "version");
 				XMLVersionMap& versionMap = UserProxy::shared()->mXMLVersionMap;
 
                 xmlFreeDoc(doc);

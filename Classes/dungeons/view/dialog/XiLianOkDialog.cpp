@@ -1,5 +1,5 @@
 #include "XiLianOkDialog.h"
-//#include "../../../model/proxy/ItemProxy.h"
+//#include "../../../model/proxy/EquipProxy.h"
 #include "NetController.h"
 
 EquipInfo* XiLianOkDialog::msEquipInfo = NULL;
@@ -53,7 +53,7 @@ void XiLianOkDialog::onNodeLoaded(CCNode* pNode, CCNodeLoader* pNodeLoader)
 	mOkBtn->setDefaultTouchPriority(touch_priority_5);
 	mCancelBtn->setDefaultTouchPriority(touch_priority_5);
 
-	mMoneyIcon->setType(MONEY_TYPE_GOLD);
+	mMoneyIcon->setType(MONEY_TYPE_COIN);
 	mMoneyIcon->setCount(100);
 }
 

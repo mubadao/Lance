@@ -41,7 +41,7 @@ void DungeonsListScene::onNodeLoaded(CCNode* pNode, CCNodeLoader* pNodeLoader)
 	CCArray* nameList = CCArray::create(ccs(kNCDungeonStart), NULL);
 	RegisterObservers(this, nameList, callfuncO_selector(DungeonsListScene::_onNotification));
 
-	FloorStaticMap floorMap = DungeonsProxy::shared()->getCurDungeonsStatic()->floorList;
+	xmlFloorMap& floorMap = DungeonsProxy::shared()->getCurDungeonsStatic()->floorList;
 
 	int maxCount = floorMap.size();
 	CCPoint contentPos = ccp(0, maxCount * 166);
@@ -50,7 +50,7 @@ void DungeonsListScene::onNodeLoaded(CCNode* pNode, CCNodeLoader* pNodeLoader)
 	for (int i = 0; i < maxCount; i++)
 	{
 		DungeonsItem* item = DungeonsItem::create(NULL);
-		item->setInfo(DungeonsProxy::shared()->getCurDungeonsID(), floorMap[i+1]->floorID);
+		item->setInfo(DungeonsProxy::shared()->getCurDungeon(), floorMap[i+1].floorID);
 		item->setPosition(ccp(0, contentPos.y - (i + 1) * 166));
 		mScrollView->getContainer()->addChild(item);
 	}

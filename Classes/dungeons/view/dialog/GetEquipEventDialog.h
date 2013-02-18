@@ -21,7 +21,9 @@ public:
 	virtual SEL_MenuHandler onResolveCCBCCMenuItemSelector(CCObject * pTarget, const char * pSelectorName);
 	virtual SEL_CCControlHandler onResolveCCBCCControlSelector(CCObject * pTarget, const char * pSelectorName);
 	virtual void onNodeLoaded(CCNode * pNode, CCNodeLoader * pNodeLoader);
-
+	
+	virtual void refresh();
+	
 private:
 	CCLabelTTF* mDesc;
 	CCLabelTTF* mItemName;

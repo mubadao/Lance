@@ -1,8 +1,6 @@
 #include "MeltOkDialog.h"
 #include "NetController.h"
 
-EquipInfo* MeltOkDialog::msEquipInfo = NULL;
-
 MeltOkDialog::MeltOkDialog()
 	: mGetEnergy(NULL)
 	, mTitle(NULL)
@@ -59,6 +57,10 @@ void MeltOkDialog::onNodeLoaded(CCNode* pNode, CCNodeLoader* pNodeLoader)
 	RegisterObservers(this, nameList, callfuncO_selector(MeltOkDialog::_onNotification));
 }
 
+void MeltOkDialog::refresh()
+{
+}
+
 void MeltOkDialog::_onNotification(CCObject* object)
 {
 	CCLOG("MeltOkDialog::%s()", __FUNCTION__);
@@ -74,9 +76,10 @@ void MeltOkDialog::_onNotification(CCObject* object)
 
 void MeltOkDialog::onOkBtnClick( CCObject * pSender, CCControlEvent pCCControlEvent )
 {
-	vector<int>& meltList = ItemProxy::shared()->mMeltList;
+	EquipInfo* equip = (EquipInfo*)getUserData();
+	vector<int>& meltList = EquipProxy::shared()->mMeltList;
 	meltList.clear();
-	meltList.push_back(msEquipInfo->index);
+	meltList.push_back(equip->index);
 	NetController::shared()->fusionEquipage(meltList);
 }
 
@@ -88,12 +91,11 @@ void MeltOkDialog::onCancelBtnClick(CCObject* pSender, CCControlEvent pCCControl
 int MeltOkDialog::_getMeltCost()
 {
 	int cost = 0;
-	vector<int>& selectlList = ItemProxy::shared()->mMeltList;
+	vector<int>& selectlList = EquipProxy::shared()->mMeltList;
 	for (int i = 0; i < selectlList.size(); i++)
 	{
-		EquipInfo* equipInfo = ItemProxy::shared()->getEquip(selectlList[i]);
-		EquipStatic* equipStatic = StaticItem::shared()->getEquipInfo(equipInfo->id);
-		cost += equipStatic->fusion;
+		EquipInfo* equipInfo = EquipProxy::shared()->getEquip(selectlList[i]);
+		cost += StaticItem::shared()->getEquipInfo(equipInfo->baseId)->fusion;
 	}
 	return cost;
 }

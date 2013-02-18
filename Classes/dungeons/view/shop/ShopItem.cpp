@@ -1,7 +1,7 @@
 #include "ShopItem.h"
 #include "ShopItemLoader.h"
 #include "MoneyIconLoader.h"
-#include "ItemProxy.h"
+#include "EquipProxy.h"
 #include "NetController.h"
 #include "AlertDialog.h"
 
@@ -46,17 +46,17 @@ SEL_CCControlHandler ShopItem::onResolveCCBCCControlSelector( CCObject * pTarget
 	return NULL;
 }
 
-void ShopItem::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
+void ShopItem::onNodeLoaded(CCNode* pNode, CCNodeLoader* pNodeLoader)
 {
 	CCLOG("ShopItem::%s()", __FUNCTION__);
 }
 
-void ShopItem::setData(BoxStatic* data)
+void ShopItem::setData(xmlBox* data)
 {
 	mData = data;
-	MoneyType moneyType = data->costType.getMoneyType();
+	MoneyType moneyType = data->moneyType;
 
-	if (moneyType == MONEY_TYPE_FREE)
+	if (moneyType == MONEY_TYPE_NONE)
 	{
 		mFree->setVisible(true);
 		mMoneyIcon->setVisible(false);
@@ -66,7 +66,7 @@ void ShopItem::setData(BoxStatic* data)
 		mFree->setVisible(false);
 		mMoneyIcon->setVisible(true);
 		mMoneyIcon->setType(moneyType);
-		mMoneyIcon->setCount(data->costType.getCostCount());
+		mMoneyIcon->setCount(data->money);
 	}
 	
 	if(data->id == 27001)
@@ -92,13 +92,13 @@ void ShopItem::setData(BoxStatic* data)
 
 void ShopItem::onUseBtnClick( CCObject * pSender, CCControlEvent pCCControlEvent )
 {
-	if(ItemProxy::shared()->isBagFull())
+	if(EquipProxy::shared()->isBagFull())
 	{
 		AlertDialog::initContent(gls("191"));
 		FRAMEWORK->popup("AlertDialog");
 	}
 	else {
-		NetController::shared()->openBox(mData->costType.getMoneyType(),mData->id);
+		NetController::shared()->openBox(mData->moneyType, mData->money);
 	}
 }
 

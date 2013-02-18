@@ -53,8 +53,8 @@ void PacketScene::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
 	_refresh();
 	mScrollView->setContentOffset(ccp(0, mScrollView->getViewSize().height - mScrollView->getContainer()->getContentSize().height));
 	
-	int magMax = ItemProxy::shared()->getBagMax();
-	int bagCount = ItemProxy::shared()->getEquipCount();
+	int magMax = EquipProxy::shared()->mBagMax;
+	int bagCount = EquipProxy::shared()->getCount();
 
 	if(magMax - bagCount <= 2)
 	{
@@ -71,22 +71,21 @@ void PacketScene::_onNotification(CCObject* object)
 	
 	if (name == kNCLoadEquipage || name == kNCUnloadEquipage || name == kNCSellEquipage || name == kNCFusionEquipage)
 	{		
+		_refresh();
 		if(name == kNCLoadEquipage)
 			FloatText::shared()->playAnim(gls("195"));
 		else if(name == kNCUnloadEquipage)
 			FloatText::shared()->playAnim(gls("196"));
 		else if(name == kNCSellEquipage)
 		{
-			mLastScrollPos.y -= 158;
+			mScrollView->setContentOffset(ccp(0, mScrollView->getViewSize().height - mScrollView->getContainer()->getContentSize().height));
 		}
-		_refresh();
-		
 	}
 }
 
 void PacketScene::_refresh()
 {
-	mBagCount->setString(fcs("%d/%d", ItemProxy::shared()->getEquipCount(), ItemProxy::shared()->mBagMax));
+	mBagCount->setString(fcs("%d/%d", EquipProxy::shared()->getCount(), EquipProxy::shared()->mBagMax));
 	
 	mLastScrollPos = mScrollView->getContentOffset();
 	mScrollView->setContainer(NULL);
@@ -117,15 +116,15 @@ void PacketScene::onEquipTypeSortSelect(CCObject* object)
 
 EquipList PacketScene::_getEquipList(EquipFilterType type)
 {
-	EquipList& equipList1 = ItemProxy::shared()->getEquipList();
+	EquipList& equipList1 = EquipProxy::shared()->mList;
 	EquipList rtn;
 	
 	if(type >= EQUIP_FILTER_BY_HELM && type <= EQUIP_FILTER_BY_SHOES)
 	{
 		for (int i = 0; i < equipList1.size(); i++)
 		{
-			ItemKind kind = ItemProxy::shared()->getItemKind(equipList1[i]->id);
-			if(type == (EquipFilterType)kind)
+			EquipType t = equipList1[i]->getType();
+			if(type == (EquipFilterType)t)
 				rtn.push_back(equipList1[i]);
 		}
 	}

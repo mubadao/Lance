@@ -67,40 +67,45 @@ void EquipDetailDialog::onNodeLoaded(CCNode* pNode, CCNodeLoader* pNodeLoader)
 	mUpgradeBtn->setDefaultTouchPriority(touch_priority_5);
 	mMeltBtn->setDefaultTouchPriority(touch_priority_5);
 
-	bool isPutOn = ItemProxy::shared()->isEquipPutOn(gsEquipInfo->index);
+	mMoneyIcon->setType(MONEY_TYPE_COIN);
+}
 
-	if(!isPutOn)
-	{
-		mEquipBtn->setTitleForState(ccs(gls("70")), CCControlStateNormal);
-		mEquipBtn->setTitleForState(ccs(gls("70")), CCControlStateHighlighted);
-	}
-	else
+void EquipDetailDialog::refresh()
+{
+	EquipInfo* equip = (EquipInfo*)getUserData();
+	mMoneyIcon->setCount(equip->getSellPrize());
+	if(equip->isPutOn())
 	{
 		mEquipBtn->setTitleForState(ccs(gls("71")), CCControlStateNormal);
 		mEquipBtn->setTitleForState(ccs(gls("71")), CCControlStateHighlighted);
 	}
+	else
+	{
+		mEquipBtn->setTitleForState(ccs(gls("70")), CCControlStateNormal);
+		mEquipBtn->setTitleForState(ccs(gls("70")), CCControlStateHighlighted);
+	}
 	
-	mMoneyIcon->setType(MONEY_TYPE_GOLD);
-	mMoneyIcon->setCount(gsEquipInfo->getSellPrize());
+	mEquipDetail->setUserData(equip);
+	mEquipDetail->refresh();
 }
 
 void EquipDetailDialog::onEquipBtnClick(CCObject * pSender, CCControlEvent pCCControlEvent)
 {
-	if(ItemProxy::shared()->isEquipPutOn(gsEquipInfo->index))
+	EquipInfo* equip = (EquipInfo*)getUserData();
+	if(equip->isPutOn())
 	{
-		NetController::shared()->unloadEquipage(gsEquipInfo->index);
+		NetController::shared()->unloadEquipage(equip->index);
 		close();
 	}
 	else
 	{
-		EquipStatic* equipStatic = StaticItem::shared()->getEquipInfo(gsEquipInfo->id);
-		if(equipStatic->level > UserProxy::shared()->userVO.level)
+		if(StaticItem::shared()->getEquipInfo(equip->baseId)->level > UserProxy::shared()->userVO.level)
 		{
 			FloatText::shared()->playAnim(gls("194"));
 		}
 		else
 		{
-			NetController::shared()->loadEquipage(gsEquipInfo->index);
+			NetController::shared()->loadEquipage(equip->index);
 			close();
 		}
 	}
@@ -108,9 +113,10 @@ void EquipDetailDialog::onEquipBtnClick(CCObject * pSender, CCControlEvent pCCCo
 
 void EquipDetailDialog::onSellBtnClick(CCObject * pSender, CCControlEvent pCCControlEvent)
 {
-	vector<int>& sellList = ItemProxy::shared()->sellList;
+	EquipInfo* equip = (EquipInfo*)getUserData();
+	vector<int>& sellList = EquipProxy::shared()->mSellList;
 	sellList.clear();
-	sellList.push_back(gsEquipInfo->index);
+	sellList.push_back(equip->index);
 	Post_Net_Notification(kVCSellEquip, NULL);
 	close();
 }
@@ -122,15 +128,15 @@ void EquipDetailDialog::onCloseBtnClick(CCObject * pSender, CCControlEvent pCCCo
 
 void EquipDetailDialog::onUpgradeBtnClick(CCObject * pSender, CCControlEvent pCCControlEvent)
 {
-	ItemProxy::shared()->curQiangHuaEquip = gsEquipInfo;
+	EquipInfo* equip = (EquipInfo*)getUserData();
+	EquipProxy::shared()->curQiangHuaEquip = *equip;
 	FRAMEWORK->changeState("EquipMergeScene");
 	close();
 }
 
 void EquipDetailDialog::onMeltBtnClick(CCObject * pSender, CCControlEvent pCCControlEvent)
 {
-	MeltOkDialog::msEquipInfo = gsEquipInfo;
-	FRAMEWORK->popup("MeltOkDialog");
+	FRAMEWORK->popup("MeltOkDialog", getUserData());
     close();
 }
 

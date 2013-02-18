@@ -35,6 +35,7 @@ EquipDetailContent::~EquipDetailContent(void)
 
 bool EquipDetailContent::onAssignCCBMemberVariable( CCObject * pTarget, const char * pMemberVariableName, CCNode * pNode )
 {
+	CCLOG("EquipDetailContent::%s()", __FUNCTION__);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mName", CCLabelTTF*, mName);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mLevel", CCLabelTTF*, mLevel);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mType", CCLabelTTF*, mType);
@@ -59,14 +60,19 @@ bool EquipDetailContent::onAssignCCBMemberVariable( CCObject * pTarget, const ch
 void EquipDetailContent::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
 {
 	CCLOG("EquipDetailContent::%s()", __FUNCTION__);
-	EquipStatic* equipStatic = StaticItem::shared()->getEquipInfo(gsEquipInfo->id);
+}
+
+void EquipDetailContent::refresh()
+{
+	CCLOG("EquipDetailContent::%s()", __FUNCTION__);
+	EquipInfo* info = (EquipInfo*)getUserData();
+
+	mName->setColor(info->getNameColor());
+	mName->setString(gls(fcs("item%05d", info->baseId)));
+	mLevel->setString(fcs("lv %d", info->level));
+	mType->setString(info->getTypeTitle());
 	
-	mName->setColor(gsEquipInfo->getNameColor());
-	mName->setString(equipStatic->name);
-	mLevel->setString(fcs("lv %d", gsEquipInfo->level));
-	mType->setString(ItemProxy::shared()->getTypeTitle(gsEquipInfo->id));
-	
-	mProperty->setString(fcs("%s:%s", gsEquipInfo->getPropertyTitle(), gsEquipInfo->getBasePropertyStr()));
+	mProperty->setString(fcs("%s:%s", info->getPropertyTitle(), info->getBasePropertyStr()));
 	
 	for (int i = 0; i < 6; i++)
 	{
@@ -74,25 +80,26 @@ void EquipDetailContent::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoade
 		mAffixValue[i]->setVisible(false);
 	}
 	
-	AffixList& affixList = gsEquipInfo->affixs;
+	AffixList& affixList = info->affixs;
 	for (int i = 0; i < affixList.size(); i++)
 	{
 		if(i >= 6)
 			break;
 		
-		Affix* affix = affixList[i];
-		mAffixTitle[i]->setString(affix->getTitle());
-		if(affix->isPer())
-			mAffixValue[i]->setString(fcs("+%d%%", affix->value));
+		Affix& affix = affixList[i];
+		mAffixTitle[i]->setString(affix.getTitle());
+		if(affix.isPer())
+			mAffixValue[i]->setString(fcs("+%d%%", affix.value));
 		else
-			mAffixValue[i]->setString(fcs("+%d", affix->value));
+			mAffixValue[i]->setString(fcs("+%d", affix.value));
 		mAffixTitle[i]->setVisible(true);
 		mAffixValue[i]->setVisible(true);
 	}
 	
-	mEquipIcon->setInfo(gsEquipInfo->id);
+	mEquipIcon->setUserData(getUserData());
+	mEquipIcon->refresh();
 	
-	EquipInfo* putEquipInfo = ItemProxy::shared()->getPutOnEquip(gsEquipInfo->getKind());
+	EquipInfo* putEquipInfo = EquipProxy::shared()->getLoadedEquip(info->getType());
 	if(NULL == putEquipInfo)
 	{
 		mCurProperty->setVisible(false);

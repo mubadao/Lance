@@ -1,7 +1,8 @@
 #include "DungeonsScene.h"
 #include "DungeonsProxy.h"
-#include "StaticDungeons.h"
+#include "StaticDungeon.h"
 #include "FightProxy.h"
+#include "NetController.h"
 #include "NotifyDefine.h"
 
 DungeonsScene::DungeonsScene()
@@ -48,9 +49,7 @@ void DungeonsScene::onNodeLoaded(CCNode* pNode, CCNodeLoader* pNodeLoader)
 
 void DungeonsScene::refresh()
 {
-	TaskStatic* taskInfo = DungeonsProxy::shared()->getCurTaskStatic();
-
-	if (taskInfo->bossID == -1)
+	if (DungeonsProxy::shared()->getCurTaskStatic()->bossID == -1)
 	{
 		mTaskDesc->refresh();
 		mTaskNormal->refresh();
@@ -66,7 +65,6 @@ void DungeonsScene::refresh()
 	}
 }
 
-
 void DungeonsScene::_onNotification( CCObject* object )
 {
 	CCLOG("DungeonsScene::%s()", __FUNCTION__);
@@ -76,11 +74,10 @@ void DungeonsScene::_onNotification( CCObject* object )
 	
 	if (name == kNCDungeonExplore)
 	{
-		int win = FightProxy::shared()->battleInfo.win;
+		int win = FightProxy::shared()->mBattleInfo.win;
 		if (win == 1)		//战斗胜利
 		{
 			mTaskBoss->reset();
-			gsEquipInfo = FightProxy::shared()->awardInfo.equipList[0];
 			FRAMEWORK->popup("FightSucceedDialog");
 		}
 		else if(win == 2 )	//战斗失败
@@ -89,18 +86,17 @@ void DungeonsScene::_onNotification( CCObject* object )
 		}
 		else
 		{
-			Award& award = FightProxy::shared()->awardInfo;
-			if(award.eventType == EVENT_TYPE_NONE)
+			ExploreEvent& info = FightProxy::shared()->mEventInfo;
+			if(info.type == EVENT_TYPE_NONE)
 				_playAwardAnim();
-			else if(award.eventType == EVENT_TYPE_LOST_LIFE)
+			else if(info.type == EVENT_TYPE_LOST_LIFE)
 				FRAMEWORK->popup("LostLifeEventDialog");
-			else if(award.eventType == EVENT_TYPE_GET_COIN)
+			else if(info.type == EVENT_TYPE_GET_COIN)
 				FRAMEWORK->popup("GetMoneyEventDialog");
-			else if(award.eventType == EVENT_TYPE_GET_ENERGY)
+			else if(info.type == EVENT_TYPE_GET_ENERGY)
 				FRAMEWORK->popup("GetEnergyEventDialog");
-			else if(award.eventType == EVENT_TYPE_GET_EQUIP)
+			else if(info.type == EVENT_TYPE_GET_EQUIP)
 			{
-				gsEquipInfo = award.equipList[0];
 				FRAMEWORK->popup("GetEquipEventDialog");
 			}
 			refresh();
@@ -108,7 +104,7 @@ void DungeonsScene::_onNotification( CCObject* object )
 		}
 		
 		//玩家升级
-		if(DungeonsProxy::shared()->getCurFloorID() == -1)
+		if(DungeonsProxy::shared()->getCurFloor() == -1)
 		{
 			FRAMEWORK->changeState("DungeonsListScene");
 		}
@@ -116,16 +112,14 @@ void DungeonsScene::_onNotification( CCObject* object )
 		{
 			PostNotification(kVCLevelUp, NULL);
 			//需要刷新生命值，因为升级后生命值会补满
-			TaskStatic* taskInfo = DungeonsProxy::shared()->getCurTaskStatic();
-			if (taskInfo->bossID == -1)	//不是boss关
+			if (DungeonsProxy::shared()->getCurTaskStatic()->bossID == -1)	//不是boss关
 				mTaskNormal->refresh();
 		}
 	}
 	else if(name == kNCBuyLife)
 	{
 		mTaskNormal->refresh();
-		TaskStatic* taskInfo = DungeonsProxy::shared()->getCurTaskStatic();
-		if (taskInfo->bossID != -1)	//需刷新生命值
+		if (DungeonsProxy::shared()->getCurTaskStatic()->bossID != -1)	//需刷新生命值
 		{
 			mTaskBoss->refreshLife();
 		}
@@ -139,7 +133,7 @@ void DungeonsScene::_onNotification( CCObject* object )
 
 void DungeonsScene::_playAwardAnim()
 {
-	Award& award = FightProxy::shared()->awardInfo;
+	ExploreEvent& award = FightProxy::shared()->mEventInfo;
 	if (award.exp > 0 || award.coin > 0)
 	{
 		FloatText::shared()->playAnim(fls("get_award", award.exp, award.coin));

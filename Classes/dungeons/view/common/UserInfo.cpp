@@ -107,7 +107,6 @@ void UserInfo::onNodeLoaded( CCNode* pNode, CCNodeLoader* pNodeLoader )
 void UserInfo::refresh()
 {
 	UserVO& userVO = UserProxy::shared()->userVO;
-	LevelInfo* levelInfo = StaticRole::shared()->getLevelInfo(userVO.level+1);
 
 	mLevel->setString(fcs("%d", userVO.level));
 	mName->setString(fcs("%s%d", gls("Player"), userVO.gid)); // up->userVO.name.c_str());
@@ -115,7 +114,7 @@ void UserInfo::refresh()
 	//mPower->setString(fcs("%d/%d", userVO.powerCur, userVO.powerMax));
 	mCoin->setString(fcs("%d", userVO.coin));
 	mMoney->setString(fcs("%d", userVO.money));
-	mProgress->setRange(0, float(levelInfo->exp));
+	mProgress->setRange(0, float(StaticRole::shared()->getLevelInfo(userVO.level+1)->exp));
 	mProgress->setPecent(float(userVO.exp));
 	updateEnergyTime(float(userVO.energyTime));
 }
@@ -186,8 +185,8 @@ void UserInfo::onBtnAddMoney( CCObject * pSender, CCControlEvent pCCControlEvent
 
 void UserInfo::onBtnAddCoin( CCObject * pSender, CCControlEvent pCCControlEvent )
 {
-	BuyCoinStatic* buyCoinStatic = StaticShop::shared()->getBuyCoinStatic(1);
-	AlertDialog::initContent(fls("153", buyCoinStatic->money, buyCoinStatic->count), false, this, callfunc_selector(UserInfo::buyCoin));
+	xmlBuy* buyCoin = StaticShop::shared()->getBuyCoin(1);
+	AlertDialog::initContent(fls("153", buyCoin->money, buyCoin->count), false, this, callfunc_selector(UserInfo::buyCoin));
 	FRAMEWORK->popup("AlertDialog");
 }
 
@@ -218,8 +217,7 @@ void UserInfo::buyEnergy()
 	}
 	else
 	{
-		int moneyType = StaticShop::shared()->getSupplyMoneyType(SUPPLY_TYPE_ENERGY);
-		NetController::shared()->buyEnergy(moneyType);
+		NetController::shared()->buyEnergy(MONEY_TYPE_MONEY);
 	}
 }
 

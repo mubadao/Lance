@@ -2,7 +2,7 @@
 #include "UserProxy.h"
 #include "MainMenu.h"
 #include "StaticItem.h"
-#include "ItemProxy.h"
+#include "EquipProxy.h"
 #include "EquipIcon.h"
 #include "NetController.h"
 
@@ -42,12 +42,12 @@ bool HomeSceneContent::onAssignCCBMemberVariable( CCObject * pTarget, const char
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mAttack", CCLabelTTF *, mAttack);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mDefense", CCLabelTTF *, mDefense);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mLife", CCLabelTTF *, mLife);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mNodeWeapon", CCNode *, mNodeEquip[ITEM_KIND_WEAPON]);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mNodeHelm", CCNode *, mNodeEquip[ITEM_KIND_HELM]);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mNodeNecklace", CCNode *, mNodeEquip[ITEM_KIND_NECKLACE]);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mNodeCloth", CCNode *, mNodeEquip[ITEM_KIND_CLOTH]);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mNodeShoes", CCNode *, mNodeEquip[ITEM_KIND_SHOES]);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mNodeRing", CCNode *, mNodeEquip[ITEM_KIND_RING]);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mNodeWeapon", CCNode *, mNodeEquip[EQUIP_TYPE_WEAPON]);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mNodeHelm", CCNode *, mNodeEquip[EQUIP_TYPE_HELM]);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mNodeNecklace", CCNode *, mNodeEquip[EQUIP_TYPE_NECKLACE]);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mNodeCloth", CCNode *, mNodeEquip[EQUIP_TYPE_CLOTH]);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mNodeShoes", CCNode *, mNodeEquip[EQUIP_TYPE_SHOES]);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mNodeRing", CCNode *, mNodeEquip[EQUIP_TYPE_RING]);
 	CCB_CCLABELTTF_GLUE(this, "mAttackTitle", mAttackTitle, gls("attack"));
 	CCB_CCLABELTTF_GLUE(this, "mDefenseTitle", mDefenseTitle, gls("defense"));
 	CCB_CCLABELTTF_GLUE(this, "mLifeTitle", mLifeTitle, gls("93"));
@@ -84,17 +84,18 @@ void HomeSceneContent::_refresh()
 	mLife->setString(fcs("%d", userVO.life));
 	
 	// 装备
-	EquipList& equipList = ItemProxy::shared()->getEquipList();
+	EquipList& equipList = EquipProxy::shared()->mList;
 	EquipList::iterator iter = equipList.begin();
 	while(iter != equipList.end())
 	{
-		if((*iter)->state == 1)
+		EquipInfo* info = *iter;
+		if(info->state == 1)
 		{
-			ItemKind part = ItemProxy::shared()->getItemKind((*iter)->id);
+			EquipType type = info->getType();
 			EquipIcon* itemIcon = EquipIcon::create(this);
-			itemIcon->setInfo((*iter)->id);
+			itemIcon->setInfo(info->baseId);
 			itemIcon->setScale(0.339);
-			mNodeEquip[part]->addChild(itemIcon);
+			mNodeEquip[type]->addChild(itemIcon);
 		}
 		iter++;
 	}

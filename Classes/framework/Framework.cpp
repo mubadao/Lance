@@ -70,9 +70,10 @@ void Framework::changeState(const string& name)
 	mLayerState->addChild(mCurState);
 }
 
-void Framework::popup(const string& name)
+void Framework::popup(const string& name, void* data)
 {
-	mDialogList.push(name);
+	DialogInfo info(name, data);
+	mDialogList.push(info);
 	popupNext();
 }
 
@@ -80,7 +81,9 @@ void Framework::popupNext()
 {
 	if(!mDialogList.empty())
 	{
-		Dialog* dlg = mStateManager->getDialog(mDialogList.front());
+		DialogInfo& di = mDialogList.front();
+		Dialog* dlg = mStateManager->getDialog(di.name);
+		dlg->setUserData(di.data);
 		dlg->popup();
 		mDialogList.pop();
 	}

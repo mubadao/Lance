@@ -23,7 +23,7 @@ bool MoneyIcon::onAssignCCBMemberVariable( CCObject * pTarget, const char * pMem
 
 void MoneyIcon::setType(MoneyType type)
 {
-	if (type == MONEY_TYPE_GOLD)
+	if (type == MONEY_TYPE_COIN)
 	{
 		mIcon->initWithFile("money_gold.png");
 	}

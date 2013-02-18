@@ -13,7 +13,7 @@
 #include "NCDefines.h"
 #include "DungeonsProxy.h"
 #include "UserProxy.h"
-#include "ItemProxy.h"
+#include "EquipProxy.h"
 #include "FightProxy.h"
 #include "ChanllengeProxy.h"
 #include "ShopProxy.h"
@@ -139,13 +139,13 @@ private:
     void _syncEquipInfo(void* params);
 
     /// 解析细节数据
-    void _parseEquipageInfo(void* data, EquipInfo* info);
-    void _parsePropInfo(void* data, ItemInfo* info);
+    EquipInfo _parseEquipageInfo(void* data);
+//    void _parsePropInfo(void* data, ItemInfo* info);
     void _parseTaskInfo(void* data, TaskInfo* info);
     void _parseChallengeEnemyList(void* data, void* info);
     void _parseSnatchEnemyList(void* data, void* info);
     void _parseFragmentArray(void* data, void* info);
-    void _parseChallengeEnemyInfo(void* data, ChallengeEnemyInfo* info, bool isParseEnemy=true);
+    ChallengeEnemyInfo _parseChallengeEnemyInfo(void* data, bool isParseEnemy=true);
 
     /// 解析网络命令
     void _parseGameInit(void* params);

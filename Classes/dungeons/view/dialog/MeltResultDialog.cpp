@@ -1,5 +1,5 @@
 #include "MeltResultDialog.h"
-#include "ItemProxy.h"
+#include "EquipProxy.h"
 
 MeltResultDialog::MeltResultDialog()
 	: mTitle(NULL)
@@ -44,11 +44,11 @@ void MeltResultDialog::onNodeLoaded(CCNode* pNode, CCNodeLoader* pNodeLoader)
 	CCLOG("MeltResultDialog::%s()", __FUNCTION__);
 	mCloseBtn->setDefaultTouchPriority(touch_priority_5);
 	
-	IntensifyResult& intensifyResult = ItemProxy::shared()->mIntensifyResult;
+	IntensifyResult& intensifyResult = EquipProxy::shared()->mIntensifyResult;
 	mPerfect->setString(fcs("%s: %d%%", gls("206"), intensifyResult.perfect));
-	EquipInfo* equipInfo1 = ItemProxy::shared()->curQiangHuaEquip;
-	EquipInfo* equipInfo2 = ItemProxy::shared()->lastQiangHuaEquip;
-	mAttack->setString(fcs("%s: +%d", gls("207"), equipInfo1->getMaxBaseProperty()-equipInfo2->getMaxBaseProperty()));
+	EquipInfo* equipInfo1 = &EquipProxy::shared()->curQiangHuaEquip;
+	EquipInfo* equipInfo2 = &EquipProxy::shared()->lastQiangHuaEquip;
+	mAttack->setString(fcs("%s: +%d", gls("207"), equipInfo1->getBaseProperty(1) - equipInfo2->getBaseProperty(1)));
 }
 
 void MeltResultDialog::onCloseBtnClick( CCObject * pSender, CCControlEvent pCCControlEvent )

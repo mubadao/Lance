@@ -2,7 +2,7 @@
 #define _MeltOkDialog_H_
 
 #include "Global.h"
-//#include "model/proxy/ItemProxy.h"
+//#include "model/proxy/EquipProxy.h"
 
 class MeltOkDialog
 	: public Dialog
@@ -21,7 +21,7 @@ public:
 	virtual bool onAssignCCBMemberVariable(CCObject* pTarget, const char* pMemberVariableName, CCNode* pNode);
 	virtual void onNodeLoaded(CCNode* pNode, CCNodeLoader* pNodeLoader);
 
-	static EquipInfo* msEquipInfo;
+	virtual void refresh();
 
 private:
 	CCLabelTTF* mTitle;

@@ -1,28 +1,17 @@
 #include "StaticShop.h"
 
-StaticShop::StaticShop()
-{
-
-}
-
-StaticShop::~StaticShop()
-{
-	BuyMoneyStaticList::iterator iter = mBuyMoneyStaticList.begin();
-	while(iter != mBuyMoneyStaticList.end())
-		delete (*iter);
-	mBuyMoneyStaticList.clear();
-}
-
 void StaticShop::parse()
 {
-	TargetPlatform target = CCApplication::sharedApplication()->getTargetPlatform();
+	_parseBuyMoney();
+	_parseSupplement();
+	_parseBox();
+}
 
-	std::string path = CCFileUtils::sharedFileUtils()->getWriteablePath();
+void StaticShop::_parseBuyMoney()
+{
+	string path = CCFileUtils::sharedFileUtils()->getWriteablePath();
 	path += "BuyMoney.xml";
-
-	if (target == kTargetWindows)
-		path = CCFileUtils::sharedFileUtils()->fullPathForFilename("config/BuyMoney.xml");
-
+	
     if(!isFileExistsInWritablePath("BuyMoney.xml"))
         assert(false);
     
@@ -30,20 +19,19 @@ void StaticShop::parse()
     unsigned char* pBytes = CCFileUtils::sharedFileUtils()->getFileData(path.c_str(), "rb", &size);
 	
 	xmlDocPtr doc = xmlReadMemory((const char*)pBytes, size, NULL, "utf-8", XML_PARSE_RECOVER);
-//	xmlDocPtr doc = xmlReadFile(path.c_str(), "utf-8", XML_PARSER_EOF);
 	if(NULL == doc)
 		CCLOG("BuyMoney xml parse failed!");
-
+	
 	xmlNodePtr rootNode = xmlDocGetRootElement(doc);
 	if(NULL == rootNode)
 		CCLOG("BuyMoney xml root null!");
-
+	
 	xmlNodePtr curNode = rootNode->children;
 	while(NULL != curNode)
 	{
 		if (!xmlStrcmp(curNode->name, BAD_CAST "Group"))
 		{
-			std::string name = attriToChar(curNode, "name");
+			string name = attrToChar(curNode, "name");
 			if (name == "items")
 			{
 				xmlNodePtr elem = curNode->children;
@@ -51,48 +39,48 @@ void StaticShop::parse()
 				{
 					if (!xmlStrcmp(elem->name, BAD_CAST "Item"))
 					{
-						BuyMoneyStatic* itemStatic = new BuyMoneyStatic();
-						itemStatic->id = attriToInt(elem, "id");
-                        itemStatic->identifier = attriToChar(elem, "identifier");
-						itemStatic->money = attriToInt(elem, "money");
-						itemStatic->dollar = attriToFloat(elem, "dollar");
-						mBuyMoneyStaticList.push_back(itemStatic);
+						xmlBuyMoney item;
+						item.id = attrToInt(elem, "id");
+                        item.identifier = attrToChar(elem, "identifier");
+						item.money = attrToInt(elem, "money");
+						item.dollar = attrToChar(elem, "dollar");
+						mBuyMoney.push_back(item);
 					}
 					elem = elem->next;
 				}
-
+				
 			}
 		}
 		curNode = curNode->next;
 	}
 	xmlFreeDoc(doc);
+}
 
-	path = CCFileUtils::sharedFileUtils()->getWriteablePath();
+void StaticShop::_parseSupplement()
+{
+	string path = CCFileUtils::sharedFileUtils()->getWriteablePath();
 	path += "Supplement.xml";
-
-    if (target == kTargetWindows)
-        path = CCFileUtils::sharedFileUtils()->fullPathForFilename("config/Supplement.xml");
-
+	
     if(!isFileExistsInWritablePath("Supplement.xml"))
         assert(false);
     
-    pBytes = CCFileUtils::sharedFileUtils()->getFileData(path.c_str(), "rb", &size);
+    unsigned long size;
+    unsigned char* pBytes = CCFileUtils::sharedFileUtils()->getFileData(path.c_str(), "rb", &size);
 	
-	doc = xmlReadMemory((const char*)pBytes, size, NULL, "utf-8", XML_PARSE_RECOVER);
-//	doc = xmlReadFile(path.c_str(), "utf-8", XML_PARSER_EOF);
+	xmlDocPtr doc = xmlReadMemory((const char*)pBytes, size, NULL, "utf-8", XML_PARSE_RECOVER);
 	if(NULL == doc)
 		CCLOG("Supplement xml parse failed!");
-
-	rootNode = xmlDocGetRootElement(doc);
+	
+	xmlNodePtr rootNode = xmlDocGetRootElement(doc);
 	if(NULL == rootNode)
 		CCLOG("Supplement xml root null!");
-
-	curNode = rootNode->children;
+	
+	xmlNodePtr curNode = rootNode->children;
 	while(NULL != curNode)
 	{
 		if (!xmlStrcmp(curNode->name, BAD_CAST "Group"))
 		{
-			std::string name = attriToChar(curNode,"name");
+			string name = attrToChar(curNode,"name");
 			if (name == "buycoin")
 			{
 				xmlNodePtr elem = curNode->children;
@@ -100,12 +88,11 @@ void StaticShop::parse()
 				{
 					if (!xmlStrcmp(elem->name, BAD_CAST "Item"))
 					{
-						BuyCoinStatic* itemStatic;
-						itemStatic = new BuyCoinStatic();
-						itemStatic->count = attriToInt(elem, "count");
-						itemStatic->money = attriToInt(elem, "money");
-						itemStatic->id = attriToInt(elem, "id");
-						mBuyCoinStaticMap[itemStatic->id] = itemStatic;
+						xmlBuy item;
+						item.id = attrToInt(elem, "id");
+						item.count = attrToInt(elem, "count");
+						item.money = attrToInt(elem, "money");
+						mBuyCoin[item.id] = item;
 					}
 					elem = elem->next;
 				}
@@ -117,12 +104,10 @@ void StaticShop::parse()
 				{
 					if (!xmlStrcmp(elem->name, BAD_CAST "Box"))
 					{
-						BuyEnergyOrPowerStatic* itemStatic = new BuyEnergyOrPowerStatic();
-						itemStatic->id = attriToInt(elem, "id");
-						itemStatic->costType.money = attriToInt(elem, "money");
-						itemStatic->costType.coin = attriToInt(elem, "coin");
-						itemStatic->costType.free = attriToInt(elem, "free");
-						mBuyEnergyOrPowerStaticMap[itemStatic->id] = itemStatic;
+						xmlBuy item;
+						item.id = attrToInt(elem, "id");
+						item.money = attrToInt(elem, "money");
+						mBuyEnergyOrPower[item.id] = item;
 					}
 					elem = elem->next;
 				}
@@ -134,11 +119,11 @@ void StaticShop::parse()
 				{
 					if (!xmlStrcmp(elem->name, BAD_CAST "Item"))
 					{
-						mBuyFusionStatic.count = attriToInt(elem, "count");
-						mBuyFusionStatic.costType.money = attriToInt(elem, "money");
-                        mBuyFusionStatic.costType.coin = attriToInt(elem, "coin");
-                        mBuyFusionStatic.costType.free = attriToInt(elem, "free");
-						mBuyFusionStatic.id = attriToInt(elem, "id");
+						xmlBuy item;
+						item.id = attrToInt(elem, "id");
+						item.count = attrToInt(elem, "count");
+						item.money = attrToInt(elem, "money");
+						mBuyFusion[item.id] = item;
 					}
 					elem = elem->next;
 				}
@@ -150,12 +135,11 @@ void StaticShop::parse()
 				{
 					if (!xmlStrcmp(elem->name, BAD_CAST "Item"))
 					{
-						BuyZhuRongStatic* itemStatic;
-						itemStatic = new BuyZhuRongStatic();
-						itemStatic->count = attriToInt(elem, "count");
-						itemStatic->money = attriToInt(elem, "money");
-						itemStatic->id = attriToInt(elem, "id");
-						mBuyZhuRongStaticMap[itemStatic->count] = itemStatic;
+						xmlBuy item;
+						item.id = attrToInt(elem, "id");
+						item.count = attrToInt(elem, "count");
+						item.money = attrToInt(elem, "money");
+						mBuyZhuRong[item.id] = item;
 					}
 					elem = elem->next;
 				}
@@ -163,35 +147,36 @@ void StaticShop::parse()
 		}
 		curNode = curNode->next;
 	}
-
+	
 	xmlFreeDoc(doc);
-    
-    path = CCFileUtils::sharedFileUtils()->getWriteablePath();
+}
+
+void StaticShop::_parseBox()
+{
+	
+    string path = CCFileUtils::sharedFileUtils()->getWriteablePath();
     path += "Box.xml";
-    
-	if (target == kTargetWindows)
-		path = CCFileUtils::sharedFileUtils()->fullPathForFilename("config/Box.xml");
     
     if(!isFileExistsInWritablePath("Box.xml"))
         assert(false);
     
-    pBytes = CCFileUtils::sharedFileUtils()->getFileData(path.c_str(), "rb", &size);
+    unsigned long size;
+    unsigned char* pBytes = CCFileUtils::sharedFileUtils()->getFileData(path.c_str(), "rb", &size);
 	
-	doc = xmlReadMemory((const char*)pBytes, size, NULL, "utf-8", XML_PARSE_RECOVER);
-//	doc = xmlReadFile(path.c_str(), "utf-8", XML_PARSE_NOBLANKS);
+	xmlDocPtr doc = xmlReadMemory((const char*)pBytes, size, NULL, "utf-8", XML_PARSE_RECOVER);
 	if(NULL == doc)
 		CCLOG("Box xml parse failed!");
     
-	rootNode = xmlDocGetRootElement(doc);
+	xmlNodePtr rootNode = xmlDocGetRootElement(doc);
 	if(NULL == rootNode)
 		CCLOG("Box xml root null!");
     
-	curNode = rootNode->children;
+	xmlNodePtr curNode = rootNode->children;
 	while(NULL != curNode)
 	{
 		if (!xmlStrcmp(curNode->name, BAD_CAST "Group"))
 		{
-			std::string name = attriToChar(curNode,"name");
+			std::string name = attrToChar(curNode,"name");
 			if (name == "properties")
 			{
 				xmlNodePtr elem = curNode->children;
@@ -199,15 +184,13 @@ void StaticShop::parse()
 				{
 					if (!xmlStrcmp(elem->name, BAD_CAST "Box"))
 					{
-						BoxStatic* itemStatic;
-						itemStatic = new BoxStatic();
-						itemStatic->name = attriToChar(elem, "name");
-						itemStatic->id = attriToInt(elem, "id");
-						itemStatic->desc = attriToChar(elem, "desc");
-						itemStatic->costType.coin = attriToInt(elem, "coin");
-						itemStatic->costType.money = attriToInt(elem, "money");
-						itemStatic->costType.free = attriToInt(elem, "free");
-						mBoxStaticList.push_back(itemStatic);
+						xmlBox item;
+						item.id = attrToInt(elem, "id");
+						//TODO: moneyType
+//						item.moneyType = (MoneyType)attrToInt(elem, "moneyType");
+						item.moneyType = MONEY_TYPE_MONEY;
+						item.money = attrToInt(elem, "money");
+						mBox.push_back(item);
 					}
 					elem = elem->next;
 				}
@@ -219,30 +202,23 @@ void StaticShop::parse()
     xmlFreeDoc(doc);
 }
 
-BuyMoneyStaticList& StaticShop::getBuyMoneyStaticList()
+int StaticShop::getSupplyCostCount(SupplyType type)
 {
-	return mBuyMoneyStaticList;
+	return mBuyEnergyOrPower[type].money;
 }
 
-MoneyType StaticShop::getSupplyMoneyType( SupplyType type )
+xmlBuy* StaticShop::getBuyCoin(int id)
 {
-	BuyEnergyOrPowerStatic* staticItem = mBuyEnergyOrPowerStaticMap[type];
-	return staticItem->costType.getMoneyType();
+	return &mBuyCoin[id];
 }
 
-int StaticShop::getSupplyCostCount( SupplyType type )
+xmlBuy* StaticShop::getBuyFusion(int count)
 {
-	BuyEnergyOrPowerStatic* staticItem = mBuyEnergyOrPowerStaticMap[type];
-	return staticItem->costType.getCostCount();
+	return &mBuyFusion[count];
 }
 
-BuyCoinStatic* StaticShop::getBuyCoinStatic( int id )
+xmlBuy* StaticShop::getBuyZhuRong(int count)
 {
-	return mBuyCoinStaticMap[id];
-}
-
-BuyZhuRongStatic* StaticShop::getBuyZhuRongStatic(int count)
-{
-	return mBuyZhuRongStaticMap[count];
+	return &mBuyZhuRong[count];
 }
 

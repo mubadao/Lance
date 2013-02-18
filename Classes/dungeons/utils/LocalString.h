@@ -1,17 +1,13 @@
-#ifndef _LocalString_h_
-#define _LocalString_h_
+#ifndef _LocalString_H_
+#define _LocalString_H_
 
 #include "Global.h"
 
 class LocalString : public Singleton<LocalString>
 {
-private:
-	xmlDocPtr xmlDoc;
-	xmlNodePtr rootNode;
-	xmlNodePtr childNode;
-public:
-	LocalString();
-	~LocalString();
+	map<string, string> mStringMap;
+	
+public:	
 	void parse();
 	const char* getLocalizationString(const char* id);
 };
@@ -19,4 +15,4 @@ public:
 #define gls(id) LocalString::shared()->getLocalizationString(id)
 #define fls(id,...) fcs(gls(id), ## __VA_ARGS__)
 	
-#endif // LocalString_h__
+#endif

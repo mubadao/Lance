@@ -75,7 +75,7 @@ void ChallengeScene::_refresh()
 	for(int i = 0; i < list.size(); i++)
 	{
 		ChallengeItem* item = ChallengeItem::create(NULL);
-		item->setData(list[i]);
+		item->setData(&list[i]);
 		item->setPosition(ccp(0, contentPos.y - ((i + 1) * 176)));
 		mScrollView->getContainer()->addChild(item);
 	}

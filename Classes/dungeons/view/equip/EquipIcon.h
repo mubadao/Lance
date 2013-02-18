@@ -2,7 +2,7 @@
 #define _EquipIcon_H_
 
 #include "Global.h"
-#include "ItemProxy.h"
+#include "EquipProxy.h"
 
 class EquipIcon
 	: public CCNode
@@ -16,6 +16,8 @@ public:
 
 	EquipIcon();
 	~EquipIcon();
+	
+	void refresh();
 
 	virtual bool onAssignCCBMemberVariable(CCObject * pTarget, const char * pMemberVariableName, CCNode * pNode);
 	virtual void onNodeLoaded(CCNode * pNode, CCNodeLoader * pNodeLoader);

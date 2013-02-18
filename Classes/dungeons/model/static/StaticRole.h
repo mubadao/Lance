@@ -1,25 +1,25 @@
-#ifndef StaticRole_h__
-#define StaticRole_h__
+#ifndef _StaticRole_H_
+#define _StaticRole_H_
 
-#include "StaticData.h"
 #include "Global.h"
-#include "DataVO.h"
+#include "UserVO.h"
 
-/*角色信息：boss等*/
-struct LevelInfo
+struct xmlLevelInfo
 {
-	int id;
+	int level;
 	int exp;
-	float energytime;
-	float powertime;	
+	float energyTime;
+	float powerTime;
 };
-struct RoleInfo
+typedef map<int, xmlLevelInfo> xmlLevelInfoMap;
+
+struct xmlRoleInfo
 {
 	int id;
-	const char* name;
-	const char* icon;
+	string icon;
 };
-struct BossInfo : public RoleInfo
+
+struct xmlBossInfo : public xmlRoleInfo
 {
 	int level;
 	int life;
@@ -31,18 +31,21 @@ struct BossInfo : public RoleInfo
 	int speed;
 	int stamina;
 };
+typedef map<int, xmlBossInfo> xmlBossInfoMap;
 
-typedef std::map<int, LevelInfo*> LevelInfoMap;
-class StaticRole : public StaticData, public Singleton<StaticRole>
+class StaticRole : public Singleton<StaticRole>
 {
-	std::map<int, BossInfo*> bossInfoMap;
-	LevelInfoMap mLevelInfoMap;
+	xmlBossInfoMap mBossMap;
+	xmlLevelInfoMap mLevelMap;
+	
 public:
 	StaticRole();
 	~StaticRole();
+	
 	void parse();
-	BossInfo* getBossInfo(int id);
-	RoleInfo* getRoleInfo(int id);
-	LevelInfo* getLevelInfo(int level);
+	
+	xmlBossInfo* getBossInfo(int id);
+	xmlLevelInfo* getLevelInfo(int level);
 };
-#endif // StaticRole_h__
+
+#endif

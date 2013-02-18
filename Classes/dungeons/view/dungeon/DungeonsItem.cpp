@@ -1,5 +1,5 @@
 #include "DungeonsItem.h"
-#include "StaticDungeons.h"
+#include "StaticDungeon.h"
 #include "DungeonsProxy.h"
 #include "NetController.h"
 #include "AlertDialog.h"
@@ -53,12 +53,11 @@ void DungeonsItem::setInfo(int dungeonId, int floorId)
 	mDungeonID = dungeonId;
 	mFloorID = floorId;
 	
-	FloorStatic* floorInfo = StaticDungeons::shared()->getFloorInfo(dungeonId, floorId);
-	int maxFloorID = DungeonsProxy::shared()->getMaxFloorID();
+	int maxFloor = DungeonsProxy::shared()->getMaxFloor();
 	
-	mName->setString(floorInfo->name);
+	mName->setString(DungeonsProxy::shared()->getName(dungeonId, floorId));
 
-	if(floorId > maxFloorID)
+	if(floorId > maxFloor)
 	{
 		BYGraySprite* bg = BYGraySprite::create(fcs("scene/scene%d_thum.jpg", floorId));
 		mNodeBg->addChild(bg);
@@ -76,9 +75,9 @@ void DungeonsItem::setInfo(int dungeonId, int floorId)
 
 void DungeonsItem::onGoBtnClick(CCObject* pSender, CCControlEvent pCCControlEvent)
 {
-	if(DungeonsProxy::shared()->getMaxDungeonsID() == 1 &&
-	   DungeonsProxy::shared()->getMaxFloorID() == 1 &&
-	   DungeonsProxy::shared()->getMaxTaskID() == 1 &&
+	if(DungeonsProxy::shared()->getMaxDungeon() == 1 &&
+	   DungeonsProxy::shared()->getMaxFloor() == 1 &&
+	   DungeonsProxy::shared()->getMaxTask() == 1 &&
 	   DungeonsProxy::shared()->getMaxProgress() == 0)
 	{
 		FRAMEWORK->changeState("DungeonsScene");

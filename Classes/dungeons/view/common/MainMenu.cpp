@@ -73,12 +73,10 @@ void MainMenu::onBtnEquip(CCObject * pSender, CCControlEvent pCCControlEvent)
 
 void MainMenu::onBtnDungeon(CCObject * pSender, CCControlEvent pCCControlEvent)
 {
-	int dungeonID = DungeonsProxy::shared()->getMaxDungeonsID();
-	int floorID = DungeonsProxy::shared()->getMaxFloorID();
-	int taskID = DungeonsProxy::shared()->getMaxTaskID();
-	int progress = DungeonsProxy::shared()->getMaxProgress();
-
-	if(dungeonID == 1 && floorID == 1 && taskID == 1 && progress == 0)
+	if(DungeonsProxy::shared()->getMaxDungeon() == 1 &&
+	   DungeonsProxy::shared()->getMaxFloor() == 1 &&
+	   DungeonsProxy::shared()->getMaxTask() == 1 &&
+	   DungeonsProxy::shared()->getMaxProgress() == 0)
 	{
 		FRAMEWORK->changeState("DungeonsListScene");
 	}

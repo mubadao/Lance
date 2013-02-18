@@ -1,17 +1,32 @@
 #include "XMLUtil.h"
 #include "StringUtil.h"
 
-int XMLUtil::attributeToInt( xmlNodePtr node, const char* key )
+int attrToInt(xmlNodePtr node, const char* key)
 {
-	return charToInt((const char*)xmlGetProp(node,(const xmlChar*)key));
+	xmlChar* prop = xmlGetProp(node,(const xmlChar*)key);
+	if (!prop)
+		assert(false);
+	int rtn = StringUtil::parseCharToInt((const char*)prop);
+	xmlFree(prop);
+	return rtn;
 }
 
-float XMLUtil::attributeToFloat( xmlNodePtr node, const char* key )
+float attrToFloat(xmlNodePtr node, const char* key)
 {
-	return charToFloat((const char*)xmlGetProp(node,(const xmlChar*)key));
+	xmlChar* prop = xmlGetProp(node,(const xmlChar*)key);
+	if (!prop)
+		assert(false);
+	float rtn = StringUtil::parseCharToFloat((const char*)prop);
+	xmlFree(prop);
+	return rtn;
 }
 
-const char* XMLUtil::attributeToChar( xmlNodePtr node, const char* key )
+string attrToChar(xmlNodePtr node, const char* key)
 {
-	return (const char*)xmlGetProp(node,(const xmlChar*)key);
+	xmlChar* prop = xmlGetProp(node,(const xmlChar*)key);
+	if (!prop)
+		assert(false);
+	string rtn = (const char*)prop;
+	xmlFree(prop);
+	return rtn;
 }

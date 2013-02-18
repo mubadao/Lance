@@ -18,6 +18,7 @@ AwardEquipDialog::~AwardEquipDialog()
 
 bool AwardEquipDialog::onAssignCCBMemberVariable( CCObject * pTarget, const char * pMemberVariableName, CCNode * pNode )
 {
+	CCLOG("EquipDetailContent::%s()", __FUNCTION__);
 	CCB_CCLABELTTF_GLUE(this, "mTitle", mTitle, gls("78"));
 	CCB_CONTROLBUTTON_GLUE(this, "mCloseBtn", mCloseBtn, gls("77"));
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mEquipDetail", EquipDetail*, mEquipDetail);
@@ -39,6 +40,12 @@ void AwardEquipDialog::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader 
 {
 	CCLOG("AwardEquipDialog::%s()", __FUNCTION__);
 	mCloseBtn->setDefaultTouchPriority(touch_priority_5);
+}
+
+void AwardEquipDialog::refresh()
+{
+	mEquipDetail->setUserData(getUserData());
+	mEquipDetail->refresh();
 }
 
 void AwardEquipDialog::onCloseBtnClick( CCObject * pSender, CCControlEvent pCCControlEvent )

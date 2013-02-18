@@ -1,8 +1,7 @@
 #include "PreLoaderScene.h"
 #include "NetController.h"
-#include "StaticDungeons.h"
+#include "StaticDungeon.h"
 #include "StaticItem.h"
-#include "StaticCompose.h"
 #include "StaticShop.h"
 #include "StaticRole.h"
 #include "UserProxy.h"
@@ -61,9 +60,8 @@ void PreLoaderScene::_onNotification(CCObject* object)
 void PreLoaderScene::_loadComplete()
 {
 	LocalString::shared()->parse();
-	StaticDungeons::shared()->parse();
+	StaticDungeon::shared()->parse();
 	StaticItem::shared()->parse();
-	StaticCompose::shared()->parse();
 	StaticShop::shared()->parse();
 	StaticRole::shared()->parse();
 	

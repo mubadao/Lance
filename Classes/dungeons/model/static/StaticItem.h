@@ -1,104 +1,57 @@
-#ifndef StaticItem_h__
-#define StaticItem_h__
-#include "StaticData.h"
+#ifndef _StaticItem_H_
+#define _StaticItem_H_
+
 #include "Global.h"
-#include "DataVO.h"
+#include "TypeDefine.h"
+#include "UserVO.h"
 
-/*道具信息：装备，道具等*/
+//struct ItemStatic
+//{
+//	int baseId;
+//	string name;
+//	string desc;
+//	string icon;
+//	ItemKind kind;
+//	MoneyType moneyType;
+//	int buyCost;
+//	int sell;
+//	
+//    ItemStatic():baseId(-1),buyCost(0),moneyType(MONEY_TYPE_NONE),sell(0) {}
+//};
+//typedef vector<ItemStatic> ItemStaticList;
+//typedef map<int, ItemStatic> ItemStaticMap;
 
-//物品分类
-enum ItemKind
+struct xmlEquipInfo
 {
-	ITEM_KIND_HELM=0,		//装备
-	ITEM_KIND_NECKLACE=1,	//装备
-	ITEM_KIND_WEAPON=2,		//装备
-	ITEM_KIND_CLOTH=3,		//装备
-	ITEM_KIND_RING=4,		//装备
-	ITEM_KIND_SHOES=5,		//装备
-	ITEM_KIND_MATERIAL=6,	//材料
-	ITEM_KIND_BOX=7,			//宝箱
-	ITEM_KIND_YAOSHUI=8,			//药水
-	ITEM_KIND_QIANDAI=9			//钱袋
-} ;
-
-enum MoneyType
-{
-    MONEY_TYPE_FREE=0,
-	MONEY_TYPE_GOLD,
-	MONEY_TYPE_MONEY,
-	MONEY_TYPE_NONE
-};
-
-struct ItemStatic
-{
-	int id;
-	const char* name;
-	const char* icon;
-	int sell;
-	int buyGold;
-	int buyMoney;
-    int buyFree;
-	ItemKind kind;
-	const char* desc;
-	MoneyType getMoneyType()
-	{
-		if (buyGold > 0) return MONEY_TYPE_GOLD;
-		else if(buyMoney > 0) return MONEY_TYPE_MONEY;
-		return MONEY_TYPE_NONE;
-	}
-    
-    MoneyType getRandomMoneyType()
-	{
-        if (buyGold > 0) return MONEY_TYPE_GOLD;
-		else if(buyMoney > 0) return MONEY_TYPE_MONEY;
-        else if(buyFree > 0) return MONEY_TYPE_FREE;
-		return MONEY_TYPE_NONE;
-    }
-
-	int getMoneyCount()
-	{
-		if (getMoneyType() == MONEY_TYPE_GOLD)
-			return buyGold;
-		else if(getMoneyType() == MONEY_TYPE_MONEY)
-			return buyMoney;
-		return 0;
-	}
-    ItemStatic():buyFree(-1)
-    {
-        
-    }
-};
-struct EquipStatic : public ItemStatic
-{
+	int baseId;
+	string icon;
+	EquipType type;
 	int quality;
-	int atk_min;
-	int atk_max;
-	int def_min;
-	int def_max;
-	int life_min;
-	int life_max;
 	int fusion;
 	int intensify_price;
 	int intensify_energy;
 	int intensify_fusion;
 	int rule;
     int level;
+	int sell;
 };
-typedef std::vector<ItemStatic*> ItemStaticList;
-typedef std::map<int, ItemStatic*> ItemStaticMap;
+typedef vector<xmlEquipInfo> xmlEquipList;
+typedef map<int, xmlEquipInfo> xmlEquipMap;
 
-class StaticItem : public StaticData, public Singleton<StaticItem>
+class StaticItem : public Singleton<StaticItem>
 {
-	std::map<int, EquipStatic*> mEquipInfoMap;
-	std::map<int, ItemStatic*> mItemInfoMap;
+	xmlEquipMap mEquipInfoMap;
+//	ItemStaticMap mItemInfoMap;
+
 public:
 	void parse();
-	void getMysteryStaticList(ItemStaticList& itemList);
-	void getPropList(ItemStaticList& itemList);
-	void getShopList(ItemStaticList& itemList);
-	EquipStatic* getEquipInfo(int id);
-	ItemStatic* getItemInfo(int id);
-	bool isEquip(ItemKind kind);
-	bool isEquip(int id);
+
+//	void getMysteryStaticList(ItemStaticList& itemList);
+//	void getPropList(ItemStaticList& itemList);
+//	void getShopList(ItemStaticList& itemList);
+
+	xmlEquipInfo* getEquipInfo(int baseId);
+//	const ItemStatic& getItemInfo(int baseId);
 };
-#endif // StaticItem_h__
+
+#endif

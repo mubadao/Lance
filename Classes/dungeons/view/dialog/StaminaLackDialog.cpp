@@ -58,15 +58,14 @@ void StaminaLackDialog::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader
 	CommonNotify::shared()->registerAllPowerTimeCall(
 		this, schedule_selector(StaminaLackDialog::updateAllPowerTime));
 
-	mMoneyIcon->setType(StaticShop::shared()->getSupplyMoneyType(SUPPLY_TYPE_POWER));
+	mMoneyIcon->setType(MONEY_TYPE_MONEY);
 	mMoneyIcon->setCount(StaticShop::shared()->getSupplyCostCount(SUPPLY_TYPE_POWER));
 	updateAllPowerTime(UserProxy::shared()->getAllPowerTime());
 }
 
 void StaminaLackDialog::onBuyBtnClick( CCObject * pSender, CCControlEvent pCCControlEvent )
 {
-	int moneyType = StaticShop::shared()->getSupplyMoneyType(SUPPLY_TYPE_POWER);
-	NetController::shared()->buyPower(moneyType);
+	NetController::shared()->buyPower(MONEY_TYPE_MONEY);
 	close();
 }
 

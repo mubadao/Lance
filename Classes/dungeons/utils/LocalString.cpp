@@ -3,63 +3,63 @@
 
 void LocalString::parse()
 {
-	TargetPlatform target = CCApplication::sharedApplication()->getTargetPlatform();
-
-    std::string path = CCFileUtils::sharedFileUtils()->getWriteablePath();
+    string path = CCFileUtils::sharedFileUtils()->getWriteablePath();
     path += "LocalString.xml";
     
-	if (target == kTargetWindows)
-		path = CCFileUtils::sharedFileUtils()->fullPathForFilename("config/LocalString.xml");
-	
     if(!isFileExistsInWritablePath("LocalString.xml"))
         return;
     
     unsigned long size;
     unsigned char* pBytes = CCFileUtils::sharedFileUtils()->getFileData(path.c_str(), "rb", &size);
     
-	xmlDoc = xmlReadMemory((const char*)pBytes, size, NULL, "utf-8", XML_PARSE_RECOVER);
-//	xmlDoc = xmlReadFile(path.c_str(), "utf-8", XML_PARSER_EOF);
+	xmlDocPtr xmlDoc = xmlReadMemory((const char*)pBytes, size, NULL, "utf-8", XML_PARSE_RECOVER);
 	if(NULL == xmlDoc)
 	{
 		CCLOG("LocalString xml parse failed!");
 		return;
 	}
 
-	rootNode = xmlDocGetRootElement(xmlDoc);
+	xmlNodePtr rootNode = xmlDocGetRootElement(xmlDoc);
 	if(NULL == xmlDoc)
 	{
 		CCLOG("LocalString xml root null!");
 		return;
 	}
 
-	childNode = rootNode->children;
-}
-
-const char* LocalString::getLocalizationString( const char* id )
-{
-	xmlNodePtr curNode = childNode;
+	xmlNodePtr curNode = rootNode->children;
 	while(NULL != curNode)
 	{
-		xmlChar* ids = xmlGetProp(curNode,(const xmlChar*)"id");
-		if(xmlStrEqual((xmlChar*)id, ids))
+		if (!xmlStrcmp(curNode->name, BAD_CAST "s"))
 		{
-			xmlFree(ids);
-			return attriToChar(curNode, "v");
-		}
-		xmlFree(ids);
+			string id = attrToChar(curNode, "id");
+			string value = attrToChar(curNode, "v");
+			mStringMap[id] = value;
+		}		
 		curNode = curNode->next;
 	}
-    CCLOG("LocalString [%s] not found", id);
-	return id;
 }
 
-LocalString::LocalString()
+const char* LocalString::getLocalizationString(const char* id)
 {
+	if (mStringMap.find(id) == mStringMap.end())
+	{
+		CCLOG("LocalString [%s] not found", id);
+		return id;
+	}
 	
-}
-
-LocalString::~LocalString()
-{
-	xmlFreeNode(childNode);
-	xmlFreeDoc(xmlDoc);
+	return mStringMap[id].c_str();
+//	xmlNodePtr curNode = childNode;
+//	while(NULL != curNode)
+//	{
+//		xmlChar* ids = xmlGetProp(curNode,(const xmlChar*)"id");
+//		if(xmlStrEqual((xmlChar*)id, ids))
+//		{
+//			xmlFree(ids);
+//			return attrToChar(curNode, "v").c_str();
+//		}
+//		xmlFree(ids);
+//		curNode = curNode->next;
+//	}
+//    CCLOG("LocalString [%s] not found", id);
+//	return id;
 }

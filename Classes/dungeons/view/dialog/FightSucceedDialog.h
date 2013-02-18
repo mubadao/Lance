@@ -20,6 +20,8 @@ public:
 	virtual SEL_CCControlHandler onResolveCCBCCControlSelector(CCObject * pTarget, const char * pSelectorName);
 	virtual bool onAssignCCBMemberVariable(CCObject * pTarget, const char * pMemberVariableName, CCNode * pNode);
 	virtual void onNodeLoaded(CCNode * pNode, CCNodeLoader * pNodeLoader);
+	
+	virtual void refresh();
 
 private:
 	CCLabelTTF* mGold;

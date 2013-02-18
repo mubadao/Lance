@@ -1,5 +1,6 @@
-#ifndef _StaticShop_h__
-#define _StaticShop_h__
+#ifndef _StaticShop_H_
+#define _StaticShop_H_
+
 #include "Global.h"
 #include "StaticItem.h"
 
@@ -9,97 +10,52 @@ enum SupplyType
 	SUPPLY_TYPE_POWER = 2,
     SUPPLY_TYPE_LIFE = 3
 };
-struct CostType
+
+struct xmlBuy
 {
-    int free;
-    int coin;
+	int id;
     int money;
-    MoneyType getMoneyType()
-	{
-		if (coin > 0) return MONEY_TYPE_GOLD;
-		else if(money > 0) return MONEY_TYPE_MONEY;
-		else if(free > 0) return MONEY_TYPE_FREE;
-		return MONEY_TYPE_NONE;
-	}
-	int getCostCount()
-	{
-		if (getMoneyType() == MONEY_TYPE_GOLD)
-			return coin;
-		else if(getMoneyType() == MONEY_TYPE_MONEY)
-			return money;
-		return 0;
-	}
-};
-struct BuyEnergyOrPowerStatic
-{
-	int id;
-	CostType costType;
-};
-struct BuyCoinStatic
-{
-	int id;
-	int count;
-	int money;
-};
-struct BuyMoneyStatic
-{
-	int id;
-    const char* identifier;
-	int money;
-	float dollar;
-};
-
-struct BoxStatic
-{
-    int id;
-    const char* desc;
-    const char* name;
-    CostType costType;
-};
-
-struct BuyCountStatic
-{
-    int id;
     int count;
-    CostType costType;
 };
+typedef map<int, xmlBuy> xmlBuyMap;
 
-struct BuyZhuRongStatic
+struct xmlBuyMoney
 {
 	int id;
-	int count;
+    string identifier;
+	int money;
+	string dollar;
+};
+typedef vector<xmlBuyMoney> xmlBuyMoneyList;
+
+struct xmlBox
+{
+    int id;
+	MoneyType moneyType;
 	int money;
 };
-
-typedef std::vector<BuyMoneyStatic*> BuyMoneyStaticList;
-typedef std::map<int, BuyEnergyOrPowerStatic*> BuyEnergyOrPowerStaticMap;
-typedef std::map<int, BuyCoinStatic*> BuyCoinStaticMap;
-typedef std::vector<BoxStatic*> BoxStaticList;
-typedef std::map<int, BuyZhuRongStatic*> BuyZhuRongStaticMap;
+typedef vector<xmlBox> xmlBoxList;
 
 class StaticShop : public Singleton<StaticShop>
 {
-private:
+	void _parseBuyMoney();
+	void _parseSupplement();
+	void _parseBox();
 	
-protected:
 public:
-	StaticShop();
-	~StaticShop();
-
 	void parse();
     
-	BuyMoneyStaticList mBuyMoneyStaticList;
-	BuyEnergyOrPowerStaticMap mBuyEnergyOrPowerStaticMap;
-	BuyCoinStaticMap mBuyCoinStaticMap;
-    BoxStaticList mBoxStaticList;
-    BuyCountStatic mBuyFusionStatic;
-    BuyZhuRongStaticMap mBuyZhuRongStaticMap;
+	xmlBuyMoneyList mBuyMoney;
+	xmlBuyMap mBuyCoin;
+	xmlBuyMap mBuyEnergyOrPower;
+    xmlBuyMap mBuyFusion;
+    xmlBuyMap mBuyZhuRong;
+    xmlBoxList mBox;
 
-	BuyMoneyStaticList& getBuyMoneyStaticList();
-	MoneyType getSupplyMoneyType(SupplyType type);
 	int getSupplyCostCount(SupplyType type);
-	BuyCoinStatic* getBuyCoinStatic(int id);
-    BuyZhuRongStatic* getBuyZhuRongStatic(int count);
-
+	xmlBuy* getBuyCoin(int id);
+	xmlBuy* getBuyFusion(int count);
+    xmlBuy* getBuyZhuRong(int count);
 };
-#endif // _StaticShop_h__
+
+#endif

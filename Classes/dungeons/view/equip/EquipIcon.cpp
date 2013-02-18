@@ -19,6 +19,7 @@ EquipIcon::~EquipIcon()
 
 bool EquipIcon::onAssignCCBMemberVariable( CCObject * pTarget, const char * pMemberVariableName, CCNode * pNode )
 {
+	CCLOG("EquipDetailContent::%s()", __FUNCTION__);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mBg", CCSprite*, mBg);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mIcon", CCSprite*, mIcon);
 	return false;
@@ -27,7 +28,15 @@ bool EquipIcon::onAssignCCBMemberVariable( CCObject * pTarget, const char * pMem
 void EquipIcon::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
 {
 	CCLOG("EquipIcon::%s()", __FUNCTION__);
-	RegisterObserver(this, callfuncO_selector(EquipIcon::_onNotification), FileDownload::notificationName, NULL);
+	RegisterObserver(this, callfuncO_selector(EquipIcon::_onNotification), FileDownload::notificationName, NULL);	
+}
+
+void EquipIcon::refresh()
+{
+	CCLOG("EquipIcon::%s()", __FUNCTION__);
+	EquipInfo* info = (EquipInfo*)getUserData();
+
+	setInfo(info->baseId);
 }
 
 void EquipIcon::_onNotification(CCObject* object)
@@ -40,8 +49,7 @@ void EquipIcon::_onNotification(CCObject* object)
 	if (name == FileDownload::notificationName)
 	{
 		CCString* filename1 = (CCString*)params;
-		EquipStatic* equipStatic = StaticItem::shared()->getEquipInfo(mItemID);
-		CCString* filename2 = CCString::create(equipStatic->icon);
+		CCString* filename2 = CCString::create(StaticItem::shared()->getEquipInfo(mItemID)->icon);
 		if(filename1->isEqual(filename2))
 		{
 			mIcon->initWithFile(filename1->getCString());
@@ -54,10 +62,9 @@ void EquipIcon::setInfo(int itemID)
 {
 	// 装备图
 	mItemID = itemID;
-	EquipStatic* equipStatic = StaticItem::shared()->getEquipInfo(itemID);
 
 	string filename = "item/";
-	filename += equipStatic->icon;
+	filename += StaticItem::shared()->getEquipInfo(itemID)->icon;
 	mIcon->initWithFile(filename.c_str());
 	
 	//    std::string fileName = equipStatic->icon;
@@ -66,7 +73,7 @@ void EquipIcon::setInfo(int itemID)
 	//    FileDownload::shared()->downloadFile(fileUrl.c_str(),fileName.c_str());
 
 	// 背景图
-	mQuality = (EquipQuality)equipStatic->quality;
+	mQuality = (EquipQuality)StaticItem::shared()->getEquipInfo(itemID)->quality;
 	switch(mQuality)
 	{
 		case EQUIP_QUALITY_WHITE:

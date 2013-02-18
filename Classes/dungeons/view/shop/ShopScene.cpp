@@ -4,7 +4,6 @@
 #include "ShopProxy.h"
 #include "StaticShop.h"
 #include "AlertDialog.h"
-#include "AwardEquipDialog.h"
 
 ShopTab ShopScene::msCurTab = SHOP_TAB_LOTTERY;
 
@@ -54,8 +53,8 @@ void ShopScene::refresh()
 	clearList();
 	if (msCurTab == SHOP_TAB_LOTTERY)
 	{
-		BoxStaticList itemList;
-		BoxStaticList& boxStaticList = StaticShop::shared()->mBoxStaticList;
+		xmlBoxList itemList;
+		xmlBoxList& boxStaticList = StaticShop::shared()->mBox;
 		
 		itemList.push_back(boxStaticList[0]);
 		itemList.push_back(boxStaticList[1]);
@@ -81,14 +80,14 @@ void ShopScene::refresh()
 		for(int i = 0; i < itemList.size(); i++)
 		{
 			ShopItem* item = ShopItem::create(NULL);
-			item->setData(itemList[i]);
+			item->setData(&itemList[i]);
 			item->setPosition(points[i]);
 			content->addChild(item);
 		}
 	}
 	else if(msCurTab == SHOP_TAB_SHOP || msCurTab == SHOP_TAB_ITEM)
 	{
-		BuyMoneyStaticList list = StaticShop::shared()->getBuyMoneyStaticList();
+		xmlBuyMoneyList list = StaticShop::shared()->mBuyMoney;
 		CCPoint contentPos = ccp(0, list.size() * 128);
 		CCLayer* content = CCLayer::create();
 		content->setContentSize(CCSizeMake(640, contentPos.y));
@@ -105,7 +104,7 @@ void ShopScene::refresh()
 	}
 }
 
-void ShopScene::_onNotification( CCObject* object )
+void ShopScene::_onNotification(CCObject* object)
 {
 	CCLOG("ShopScene::%s()", __FUNCTION__);
 	NotificationObserver* notification = (NotificationObserver*)object;
@@ -113,13 +112,12 @@ void ShopScene::_onNotification( CCObject* object )
 	
 	if (name == kNCOpenBox)
 	{
-		SellResult& sellResult = ShopProxy::shared()->mSellResult;
-		if (sellResult.result == 1 && sellResult.mEquipInfo != NULL)
+		OpenBoxResult* obr = (OpenBoxResult*)notification->getObject();
+		if (obr->result == 1)
 		{
-			gsEquipInfo = sellResult.mEquipInfo;
-			FRAMEWORK->popup("AwardEquipDialog");
+			FRAMEWORK->popup("AwardEquipDialog", obr->equipInfo);
 		}
-		else if(sellResult.result == 2)
+		else if(obr->result == 2)
 		{
 			AlertDialog::initContent(gls("120"));
 			FRAMEWORK->popup("AlertDialog");

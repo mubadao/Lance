@@ -696,8 +696,8 @@
 						<string>SpriteFrame</string>
 						<key>value</key>
 						<array>
-							<string>ccbResources/ccbDefaultImages.plist</string>
-							<string>ccbButtonDisabled.png</string>
+							<string></string>
+							<string>bg_24.png</string>
 						</array>
 					</dict>
 					<dict>

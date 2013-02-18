@@ -1,14 +1,18 @@
 #include "StaticRole.h"
 
+StaticRole::StaticRole()
+{
+	parse();
+}
+
+StaticRole::~StaticRole()
+{
+}
+
 void StaticRole::parse()
 {
-	TargetPlatform target = CCApplication::sharedApplication()->getTargetPlatform();
-
-    std::string path = CCFileUtils::sharedFileUtils()->getWriteablePath();
+    string path = CCFileUtils::sharedFileUtils()->getWriteablePath();
     path += "Boss.xml";
-
-	if (target == kTargetWindows)
-		path = CCFileUtils::sharedFileUtils()->fullPathForFilename("config/Boss.xml");
 
     if(!isFileExistsInWritablePath("Boss.xml"))
         assert(false);
@@ -17,7 +21,6 @@ void StaticRole::parse()
     unsigned char* pBytes = CCFileUtils::sharedFileUtils()->getFileData(path.c_str(), "rb", &size);
 	
 	xmlDocPtr doc = xmlReadMemory((const char*)pBytes, size, NULL, "utf-8", XML_PARSE_RECOVER);
-//	xmlDocPtr doc = xmlReadFile(path.c_str(), "utf-8", XML_PARSER_EOF);
 	if(NULL == doc)
 		CCLOG("Boss xml parse failed!");
 
@@ -30,7 +33,7 @@ void StaticRole::parse()
 	{
 		if (!xmlStrcmp(curNode->name, BAD_CAST "Group"))
 		{
-			std::string name = attriToChar(curNode, "name");
+			string name = attrToChar(curNode, "name");
 			if (name == "boss")
 			{
 				xmlNodePtr elem = curNode->children;
@@ -38,17 +41,16 @@ void StaticRole::parse()
 				{
 					if (!xmlStrcmp(elem->name, BAD_CAST "Boss"))
 					{
-						BossInfo* bossInfo = new BossInfo();
-						bossInfo->id = attriToInt(elem, "id");
-						bossInfo->name = attriToChar(elem,"name");
-						bossInfo->icon = attriToChar(elem,"icon");
-						bossInfo->level = attriToInt(elem,"level");
-						bossInfo->life = attriToInt(elem,"life");
-						bossInfo->atk_min = attriToInt(elem,"atk_min");
-						bossInfo->atk_max = attriToInt(elem,"atk_max");
-						bossInfo->def_min = attriToInt(elem,"def_min");
-						bossInfo->def_max = attriToInt(elem,"def_max");
-						bossInfoMap[bossInfo->id] = bossInfo;
+						xmlBossInfo info;
+						info.id = attrToInt(elem, "id");
+						info.icon = attrToChar(elem,"icon");
+						info.level = attrToInt(elem,"level");
+						info.life = attrToInt(elem,"life");
+						info.atk_min = attrToInt(elem,"atk_min");
+						info.atk_max = attrToInt(elem,"atk_max");
+						info.def_min = attrToInt(elem,"def_min");
+						info.def_max = attrToInt(elem,"def_max");
+						mBossMap[info.id] = info;
 					}
 					elem = elem->next;
 				}
@@ -61,16 +63,12 @@ void StaticRole::parse()
     path = CCFileUtils::sharedFileUtils()->getWriteablePath();
     path += "Player.xml";
 
-	if (target == kTargetWindows)
-		path = CCFileUtils::sharedFileUtils()->fullPathForFilename("config/Player.xml");
-
     if(!isFileExistsInWritablePath("Player.xml"))
         assert(false);
     
     pBytes = CCFileUtils::sharedFileUtils()->getFileData(path.c_str(), "rb", &size);
 	
 	doc = xmlReadMemory((const char*)pBytes, size, NULL, "utf-8", XML_PARSE_RECOVER);
-//	doc = xmlReadFile(path.c_str(), "utf-8", XML_PARSER_EOF);
 	if(NULL == doc)
 		CCLOG("Player xml parse failed!");
 
@@ -83,7 +81,7 @@ void StaticRole::parse()
 	{
 		if (!xmlStrcmp(curNode->name, BAD_CAST "Group"))
 		{
-			std::string name = attriToChar(curNode, "name");
+			string name = attrToChar(curNode, "name");
 			if (name == "player")
 			{
 				xmlNodePtr elem = curNode->children;
@@ -91,12 +89,12 @@ void StaticRole::parse()
 				{
 					if (!xmlStrcmp(elem->name, BAD_CAST "Player"))
 					{
-						LevelInfo* levelInfo = new LevelInfo();
-						levelInfo->id = attriToInt(elem, "id");
-						levelInfo->exp = attriToInt(elem,"exp");
-						levelInfo->energytime = attriToFloat(elem, "energytime") * 60 * 1000;
-						levelInfo->powertime = attriToFloat(elem,"powertime") * 60 * 1000;
-						mLevelInfoMap[levelInfo->id] = levelInfo;
+						xmlLevelInfo info;
+						info.level = attrToInt(elem, "id");
+						info.exp = attrToInt(elem,"exp");
+						info.energyTime = attrToFloat(elem, "energytime") * 60 * 1000;
+						info.powerTime = attrToFloat(elem,"powertime") * 60 * 1000;
+						mLevelMap[info.level] = info;
 					}
 					elem = elem->next;
 				}
@@ -107,32 +105,17 @@ void StaticRole::parse()
 	xmlFreeDoc(doc);
 }
 
-BossInfo* StaticRole::getBossInfo(int id)
+xmlBossInfo* StaticRole::getBossInfo(int id)
 {
-	if (bossInfoMap.count(id) == 0)
-		return NULL;
-	return bossInfoMap[id];
+	if (mBossMap.find(id) == mBossMap.end())
+		assert(false);
+	return &mBossMap[id];
 }
 
-RoleInfo* StaticRole::getRoleInfo( int id )
-{
-	return getBossInfo(id);
-}
-
-StaticRole::StaticRole()
-{
-	parse();
-}
-
-StaticRole::~StaticRole()
-{
-
-}
-
-LevelInfo* StaticRole::getLevelInfo( int level )
+xmlLevelInfo* StaticRole::getLevelInfo(int level)
 {
     if(level > 35)
-        return mLevelInfoMap[35];
+        return &mLevelMap[35];
     else
-        return mLevelInfoMap[level];
+        return &mLevelMap[level];
 }

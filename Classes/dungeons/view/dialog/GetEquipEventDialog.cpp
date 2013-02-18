@@ -67,16 +67,23 @@ void GetEquipEventDialog::onNodeLoaded(CCNode* pNode, CCNodeLoader* pNodeLoader)
 	mSellBtn->setDefaultTouchPriority(touch_priority_5);
 	mCloseBtn->setDefaultTouchPriority(touch_priority_5);
 	mMeltBtn->setDefaultTouchPriority(touch_priority_5);
+}
 
-	Award& awardInfo = FightProxy::shared()->awardInfo;
-	gsEquipInfo = awardInfo.equipList[0];
-	EquipStatic* equipStatic = StaticItem::shared()->getEquipInfo(gsEquipInfo->id);
-	mItemName->setColor(gsEquipInfo->getNameColor());
-	mItemName->setString(fcs("【%s】", equipStatic->name));
-	mExp->setString(fcs("+%d", awardInfo.exp));
-	mCoin->setString(fcs("+%d", awardInfo.getCoin()));
-	mMoneyIcon->setType(MONEY_TYPE_GOLD);
-	mMoneyIcon->setCount(gsEquipInfo->getSellPrize());
+void GetEquipEventDialog::refresh()
+{
+	ExploreEvent& info = FightProxy::shared()->mEventInfo;
+	EquipInfo* equip = FightProxy::shared()->getAwardEquip();
+	
+	mItemName->setColor(equip->getNameColor());
+	const char* a = fcs("item%05d", equip->baseId);
+	mItemName->setString(fcs("【%s】", gls(a)));
+	mExp->setString(fcs("+%d", info.exp));
+	mCoin->setString(fcs("+%d", info.getCoin()));
+	mMoneyIcon->setType(MONEY_TYPE_COIN);
+	mMoneyIcon->setCount(equip->getSellPrize());
+
+	mEquipDetail->setUserData(equip);
+	mEquipDetail->refresh();
 }
 
 void GetEquipEventDialog::onCloseBtnClick( CCObject * pSender, CCControlEvent pCCControlEvent )
@@ -86,20 +93,16 @@ void GetEquipEventDialog::onCloseBtnClick( CCObject * pSender, CCControlEvent pC
 
 void GetEquipEventDialog::onSellBtnClick(CCObject * pSender, CCControlEvent pCCControlEvent)
 {
-	vector<int>& sellList = ItemProxy::shared()->sellList;
+	ExploreEvent& info = FightProxy::shared()->mEventInfo;
+	vector<int>& sellList = EquipProxy::shared()->mSellList;
 	sellList.clear();
-	Award& awardInfo = FightProxy::shared()->awardInfo;
-	EquipInfo* equipInfo = awardInfo.equipList[0];
-	sellList.push_back(equipInfo->index);
+	sellList.push_back(info.equipList[0].index);
 	Post_Net_Notification(kVCSellEquip, NULL);
 	close();
 }
 
 void GetEquipEventDialog::onMeltBtnClick( CCObject * pSender, CCControlEvent pCCControlEvent )
 {
-    Award& awardInfo = FightProxy::shared()->awardInfo;
-    EquipInfo* equipInfo = awardInfo.equipList[0];
-	MeltOkDialog::msEquipInfo = equipInfo;
-	FRAMEWORK->popup("MeltOkDialog");
+	FRAMEWORK->popup("MeltOkDialog", FightProxy::shared()->getAwardEquip());
     close();
 }

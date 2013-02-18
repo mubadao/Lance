@@ -106,10 +106,10 @@ void CommonNotify::_onNotification(CCObject* object)
         }
         else if(netError->errorCode == kNCErrorIntenfityLack)
         {
-            BuyCountStatic& buyFusionStatic = StaticShop::shared()->mBuyFusionStatic;
+            xmlBuy& buyFusion = StaticShop::shared()->mBuyFusion[1];
             AlertTitleDialog::initContent(
 				gls("213"),
-				fls("214", buyFusionStatic.costType.getCostCount(), buyFusionStatic.count),
+				fls("214", buyFusion.money, buyFusion.count),
 				false,
 				this,
 				callfunc_selector(CommonNotify::_buyFusion),
@@ -217,9 +217,8 @@ void CommonNotify::powerTimeUpdate( float lastTime )
 	if (time < 0)
 	{
 		userVO.powerCur++;
-		LevelInfo* levelInfo = StaticRole::shared()->getLevelInfo(userVO.level);
 		if(userVO.powerCur < userVO.powerMax)
-			time = float(levelInfo->powertime);
+			time = float(StaticRole::shared()->getLevelInfo(userVO.level)->powerTime);
 		Post_Net_Notification(kVCRefreshPower, NULL);
 	}
 	
@@ -245,9 +244,8 @@ void CommonNotify::energyTimeUpdate( float lastTime )
 	if (time < 0)
 	{
 		userVO.energyCur++;
-		LevelInfo* levelInfo = StaticRole::shared()->getLevelInfo(userVO.level);
 		if(userVO.energyCur < userVO.energyMax)
-			time = float(levelInfo->energytime);
+			time = float(StaticRole::shared()->getLevelInfo(userVO.level)->energyTime);
 		Post_Net_Notification(kVCRefreshEnergy, NULL);
 	}
 	
@@ -265,11 +263,10 @@ void CommonNotify::allPowerTimeUpdate( float lastTime )
 	UserVO& userVO = UserProxy::shared()->userVO;
 	if(userVO.powerCur == userVO.powerMax)
 		return;
-	LevelInfo* levelInfo = StaticRole::shared()->getLevelInfo(userVO.level);
 
 	int power = userVO.powerMax-userVO.powerCur;
 	power = power > 0 ? power - 1 : 0;
-	float time = (float)(userVO.powerTime+power*levelInfo->powertime);
+	float time = (float)(userVO.powerTime + power * StaticRole::shared()->getLevelInfo(userVO.level)->powerTime);
 	time -= lastTime;
 	if (time < 0)
 		time = 0;
@@ -288,10 +285,9 @@ void CommonNotify::allEnergyTimeUpdate( float lastTime )
 	if(userVO.energyCur == userVO.energyMax)
 		return;
 	
-	LevelInfo* levelInfo = StaticRole::shared()->getLevelInfo(userVO.level);
 	int energy = userVO.energyMax-userVO.energyCur;
 	energy = energy > 0 ? energy - 1 : 0;
-	float time = (float)(userVO.energyTime+energy*levelInfo->energytime);
+	float time = (float)(userVO.energyTime + energy * StaticRole::shared()->getLevelInfo(userVO.level)->energyTime);
 	time -= lastTime;
 	if (time < 0)
 		time = 0;
@@ -321,8 +317,7 @@ void CommonNotify::_buyEnergy()
 	}
 	else
 	{
-		int moneyType = StaticShop::shared()->getSupplyMoneyType(SUPPLY_TYPE_ENERGY);
-		NetController::shared()->buyEnergy(moneyType);
+		NetController::shared()->buyEnergy(MONEY_TYPE_MONEY);
 	}
 }
 
@@ -338,21 +333,20 @@ void CommonNotify::_forceUpgrade()
 
 void CommonNotify::_sellItem()
 {
-	vector<int>& sellList = ItemProxy::shared()->sellList;
-	NetController::shared()->sellEquipage(sellList);
+	NetController::shared()->sellEquipage(EquipProxy::shared()->mSellList);
 }
 
 void CommonNotify::_buyFusion()
 {
-    BuyCountStatic& buyFusionStatic = StaticShop::shared()->mBuyFusionStatic;
+    xmlBuy& buyFusion = StaticShop::shared()->mBuyFusion[1];
     UserVO& userVO = UserProxy::shared()->userVO;
-	if(buyFusionStatic.costType.getCostCount() > userVO.money)
+	if(buyFusion.count > userVO.money)
     {
         Post_Net_Notification(kVCBuyMoney, NULL);
     }
     else
     {
-        NetController::shared()->buyFusion(buyFusionStatic.costType.getMoneyType());
+        NetController::shared()->buyFusion(MONEY_TYPE_MONEY);
     }
     
 }

@@ -5,6 +5,14 @@
 #include "StateManager.h"
 #include "Mask.h"
 
+struct DialogInfo
+{
+	string name;
+	void* data;
+	DialogInfo(string n) : name(n), data(NULL) {}
+	DialogInfo(string n, void* d) : name(n), data(d) {}
+};
+
 class Framework : public Singleton<Framework>
 {
     CC_SYNTHESIZE_READONLY(Mask*, mDialogMask, DialogMask);
@@ -31,7 +39,7 @@ public:
 	void changeToLastState();
 
     // 弹出对话框
-	void popup(const string& name);
+	void popup(const string& name, void* data = NULL);
     // 弹出下一个对话框
 	void popupNext();
     
@@ -42,7 +50,7 @@ private:
 	string mLastStateName;
 	string mCurStateName;
 
-	queue<string> mDialogList;
+	queue<DialogInfo> mDialogList;
 };
 
 #define FRAMEWORK Framework::shared()

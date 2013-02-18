@@ -3,6 +3,7 @@
 
 #include "Global.h"
 #include "MoneyIcon.h"
+#include "EquipProxy.h"
 
 class XiLianOkDialog
 	: public Dialog

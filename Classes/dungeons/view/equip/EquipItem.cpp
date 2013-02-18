@@ -52,20 +52,18 @@ void EquipItem::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
 void EquipItem::setInfo(EquipInfo* data)
 {
 	mInfo = data;
-	EquipStatic* itemInfo = StaticItem::shared()->getEquipInfo(data->id);
 
 	mName->setColor(data->getNameColor());
-	mName->setString(itemInfo->name);
-	mLevel->setString(fcs("%s LV.%d", ItemProxy::shared()->getTypeTitle(data->id), data->level));
+	mName->setString(gls(fcs("item%05d", data->baseId)));
+	mLevel->setString(fcs("%s LV.%d", data->getTypeTitle(), data->level));
 	mProperty->setString(fcs("%s: %s", data->getPropertyTitle(), data->getAttachPropertyStr()));
 	
-	mEquipIcon->setInfo(data->id);
+	mEquipIcon->setInfo(data->baseId);
 }
 
 void EquipItem::onAttributeBtnClick(CCObject* pSender, CCControlEvent pCCControlEvent)
 {
-	gsEquipInfo = mInfo;
-	FRAMEWORK->popup("EquipDetailDialog");
+	FRAMEWORK->popup("EquipDetailDialog", mInfo);
 }
 
 EquipItem* EquipItem::create(CCObject* pOwer)

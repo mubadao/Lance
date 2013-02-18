@@ -2876,8 +2876,8 @@
 						<string>SpriteFrame</string>
 						<key>value</key>
 						<array>
-							<string>ccbResources/ccbDefaultImages.plist</string>
-							<string>ccbButtonDisabled.png</string>
+							<string></string>
+							<string>btn_29.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -3390,8 +3390,8 @@
 						<string>SpriteFrame</string>
 						<key>value</key>
 						<array>
-							<string>ccbResources/ccbDefaultImages.plist</string>
-							<string>ccbButtonDisabled.png</string>
+							<string></string>
+							<string>btn_3.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -3701,8 +3701,6 @@
 						<string>MoneyIcon.ccb</string>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>
@@ -4030,8 +4028,8 @@
 						<string>SpriteFrame</string>
 						<key>value</key>
 						<array>
-							<string>ccbResources/ccbDefaultImages.plist</string>
-							<string>ccbButtonDisabled.png</string>
+							<string></string>
+							<string>btn_01.png</string>
 						</array>
 					</dict>
 					<dict>

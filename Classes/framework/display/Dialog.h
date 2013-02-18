@@ -9,9 +9,9 @@ public:
 	Dialog();
 	virtual ~Dialog();
 
+	virtual void refresh() {}
 	virtual void popup();
 	virtual void close();
-	virtual void touchScreen(){}
 
 protected:
 	CCLayer* mLayerDialog;

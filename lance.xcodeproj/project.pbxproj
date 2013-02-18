@@ -255,15 +255,11 @@
 		EEDBBA7C16BD7CEC0070C1E7 /* Global.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEDBBA7B16BD7CEC0070C1E7 /* Global.cpp */; };
 		EEF6935D16C01063000557FA /* ChanllengeProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEF692A516C01063000557FA /* ChanllengeProxy.cpp */; };
 		EEF6935E16C01063000557FA /* DungeonsProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEF692A716C01063000557FA /* DungeonsProxy.cpp */; };
-		EEF6935F16C01063000557FA /* EventProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEF692A916C01063000557FA /* EventProxy.cpp */; };
 		EEF6936016C01063000557FA /* FightProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEF692AB16C01063000557FA /* FightProxy.cpp */; };
-		EEF6936116C01063000557FA /* ItemProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEF692AD16C01063000557FA /* ItemProxy.cpp */; };
+		EEF6936116C01063000557FA /* EquipProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEF692AD16C01063000557FA /* EquipProxy.cpp */; };
 		EEF6936216C01063000557FA /* ShopProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEF692AF16C01063000557FA /* ShopProxy.cpp */; };
-		EEF6936316C01063000557FA /* SnatchProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEF692B116C01063000557FA /* SnatchProxy.cpp */; };
 		EEF6936416C01063000557FA /* UserProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEF692B316C01063000557FA /* UserProxy.cpp */; };
-		EEF6936516C01063000557FA /* StaticCompose.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEF692B616C01063000557FA /* StaticCompose.cpp */; };
-		EEF6936616C01063000557FA /* StaticData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEF692B816C01063000557FA /* StaticData.cpp */; };
-		EEF6936716C01063000557FA /* StaticDungeons.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEF692BA16C01063000557FA /* StaticDungeons.cpp */; };
+		EEF6936716C01063000557FA /* StaticDungeon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEF692BA16C01063000557FA /* StaticDungeon.cpp */; };
 		EEF6936816C01063000557FA /* StaticItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEF692BC16C01063000557FA /* StaticItem.cpp */; };
 		EEF6936916C01063000557FA /* StaticRole.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEF692BE16C01063000557FA /* StaticRole.cpp */; };
 		EEF6936A16C01063000557FA /* StaticShop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEF692C016C01063000557FA /* StaticShop.cpp */; };
@@ -830,6 +826,7 @@
 		EE7A3E2E16C2DD4300CE9239 /* ChallengeResultDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeResultDialog.h; sourceTree = "<group>"; };
 		EE7A3E2F16C2DD4400CE9239 /* ChallengeResultDialogLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeResultDialogLoader.h; sourceTree = "<group>"; };
 		EEA4029016B587540037D955 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = Resources/images; sourceTree = SOURCE_ROOT; };
+		EEA90B7C16C39D1F003131C1 /* TypeDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TypeDefine.h; sourceTree = "<group>"; };
 		EEBE7F93169D53750052A4D3 /* AMF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMF.h; sourceTree = "<group>"; };
 		EEBE7F94169D53750052A4D3 /* AMF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMF.m; sourceTree = "<group>"; };
 		EEBE7F95169D53750052A4D3 /* AMFActionMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFActionMessage.h; sourceTree = "<group>"; };
@@ -880,34 +877,23 @@
 		EEF692A616C01063000557FA /* ChanllengeProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChanllengeProxy.h; sourceTree = "<group>"; };
 		EEF692A716C01063000557FA /* DungeonsProxy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DungeonsProxy.cpp; sourceTree = "<group>"; };
 		EEF692A816C01063000557FA /* DungeonsProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DungeonsProxy.h; sourceTree = "<group>"; };
-		EEF692A916C01063000557FA /* EventProxy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventProxy.cpp; sourceTree = "<group>"; };
-		EEF692AA16C01063000557FA /* EventProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventProxy.h; sourceTree = "<group>"; };
 		EEF692AB16C01063000557FA /* FightProxy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FightProxy.cpp; sourceTree = "<group>"; };
 		EEF692AC16C01063000557FA /* FightProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FightProxy.h; sourceTree = "<group>"; };
-		EEF692AD16C01063000557FA /* ItemProxy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ItemProxy.cpp; sourceTree = "<group>"; };
-		EEF692AE16C01063000557FA /* ItemProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemProxy.h; sourceTree = "<group>"; };
+		EEF692AD16C01063000557FA /* EquipProxy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EquipProxy.cpp; sourceTree = "<group>"; };
+		EEF692AE16C01063000557FA /* EquipProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EquipProxy.h; sourceTree = "<group>"; };
 		EEF692AF16C01063000557FA /* ShopProxy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShopProxy.cpp; sourceTree = "<group>"; };
 		EEF692B016C01063000557FA /* ShopProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopProxy.h; sourceTree = "<group>"; };
-		EEF692B116C01063000557FA /* SnatchProxy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SnatchProxy.cpp; sourceTree = "<group>"; };
-		EEF692B216C01063000557FA /* SnatchProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SnatchProxy.h; sourceTree = "<group>"; };
 		EEF692B316C01063000557FA /* UserProxy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserProxy.cpp; sourceTree = "<group>"; };
 		EEF692B416C01063000557FA /* UserProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProxy.h; sourceTree = "<group>"; };
-		EEF692B616C01063000557FA /* StaticCompose.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StaticCompose.cpp; sourceTree = "<group>"; };
-		EEF692B716C01063000557FA /* StaticCompose.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaticCompose.h; sourceTree = "<group>"; };
-		EEF692B816C01063000557FA /* StaticData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StaticData.cpp; sourceTree = "<group>"; };
-		EEF692B916C01063000557FA /* StaticData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaticData.h; sourceTree = "<group>"; };
-		EEF692BA16C01063000557FA /* StaticDungeons.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StaticDungeons.cpp; sourceTree = "<group>"; };
-		EEF692BB16C01063000557FA /* StaticDungeons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaticDungeons.h; sourceTree = "<group>"; };
+		EEF692BA16C01063000557FA /* StaticDungeon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StaticDungeon.cpp; sourceTree = "<group>"; };
+		EEF692BB16C01063000557FA /* StaticDungeon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaticDungeon.h; sourceTree = "<group>"; };
 		EEF692BC16C01063000557FA /* StaticItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StaticItem.cpp; sourceTree = "<group>"; };
 		EEF692BD16C01063000557FA /* StaticItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaticItem.h; sourceTree = "<group>"; };
 		EEF692BE16C01063000557FA /* StaticRole.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StaticRole.cpp; sourceTree = "<group>"; };
 		EEF692BF16C01063000557FA /* StaticRole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaticRole.h; sourceTree = "<group>"; };
 		EEF692C016C01063000557FA /* StaticShop.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StaticShop.cpp; sourceTree = "<group>"; };
 		EEF692C116C01063000557FA /* StaticShop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaticShop.h; sourceTree = "<group>"; };
-		EEF692C316C01063000557FA /* DataVO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataVO.h; sourceTree = "<group>"; };
-		EEF692C416C01063000557FA /* DungeonsItemVO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DungeonsItemVO.h; sourceTree = "<group>"; };
-		EEF692C516C01063000557FA /* NetMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetMessage.h; sourceTree = "<group>"; };
-		EEF692C616C01063000557FA /* ViewVO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewVO.h; sourceTree = "<group>"; };
+		EEF692C316C01063000557FA /* UserVO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserVO.h; sourceTree = "<group>"; };
 		EEF692C816C01063000557FA /* NCDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NCDefines.h; sourceTree = "<group>"; };
 		EEF692C916C01063000557FA /* NCUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NCUtils.cpp; sourceTree = "<group>"; };
 		EEF692CA16C01063000557FA /* NCUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NCUtils.h; sourceTree = "<group>"; };
@@ -2194,16 +2180,12 @@
 				EEF692A616C01063000557FA /* ChanllengeProxy.h */,
 				EEF692A716C01063000557FA /* DungeonsProxy.cpp */,
 				EEF692A816C01063000557FA /* DungeonsProxy.h */,
-				EEF692A916C01063000557FA /* EventProxy.cpp */,
-				EEF692AA16C01063000557FA /* EventProxy.h */,
 				EEF692AB16C01063000557FA /* FightProxy.cpp */,
 				EEF692AC16C01063000557FA /* FightProxy.h */,
-				EEF692AD16C01063000557FA /* ItemProxy.cpp */,
-				EEF692AE16C01063000557FA /* ItemProxy.h */,
+				EEF692AD16C01063000557FA /* EquipProxy.cpp */,
+				EEF692AE16C01063000557FA /* EquipProxy.h */,
 				EEF692AF16C01063000557FA /* ShopProxy.cpp */,
 				EEF692B016C01063000557FA /* ShopProxy.h */,
-				EEF692B116C01063000557FA /* SnatchProxy.cpp */,
-				EEF692B216C01063000557FA /* SnatchProxy.h */,
 				EEF692B316C01063000557FA /* UserProxy.cpp */,
 				EEF692B416C01063000557FA /* UserProxy.h */,
 			);
@@ -2213,12 +2195,8 @@
 		EEF692B516C01063000557FA /* static */ = {
 			isa = PBXGroup;
 			children = (
-				EEF692B616C01063000557FA /* StaticCompose.cpp */,
-				EEF692B716C01063000557FA /* StaticCompose.h */,
-				EEF692B816C01063000557FA /* StaticData.cpp */,
-				EEF692B916C01063000557FA /* StaticData.h */,
-				EEF692BA16C01063000557FA /* StaticDungeons.cpp */,
-				EEF692BB16C01063000557FA /* StaticDungeons.h */,
+				EEF692BA16C01063000557FA /* StaticDungeon.cpp */,
+				EEF692BB16C01063000557FA /* StaticDungeon.h */,
 				EEF692BC16C01063000557FA /* StaticItem.cpp */,
 				EEF692BD16C01063000557FA /* StaticItem.h */,
 				EEF692BE16C01063000557FA /* StaticRole.cpp */,
@@ -2232,10 +2210,8 @@
 		EEF692C216C01063000557FA /* vo */ = {
 			isa = PBXGroup;
 			children = (
-				EEF692C316C01063000557FA /* DataVO.h */,
-				EEF692C416C01063000557FA /* DungeonsItemVO.h */,
-				EEF692C516C01063000557FA /* NetMessage.h */,
-				EEF692C616C01063000557FA /* ViewVO.h */,
+				EEA90B7C16C39D1F003131C1 /* TypeDefine.h */,
+				EEF692C316C01063000557FA /* UserVO.h */,
 			);
 			path = vo;
 			sourceTree = "<group>";
@@ -2715,15 +2691,11 @@
 				EEDBBA7C16BD7CEC0070C1E7 /* Global.cpp in Sources */,
 				EEF6935D16C01063000557FA /* ChanllengeProxy.cpp in Sources */,
 				EEF6935E16C01063000557FA /* DungeonsProxy.cpp in Sources */,
-				EEF6935F16C01063000557FA /* EventProxy.cpp in Sources */,
 				EEF6936016C01063000557FA /* FightProxy.cpp in Sources */,
-				EEF6936116C01063000557FA /* ItemProxy.cpp in Sources */,
+				EEF6936116C01063000557FA /* EquipProxy.cpp in Sources */,
 				EEF6936216C01063000557FA /* ShopProxy.cpp in Sources */,
-				EEF6936316C01063000557FA /* SnatchProxy.cpp in Sources */,
 				EEF6936416C01063000557FA /* UserProxy.cpp in Sources */,
-				EEF6936516C01063000557FA /* StaticCompose.cpp in Sources */,
-				EEF6936616C01063000557FA /* StaticData.cpp in Sources */,
-				EEF6936716C01063000557FA /* StaticDungeons.cpp in Sources */,
+				EEF6936716C01063000557FA /* StaticDungeon.cpp in Sources */,
 				EEF6936816C01063000557FA /* StaticItem.cpp in Sources */,
 				EEF6936916C01063000557FA /* StaticRole.cpp in Sources */,
 				EEF6936A16C01063000557FA /* StaticShop.cpp in Sources */,

@@ -152,7 +152,6 @@ void EquipMergeScene::onNodeLoaded(CCNode* pNode, CCNodeLoader* pNodeLoader)
 	addChild(mStarProgress);
 
 	CCArray* nameList = CCArray::create(
-		ccs(kVCSelectItem),
 		ccs(kNCIntensifyEquipage),
 		ccs(kNCResetEquipage),
 		ccs(kVCBuyZhuRongJi),
@@ -169,20 +168,7 @@ void EquipMergeScene::_onNotification( CCObject* object )
 
 	NotificationObserver* notification = (NotificationObserver*)object;
 	string name = std::string(notification->getName());
-	if (name == kVCSelectItem)
-	{
-//		if (isChangeEquip)
-//		{
-//			int select = ItemProxy::getSingletonPtr()->mSelectList[0];
-//			ItemProxy::getSingletonPtr()->setLastQiangHuaEquip(ItemProxy::getSingletonPtr()->getEquip(select)) ;
-//			refresh();
-//		} 
-//		else
-//		{
-//			FRAMEWORK->popup("MeltOkDialog");
-//		}
-	}
-	else if(name == kNCIntensifyEquipage)
+	if(name == kNCIntensifyEquipage)
 	{
 		FRAMEWORK->popup("MeltResultDialog");
         mZhuRongJiCount = 0;
@@ -202,16 +188,16 @@ void EquipMergeScene::_onNotification( CCObject* object )
 
 void EquipMergeScene::_refresh()
 {
-	EquipInfo* equipInfo = ItemProxy::shared()->curQiangHuaEquip;
-    EquipStatic* equipStatic = StaticItem::shared()->getEquipInfo(equipInfo->id);
+	EquipInfo& equipInfo = EquipProxy::shared()->curQiangHuaEquip;
+    xmlEquipInfo* equipStatic = StaticItem::shared()->getEquipInfo(equipInfo.baseId);
 
-    mEquipIcon->setInfo(equipInfo->id);
-    mName->setString(equipStatic->name);
-    mIntensifyCount->setString(fcs("+%d", equipInfo->intensifyNum));
-    mType->setString(ItemProxy::shared()->getTypeTitle(equipInfo->id));
-    mPropertyTitle->setString(equipInfo->getPropertyTitle());
-    int addProterty = int(equipInfo->getMaxBaseProperty() * (equipInfo->intensifyValue / 100));
-    mProperty->setString(fcs("%s(+%d)", equipInfo->getAttachPropertyStr(), addProterty));
+    mEquipIcon->setInfo(equipInfo.baseId);
+    mName->setString(gls(fcs("item%05d", equipInfo.baseId)));
+    mIntensifyCount->setString(fcs("+%d", equipInfo.intensifyNum));
+    mType->setString(equipInfo.getTypeTitle());
+    mPropertyTitle->setString(equipInfo.getPropertyTitle());
+    int addProterty = int(equipInfo.getBaseProperty(1) * (equipInfo.intensifyValue / 100));
+    mProperty->setString(fcs("%s(+%d)", equipInfo.getAttachPropertyStr(), addProterty));
     mNeedCoin->setString(fcs("%d", equipStatic->intensify_price));
     mNeedFusion->setString(fcs("%d", equipStatic->intensify_energy));
     
@@ -240,7 +226,7 @@ void EquipMergeScene::onAddZhuRongBtnClick(CCObject* pSender, CCControlEvent pCC
     if(zhuRongCount > 4)
 		return;
     
-    BuyZhuRongStatic* itemStatic = StaticShop::shared()->getBuyZhuRongStatic(zhuRongCount);
+    xmlBuy* itemStatic = StaticShop::shared()->getBuyZhuRong(zhuRongCount);
     UserVO& userVO = UserProxy::shared()->userVO;
 	if(itemStatic->money > userVO.money)
     {
@@ -259,13 +245,13 @@ void EquipMergeScene::onAddZhuRongBtnClick(CCObject* pSender, CCControlEvent pCC
 void EquipMergeScene::onIntensifyBtnClick(CCObject* pSender, CCControlEvent pCCControlEvent)
 {
     NetController::shared()->intensifyEquipage(
-        ItemProxy::shared()->curQiangHuaEquip->index,
+        EquipProxy::shared()->curQiangHuaEquip.index,
         mZhuRongJiCount);
 }
 
 void EquipMergeScene::onResetBtnClick(CCObject* pSender, CCControlEvent pCCControlEvent)
 {
-    XiLianOkDialog::msEquipInfo = ItemProxy::shared()->curQiangHuaEquip;
+    XiLianOkDialog::msEquipInfo = &EquipProxy::shared()->curQiangHuaEquip;
 	FRAMEWORK->popup("XiLianOkDialog");
 }
 
@@ -276,10 +262,10 @@ void EquipMergeScene::onReturnBtnClick(CCObject * pSender, CCControlEvent pCCCon
 
 void EquipMergeScene::onAddIntensifyBtnClick(CCObject* pSender, CCControlEvent pCCControlEvent)
 {
-    BuyCountStatic& buyFusionStatic = StaticShop::shared()->mBuyFusionStatic;
+    xmlBuy& buyFusion = StaticShop::shared()->mBuyFusion[1];
 	AlertTitleDialog::initContent(
 		gls("210"),
-		fls("211", buyFusionStatic.costType.getCostCount(), buyFusionStatic.count),
+		fls("211", buyFusion.money, buyFusion.count),
 		false,
 		this,
 		callfunc_selector(EquipMergeScene::_buyFusion),
@@ -298,7 +284,7 @@ void EquipMergeScene::_refreshZhuRongCount()
     }
     else 
     {
-        BuyZhuRongStatic* itemStatic = StaticShop::shared()->getBuyZhuRongStatic(mZhuRongJiCount);
+        xmlBuy* itemStatic = StaticShop::shared()->getBuyZhuRong(mZhuRongJiCount);
         mZhuRongCostIcon->setCount(itemStatic->money);
     }
 }
@@ -310,11 +296,11 @@ void EquipMergeScene::_refreshPerfect()
 
 void EquipMergeScene::_refreshAddProperty()
 {
-    EquipInfo* equipInfo = ItemProxy::shared()->curQiangHuaEquip;
+    EquipInfo& equipInfo = EquipProxy::shared()->curQiangHuaEquip;
     float minRate = (10 + mZhuRongJiCount * 20) / 100;
     float maxRate = 100 / 100;
-    int addMinProterty = equipInfo->getMaxBaseProperty() * 0.1 * minRate;
-    int addMaxProterty = equipInfo->getMaxBaseProperty() * 0.1 * maxRate;
+    int addMinProterty = equipInfo.getBaseProperty(1) * 0.1 * minRate;
+    int addMaxProterty = equipInfo.getBaseProperty(1) * 0.1 * maxRate;
     mAddProperty->setString(fcs("%d--%d", addMinProterty, addMaxProterty));
 }
 
@@ -332,15 +318,15 @@ void EquipMergeScene::_refreshStarLevel()
 
 void EquipMergeScene::_buyFusion()
 {
-    BuyCountStatic& buyFusionStatic = StaticShop::shared()->mBuyFusionStatic;
+    xmlBuy& buyFusion = StaticShop::shared()->mBuyFusion[1];
     UserVO& userVO = UserProxy::shared()->userVO;
-	if(buyFusionStatic.costType.getCostCount() > userVO.money)
+	if(buyFusion.money > userVO.money)
     {
         Post_Net_Notification(kVCBuyMoney, NULL);
     }
     else 
     {
-        NetController::shared()->buyFusion(buyFusionStatic.costType.getMoneyType());
+        NetController::shared()->buyFusion(MONEY_TYPE_MONEY);
     }
     
 }

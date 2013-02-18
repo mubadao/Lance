@@ -14,7 +14,4 @@
 
 typedef map<string, string> XMLVersionMap;
 
-class EquipInfo;
-extern EquipInfo* gsEquipInfo;      // 当前要展示详情的装备信息
-
 #endif

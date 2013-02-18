@@ -1,45 +1,35 @@
-#ifndef _FightProxy_h_
-#define _FightProxy_h_
+#ifndef _FightProxy_H_
+#define _FightProxy_H_
 
 #include "Global.h"
-#include "NCDefines.h"
-#include "ItemProxy.h"
+#include "TypeDefine.h"
+#include "EquipProxy.h"
 
-enum AwardEventType
+// 探索事件
+struct ExploreEvent
 {
-	EVENT_TYPE_NONE=0,
-	EVENT_TYPE_LOST_LIFE,
-	EVENT_TYPE_GET_COIN,
-	EVENT_TYPE_GET_ENERGY,
-	EVENT_TYPE_GET_EQUIP
-};
-
-//����
-struct Award
-{
-	AwardEventType eventType;
+	ExploreEventType type;
 	int exp;
 	int coin;
     int energy;
     int life;
 	int eventCoin;
-	std::vector<EquipInfo*> equipList;
+	vector<EquipInfo> equipList;
+	
+	int getCoin() {return coin + eventCoin; }
+
 	void clear()
 	{
-        equipList.clear();
-        exp = 0;
-        coin = 0;
-        energy = 0;
-        life = 0;
-        eventCoin = 0;
-		eventType = EVENT_TYPE_NONE;
+		exp = coin = energy = life = eventCoin = 0;
+		equipList.clear();
+		type = EVENT_TYPE_NONE;
 	}
-	Award():exp(30),coin(100),eventCoin(20),energy(2),life(50),eventType(EVENT_TYPE_LOST_LIFE){}
-	~Award(){clear();}
-	int getCoin(){return coin + eventCoin;}
+	
+	ExploreEvent() : exp(0),coin(0),eventCoin(0),energy(0),life(0), type(EVENT_TYPE_NONE) {}
 };
 
-struct FightBoss
+// Boss属性
+struct BossInfo
 {
     int atkMax;
     int atkMin;
@@ -49,23 +39,39 @@ struct FightBoss
     int life;
 };
 
+// 对战回合定义。
+struct RoundInfo
+{
+    int act;        // 攻击方 (0:自己， 1:对方)
+    int type;       // 攻击类型
+    int value;      // 攻击失血
+};
+
+// 对战信息定义。
+struct BattleInfo
+{
+    int win;
+    vector<RoundInfo> roundInfo;
+};
+
 class FightProxy : public Singleton<FightProxy>
 {
 	void testData();
+
 public:
 	FightProxy();
 	~FightProxy();
 
-	int dungeons;
-	int floor;
-	int task;
-	int bossID;
-	Award awardInfo;
-	BattleInfo battleInfo;
+	int mDungeons;
+	int mFloor;
+	int mTask;
+	int mBossID;
+
+	ExploreEvent mEventInfo;
+	BattleInfo mBattleInfo;
+    BossInfo mFightBoss;
+    
 	EquipInfo* getAwardEquip();
-    
-    FightBoss mFightBoss;
-    
     void reset();
 };
 

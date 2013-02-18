@@ -22,6 +22,7 @@
 #include "PacketSceneLoader.h"
 #include "PlayerDetailSceneLoader.h"
 #include "ShopSceneLoader.h"
+#include "ChallengeSceneLoader.h"
 
 // Dialog
 #include "MainTools.h"
@@ -41,6 +42,7 @@
 #include "AlertTitleDialogLoader.h"
 #include "MeltOkDialogLoader.h"
 #include "MeltResultDialogLoader.h"
+#include "ChallengePreviewDialogLoader.h"
 
 SceneManager::SceneManager()
 {
@@ -104,6 +106,12 @@ CCLayer* SceneManager::getState(const string& name)
 		pLoaderLibrary->registerCCNodeLoader("UserInfo", UserInfoLoader::loader());
 		pLoaderLibrary->registerCCNodeLoader("MainMenu", MainMenuLoader::loader());
 		pLoaderLibrary->registerCCNodeLoader("ShopScene", ShopSceneLoader::loader());
+	}
+	else if(name == "ChallengeScene")
+	{
+		pLoaderLibrary->registerCCNodeLoader("UserInfo", UserInfoLoader::loader());
+		pLoaderLibrary->registerCCNodeLoader("MainMenu", MainMenuLoader::loader());
+		pLoaderLibrary->registerCCNodeLoader("ChallengeScene", ChallengeSceneLoader::loader());
 	}
 	
 	CCBReader* ccbReader = new CCBReader(pLoaderLibrary);
@@ -193,6 +201,10 @@ Dialog* SceneManager::getDialog(const string& name)
 	else if (name == "MainTools")
 	{
 		pLoaderLibrary->registerCCNodeLoader("MainTools", MainToolsLoader::loader());
+	}
+	else if (name == "ChallengePreviewDialog")
+	{
+		pLoaderLibrary->registerCCNodeLoader("ChallengePreviewDialog", ChallengePreviewDialogLoader::loader());
 	}
 	
 	CCBReader* ccbReader = new CCBReader(pLoaderLibrary);

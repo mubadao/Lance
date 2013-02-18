@@ -51,18 +51,24 @@ void FightSucceedDialog::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoade
 	CCArray* nameList = CCArray::create(ccs(kNCDungeonStart),NULL);
 	RegisterObservers(this, nameList, callfuncO_selector(FightSucceedDialog::_onNotification));
 
-	Award& awardInfo = FightProxy::shared()->awardInfo;
-	mGold->setString(fcs("+%d", awardInfo.coin));
-	mExp->setString(fcs("+%d", awardInfo.exp));
+	mTalk->setString(gls(fcs("talk_01_%02d", DungeonsProxy::shared()->getCurFloor())));
+}
+
+void FightSucceedDialog::refresh()
+{
+	FightProxy::shared()->mEventInfo.equipList[0];
+	ExploreEvent& info = FightProxy::shared()->mEventInfo;
+	mGold->setString(fcs("+%d", info.coin));
+	mExp->setString(fcs("+%d", info.exp));
 	
-	gsEquipInfo = FightProxy::shared()->getAwardEquip();
-	mTalk->setString(gls(fcs("talk_01_%02d", DUNPROXY->getCurFloorID())));
+	mEquipDetail->setUserData(FightProxy::shared()->getAwardEquip());
+	mEquipDetail->refresh();
 }
 
 void FightSucceedDialog::onReturnBtnClick( CCObject * pSender, CCControlEvent pCCControlEvent )
 {
-	int dungeonsID = DungeonsProxy::shared()->getCurDungeonsID();
-	int floorID = DungeonsProxy::shared()->getCurFloorID();
+	int dungeonsID = DungeonsProxy::shared()->getCurDungeon();
+	int floorID = DungeonsProxy::shared()->getCurFloor();
 	NetController::shared()->dungeonStart(dungeonsID, floorID);
 }
 

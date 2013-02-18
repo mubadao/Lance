@@ -1,5 +1,5 @@
 #include "TaskNormal.h"
-#include "StaticDungeons.h"
+#include "StaticDungeon.h"
 #include "DungeonsProxy.h"
 #include "UserProxy.h"
 #include "NetController.h"
@@ -74,7 +74,7 @@ void TaskNormal::onNodeLoaded(CCNode* pNode, CCNodeLoader* pNodeLoader)
 
 void TaskNormal::refresh()
 {
-	TaskStatic* taskInfo = DungeonsProxy::shared()->getCurTaskStatic();
+	xmlTaskInfo* taskInfo = DungeonsProxy::shared()->getCurTaskStatic();
 
 	mExp->setString(fcs("%d-%d", taskInfo->expMin, taskInfo->expMax));
 	mCoin->setString(fcs("%d-%d", taskInfo->coinMin, taskInfo->coinMax));
@@ -99,11 +99,11 @@ void TaskNormal::onDoItBtnClick(CCObject* pSender, CCControlEvent pCCControlEven
 	else
 	{
 		NetController::shared()->dungeonExplore(
-			DungeonsProxy::shared()->getCurDungeonsID(),
-			DungeonsProxy::shared()->getCurFloorID(),
-			DungeonsProxy::shared()->getCurTaskID());
-		FightProxy::shared()->dungeons = DungeonsProxy::shared()->getCurDungeonsID();
-		FightProxy::shared()->floor = DungeonsProxy::shared()->getCurFloorID();
-		FightProxy::shared()->task = DungeonsProxy::shared()->getCurTaskID();
+			DungeonsProxy::shared()->getCurDungeon(),
+			DungeonsProxy::shared()->getCurFloor(),
+			DungeonsProxy::shared()->getCurTask());
+		FightProxy::shared()->mDungeons = DungeonsProxy::shared()->getCurDungeon();
+		FightProxy::shared()->mFloor = DungeonsProxy::shared()->getCurFloor();
+		FightProxy::shared()->mTask = DungeonsProxy::shared()->getCurTask();
 	}
 }

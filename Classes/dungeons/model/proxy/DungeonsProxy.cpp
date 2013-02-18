@@ -5,60 +5,49 @@
 DungeonsProxy::DungeonsProxy()
 {
 //	testData();
-    curTaskInfo.dungeonID = 1;
-    curTaskInfo.floor = 1;
-    curTaskInfo.task = 1;
-    curTaskInfo.progress = 0;
-    maxTaskInfo.dungeonID = 1;
-    maxTaskInfo.floor = 1;
-    maxTaskInfo.task = 1;
-    maxTaskInfo.progress = 0;
 }
 
 DungeonsProxy::~DungeonsProxy()
 {
-	
 }
 
 void DungeonsProxy::testData()
 {
-	curTaskInfo.dungeonID = 1;
+	curTaskInfo.dungeon = 1;
 	curTaskInfo.floor = 1;
 	curTaskInfo.task = 1;
 	curTaskInfo.progress = 0;
 }
 
-DungeonsStatic* DungeonsProxy::getCurDungeonsStatic()
+xmlDungeonInfo* DungeonsProxy::getCurDungeonsStatic()
 {
-	return StaticDungeons::shared()->getDungeonsInfo(getCurDungeonsID());
+	return StaticDungeon::shared()->getDungeonInfo(curTaskInfo.dungeon);
 }
 
-FloorStatic* DungeonsProxy::getCurFloorStatic()
+xmlFloorInfo* DungeonsProxy::getCurFloorStatic()
 {
-	return StaticDungeons::shared()->getFloorInfo(
-		getCurDungeonsID(),
-		getCurFloorID());
+	return StaticDungeon::shared()->getFloorInfo(curTaskInfo.dungeon, curTaskInfo.floor);
 }
 
-TaskStatic* DungeonsProxy::getCurTaskStatic()
+xmlTaskInfo* DungeonsProxy::getCurTaskStatic()
 {
-	return StaticDungeons::shared()->getTaskInfo(
-		getCurDungeonsID(),
-		getCurFloorID(),
-		getCurTaskID());
+	return StaticDungeon::shared()->getTaskInfo(
+		curTaskInfo.dungeon,
+		curTaskInfo.floor,
+		curTaskInfo.task);
 }
 
-int DungeonsProxy::getCurDungeonsID()
+int DungeonsProxy::getCurDungeon()
 {
-	return curTaskInfo.dungeonID;
+	return curTaskInfo.dungeon;
 }
 
-int DungeonsProxy::getCurFloorID()
+int DungeonsProxy::getCurFloor()
 {
 	return curTaskInfo.floor;
 }
 
-int DungeonsProxy::getCurTaskID()
+int DungeonsProxy::getCurTask()
 {
 	return curTaskInfo.task;
 }
@@ -68,17 +57,17 @@ int DungeonsProxy::getMaxProgress()
 	return maxTaskInfo.progress;
 }
 
-int DungeonsProxy::getMaxDungeonsID()
+int DungeonsProxy::getMaxDungeon()
 {
-	return maxTaskInfo.dungeonID;
+	return maxTaskInfo.dungeon;
 }
 
-int DungeonsProxy::getMaxFloorID()
+int DungeonsProxy::getMaxFloor()
 {
 	return maxTaskInfo.floor;
 }
 
-int DungeonsProxy::getMaxTaskID()
+int DungeonsProxy::getMaxTask()
 {
 	return maxTaskInfo.task;
 }
@@ -88,21 +77,29 @@ int DungeonsProxy::getCurProgress()
 	return curTaskInfo.progress;
 }
 
+const char* DungeonsProxy::getCurName()
+{
+	return gls(fcs("dn_%02d_%02d", curTaskInfo.dungeon, curTaskInfo.floor));
+}
+
+const char* DungeonsProxy::getName(int dungeon, int floor)
+{
+	return gls(fcs("dn_%02d_%02d", dungeon, floor));
+}
+
 const char* DungeonsProxy::getCurDesc()
 {
-    // dungeon, floor, progress
-    return gls(fcs("dd_01_%02d_%d_%d", curTaskInfo.floor, ((curTaskInfo.task - 1) % 6) + 1, MAX(0,curTaskInfo.progress-1) / 20 + 1));
+    return gls(fcs("dd_01_%02d_%d_%d", curTaskInfo.floor, ((curTaskInfo.task - 1) % 6) + 1, MAX(0, curTaskInfo.progress - 1) / 20 + 1));
 }
 
 const char* DungeonsProxy::getDesc(int index)
 {
-    // dungeon, floor, progress
     return gls(fcs("dd_01_%02d_%d_%d", curTaskInfo.floor, ((curTaskInfo.task - 1) % 6) + 1, index));
 }
 
-void DungeonsProxy::setCurFloor(int dungeonsID, int floorID)
+void DungeonsProxy::setCurFloor(int dungeon, int floor)
 {
-	curTaskInfo.dungeonID = dungeonsID;
-	curTaskInfo.floor = floorID;
-	curTaskInfo.task = (floorID-1) * 6 + 1;
+	curTaskInfo.dungeon = dungeon;
+	curTaskInfo.floor = floor;
+	curTaskInfo.task = (floor - 1) * 6 + 1;
 }

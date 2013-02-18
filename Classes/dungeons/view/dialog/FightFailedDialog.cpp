@@ -72,22 +72,22 @@ void FightFailedDialog::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader
 	CCArray* nameList = CCArray::create(ccs(kNCDungeonStart),ccs(kNCBuyLife),NULL);
 	RegisterObservers(this, nameList, callfuncO_selector(FightFailedDialog::_onNotification));
 
-	int bossID = FightProxy::shared()->bossID;
+	int bossID = FightProxy::shared()->mBossID;
 	UserVO& userVO = UserProxy::shared()->userVO;
-	BossInfo* bossInfo = StaticRole::shared()->getBossInfo(bossID);
-	FightBoss& fightBoss = FightProxy::shared()->mFightBoss;
+	xmlBossInfo* xmlBoss = StaticRole::shared()->getBossInfo(bossID);
+	BossInfo& boss = FightProxy::shared()->mFightBoss;
 	
 	mSelfAttack->setString(fcs("%s: %d--%d", gls("Attack"), userVO.atkMin, userVO.atkMax));
 	mSelfDefense->setString(fcs("%s: %d--%d", gls("Defense"), userVO.atkMin, userVO.defMax));
 	mSelfLife->setString(fcs("%s: %d", gls("93"), userVO.life));
-	mOtherAttack->setString(fcs("%s: %d--%d", gls("Attack"), bossInfo->atk_min, bossInfo->atk_max));
-	mOtherDefense->setString(fcs("%s: %d--%d", gls("Defense"), bossInfo->def_min, bossInfo->def_max));
-	mOtherLife->setString(fcs("%s: %d", gls("93"), fightBoss.life));
+	mOtherAttack->setString(fcs("%s: %d--%d", gls("Attack"), xmlBoss->atk_min, xmlBoss->atk_max));
+	mOtherDefense->setString(fcs("%s: %d--%d", gls("Defense"), xmlBoss->def_min, xmlBoss->def_max));
+	mOtherLife->setString(fcs("%s: %d", gls("93"), boss.life));
 }
 
 void FightFailedDialog::onRestartBtnClick( CCObject * pSender, CCControlEvent pCCControlEvent )
 {
-	NetController::shared()->dungeonStart(DungeonsProxy::shared()->getCurDungeonsID(), DungeonsProxy::shared()->getCurFloorID());
+	NetController::shared()->dungeonStart(DungeonsProxy::shared()->getCurDungeon(), DungeonsProxy::shared()->getCurFloor());
 }
 
 void FightFailedDialog::onBuyLifeBtnClick( CCObject * pSender, CCControlEvent pCCControlEvent )

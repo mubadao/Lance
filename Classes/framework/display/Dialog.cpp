@@ -16,6 +16,7 @@ Dialog::~Dialog()
 
 void Dialog::popup()
 {
+	refresh();
     FRAMEWORK->getDialogMask()->removeFromParentAndCleanup(true);
 	FRAMEWORK->getLayerDialog()->addChild(FRAMEWORK->getDialogMask());
 	FRAMEWORK->getLayerDialog()->addChild(this);

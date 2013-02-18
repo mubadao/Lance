@@ -44,10 +44,10 @@ void GetMoneyEventDialog::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoad
 	CCLOG("GetMoneyEventDialog::%s()", __FUNCTION__);
 	mCloseBtn->setDefaultTouchPriority(touch_priority_5);
 
-	Award& awardInfo = FightProxy::shared()->awardInfo;
-	mDesc->setString(fls("167", awardInfo.eventCoin));
-	mExp->setString(fcs("+%d", awardInfo.exp));
-	mCoin->setString(fcs("+%d", awardInfo.getCoin()));
+	ExploreEvent& info = FightProxy::shared()->mEventInfo;
+	mDesc->setString(fls("167", info.eventCoin));
+	mExp->setString(fcs("+%d", info.exp));
+	mCoin->setString(fcs("+%d", info.getCoin()));
 }
 
 void GetMoneyEventDialog::onCloseBtnClick( CCObject * pSender, CCControlEvent pCCControlEvent )

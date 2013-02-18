@@ -24,7 +24,7 @@ public:
 	virtual SEL_CCControlHandler onResolveCCBCCControlSelector(CCObject * pTarget, const char * pSelectorName);
 	virtual void onNodeLoaded(CCNode * pNode, CCNodeLoader * pNodeLoader);
 
-	void setData(BoxStatic* data);
+	void setData(xmlBox* data);
 
 private:
 	CCSprite* mBg;
@@ -33,7 +33,7 @@ private:
 	CCControlButton* mUseBtn;
 	MoneyIcon* mMoneyIcon;
 	
-	BoxStatic* mData;
+	xmlBox* mData;
 	
 	void onUseBtnClick(CCObject * pSender, CCControlEvent pCCControlEvent);
 	

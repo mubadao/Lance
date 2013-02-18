@@ -52,7 +52,7 @@ void BuyMoneyDialog::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
 
 	mTitle->setString(gls("175"));
 
-	BuyMoneyStaticList list = StaticShop::shared()->getBuyMoneyStaticList();
+	xmlBuyMoneyList& list = StaticShop::shared()->mBuyMoney;
 	CCPoint contentPos = ccp(0, list.size() * 128);
 	mScrollView->setContentSize(CCSizeMake(640, contentPos.y));
 	mScrollView->setContentOffset(ccp(0, mScrollView->getViewSize().height - contentPos.y));

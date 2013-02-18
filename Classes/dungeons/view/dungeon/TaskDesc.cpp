@@ -54,22 +54,20 @@ void TaskDesc::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
 
 void TaskDesc::refresh()
 {
-	TaskStatic* taskInfo = DungeonsProxy::shared()->getCurTaskStatic();
-	FloorStatic* floorStatic = DungeonsProxy::shared()->getCurFloorStatic();
-	mName->setString(floorStatic->name);
-	mDesc->setString(DUNPROXY->getCurDesc());
+	xmlTaskInfo* taskInfo = DungeonsProxy::shared()->getCurTaskStatic();
+	mName->setString(DungeonsProxy::shared()->getCurName());
+	mDesc->setString(DungeonsProxy::shared()->getCurDesc());
 	int index = taskInfo->taskID - 1;
 	mSelect->setPosition(ccp((index % 6) * 100 + 70, mSelect->getPositionY()));
 	
 	mNodeBg->removeAllChildren();
 	if (taskInfo->bossID == -1)
 	{
-		mNodeBg->addChild(CCSprite::create(fcs("scene/scene%d.jpg", DungeonsProxy::shared()->getCurFloorID())));
+		mNodeBg->addChild(CCSprite::create(fcs("scene/scene%d.jpg", DungeonsProxy::shared()->getCurFloor())));
 	}
 	else
 	{
-		BossInfo* bossInfo = StaticRole::shared()->getBossInfo(taskInfo->bossID);
-		mNodeBg->addChild(CCSprite::create(fcs("boss/%s", bossInfo->icon)));
+		mNodeBg->addChild(CCSprite::create(fcs("boss/%s", StaticRole::shared()->getBossInfo(taskInfo->bossID)->icon.c_str())));
 	}	
 }
 

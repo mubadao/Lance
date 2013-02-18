@@ -1,6 +1,6 @@
 #include "PlayerDetailContent.h"
 #include "UserProxy.h"
-#include "ItemProxy.h"
+#include "EquipProxy.h"
 #include "StaticRole.h"
 #include "CommonNotify.h"
 #include "NotifyDefine.h"
@@ -123,8 +123,7 @@ void PlayerDetailContent::refresh()
 
 	mBaseTitle->setString(gls("基础信息"));
 	mLevel->setString(fcs("%s:%d", gls("Level"), userVO.level));
-	LevelInfo* levelInfo = StaticRole::shared()->getLevelInfo(userVO.level + 1);
-	mExp->setString(fcs("%s:%d/%d", gls("Exp"), userVO.exp, levelInfo->exp));
+	mExp->setString(fcs("%s:%d/%d", gls("Exp"), userVO.exp, StaticRole::shared()->getLevelInfo(userVO.level + 1)->exp));
 	mCoin->setString(fcs("%s:%d", gls("Coin"), userVO.coin));
 	mMoney->setString(fcs("%s:%d", gls("Diamond"), userVO.money));
 	mEnergy->setString(fcs("%s:%d/%d", gls("Energy"), userVO.energyCur, userVO.energyMax));
@@ -134,7 +133,7 @@ void PlayerDetailContent::refresh()
 	mCoinGainRatio->setString(fcs("%s:%d%%", gls("CoinGainRate"), userVO.coinGainRatio));
 
 	mFightTitle->setString(gls("BattleInfo"));
-	mPutonCount->setString(fcs("%s:%d/%d", gls("Equiped"), ItemProxy::shared()->getPutonCount(), ItemProxy::shared()->getEquipCount()));
+	mPutonCount->setString(fcs("%s:%d/%d", gls("Equiped"), EquipProxy::shared()->getLoadedCount(), EquipProxy::shared()->getCount()));
 	mLife->setString(fcs("%s:%d", gls("Life"), userVO.life));
 	mAttack->setString(fcs("%s:%d-%d", gls("Attack"), userVO.atkMin, userVO.atkMax));
 	mDefense->setString(fcs("%s:%d-%d", gls("Defense"), userVO.defMin, userVO.defMax));

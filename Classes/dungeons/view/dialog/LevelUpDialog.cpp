@@ -82,15 +82,15 @@ void LevelUpDialog::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
 	CCLOG("LevelUpDialog::%s()", __FUNCTION__);
 	mCloseBtn->setDefaultTouchPriority(touch_priority_5);
 	
-	UserVO& userVO1 = UserProxy::shared()->userVO;
-	UserVO& userVO2 = UserProxy::shared()->mLastUserVO;
-	mLevel->setString(fcs("%d-->%d", userVO2.level, userVO1.level));
-	mMinAttack->setString(fcs("%d-->%d", userVO2.atkMin, userVO1.atkMin));
-	mMaxAttack->setString(fcs("%d-->%d", userVO2.atkMax, userVO1.atkMax));
-	mMinDefense->setString(fcs("%d-->%d", userVO2.defMin, userVO1.defMin));
-	mMaxDefense->setString(fcs("%d-->%d", userVO2.defMax, userVO1.defMax));
-	mLife->setString(fcs("%d-->%d", userVO2.life, userVO1.life));
-	mMaxEnergy->setString(fcs("%d-->%d", userVO2.energyMax, userVO1.energyMax));
+	UserVO& cur = UserProxy::shared()->userVO;
+	UserVO& last = UserProxy::shared()->mLastUserVO;
+	mLevel->setString(fcs("%d-->%d", last.level, cur.level));
+	mMinAttack->setString(fcs("%d-->%d", last.atkMin, cur.atkMin));
+	mMaxAttack->setString(fcs("%d-->%d", last.atkMax, cur.atkMax));
+	mMinDefense->setString(fcs("%d-->%d", last.defMin, cur.defMin));
+	mMaxDefense->setString(fcs("%d-->%d", last.defMax, cur.defMax));
+	mLife->setString(fcs("%d-->%d", last.life, cur.life));
+	mMaxEnergy->setString(fcs("%d-->%d", last.energyMax, cur.energyMax));
 }
 
 void LevelUpDialog::onCloseBtnClick( CCObject * pSender, CCControlEvent pCCControlEvent )

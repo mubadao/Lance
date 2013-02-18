@@ -171,35 +171,27 @@
 
 struct NetError
 {
-    std::string cmdName;
-    int errorCode;
+	string cmdName;
+	int errorCode;
 };
-/**
- * @brief 装备词条属性信息定义。
- */
-typedef struct stEquipageExtInfo
-{
-    int id;
-    int value;
-}EquipageExtInfo;
 
-/**
- * @brief 装备属性信息定义。
- */
-typedef struct stEquipageInfo
-{
-    int index;
-    int id;
-    int level;
-    int exp;
-    int atkMin;
-    int atkMax;
-    int def;
-    int life;
-    int state;
-    bool isPutOn(){return state==1;}
-    std::vector<EquipageExtInfo> ext;
-}EquipageInfo;
+///**
+// * @brief 装备属性信息定义。
+// */
+//typedef struct stEquipageInfo
+//{
+//    int index;
+//    int id;
+//    int level;
+//    int exp;
+//    int atkMin;
+//    int atkMax;
+//    int def;
+//    int life;
+//    int state;
+//    bool isPutOn(){return state==1;}
+//    vector<Affix> ext;
+//}EquipageInfo;
 
 
 
@@ -267,68 +259,36 @@ typedef struct stPlayerFinanceInfo
     int money;
 }PlayerFinanceInfo;
 
-/**
- * @brief 玩家背包信息定义。
- */
-typedef struct stPlayerBagInfo
-{
-    int bagmax;
-    int bagid;
-    std::vector<EquipageInfo> baginfo;
-}PlayerBagInfo;
+///**
+// * @brief 玩家背包信息定义。
+// */
+//typedef struct stPlayerBagInfo
+//{
+//    int bagmax;
+//    int bagid;
+//    std::vector<EquipageInfo> baginfo;
+//}PlayerBagInfo;
 
 
-/**
- * @brief 玩家信息定义。
- */
-typedef struct stPlayerInfo
-{
-    PlayerCheckInfo checkInfo;
-    PlayerTimeInfo timeInfo;
-    PlayerBaseInfo baseInfo;
-    PlayerFinanceInfo financeInfo;
-    PlayerBattleInfo battleInfo;
-    PlayerBagInfo bagInfo;
-}PlayerInfo;
+///**
+// * @brief 奖励信息定义。
+// */
+//typedef struct stAwardInfo
+//{
+//    int exp;
+//    int coin;
+//    std::vector<EquipageInfo> equipageList;
+//}AwardInfo;
 
-/**
- * @brief 奖励信息定义。
- */
-typedef struct stAwardInfo
-{
-    int exp;
-    int coin;
-    std::vector<EquipageInfo> equipageList;
-}AwardInfo;
-
-/**
- * @brief 对战回合定义。
- */
-typedef struct stRoundInfo
-{
-    int act;        //攻击方
-    int type;       //攻击类型
-    int value;      //攻击失血
-}RoundInfo;
-
-/**
- * @brief 对战信息定义。
- */
-typedef struct stBattleInfo
-{
-    int win;
-    std::vector<RoundInfo> roundInfo;
-}BattleInfo;
-
-/**
- * @brief 对战结果信息定义。
- */
-typedef struct stBattleResult
-{
-    int dungeon;
-    AwardInfo awardInfo;
-    BattleInfo battleInfo;
-}BattleResult;
+///**
+// * @brief 对战结果信息定义。
+// */
+//typedef struct stBattleResult
+//{
+//    int dungeon;
+//    AwardInfo awardInfo;
+//    BattleInfo battleInfo;
+//}BattleResult;
 
 /**
  * @brief 同步信息定义。

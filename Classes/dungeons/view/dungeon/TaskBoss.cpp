@@ -1,5 +1,5 @@
 #include "TaskBoss.h"
-#include "StaticDungeons.h"
+#include "StaticDungeon.h"
 #include "StaticRole.h"
 #include "StaticItem.h"
 #include "DungeonsProxy.h"
@@ -88,17 +88,17 @@ void TaskBoss::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
 
 void TaskBoss::refresh()
 {
-	TaskStatic* taskInfo = DungeonsProxy::shared()->getCurTaskStatic();
-	EquipStatic* itemStatic = (EquipStatic*)StaticItem::shared()->getItemInfo(taskInfo->drop);
-	BossInfo* bossInfo = StaticRole::shared()->getBossInfo(taskInfo->bossID);
+	xmlTaskInfo* taskInfo = DungeonsProxy::shared()->getCurTaskStatic();
+	xmlEquipInfo* itemStatic = StaticItem::shared()->getEquipInfo(taskInfo->drop);
+	xmlBossInfo* bossInfo = StaticRole::shared()->getBossInfo(taskInfo->bossID);
 	
-	mBossName->setString(fcs("%s", bossInfo->name));
+	mBossName->setString(gls(fcs("%boss04d", bossInfo->id)));
 	mBossAttack->setString(fcs("%s: %d-%d", gls("Attack"), bossInfo->atk_min, bossInfo->atk_max));
 	mBossDefense->setString(fcs("%s: %d-%d", gls("Defense"), bossInfo->def_min, bossInfo->def_max));
 	mBossLife->setString(fcs("%s: %d", gls("Life"), bossInfo->life));
 	
 	mItemName->setColor(EquipInfo::getNameColor(itemStatic->quality));
-	mItemName->setString(itemStatic->name);
+	mItemName->setString(gls(fcs("item%05d", taskInfo->drop)));
 	mItemLevel->setString(fcs("LV.%d", itemStatic->level));
 	mItemLevel->setPositionX(mItemName->getPositionX() + mItemName->getContentSize().width + 10);
 
@@ -111,7 +111,7 @@ void TaskBoss::refresh()
 	mCoin->setString(fcs("%d-%d", taskInfo->coinMin, taskInfo->coinMax));
 	mEnergy->setString(fcs("-%d", taskInfo->energy));
 	
-	mTaskDesc->setDesc(DUNPROXY->getDesc(mCurStep));
+	mTaskDesc->setDesc(DungeonsProxy::shared()->getDesc(mCurStep));
 
 	if(mCurStep >= 5)
 	{
@@ -136,8 +136,7 @@ void TaskBoss::onDoItBtnClick(CCObject* pSender, CCControlEvent pCCControlEvent)
 	++mCurStep;
 	if(mCurStep > 5)
 	{
-		TaskStatic* taskInfo = DungeonsProxy::shared()->getCurTaskStatic();
-		FightProxy::shared()->bossID = taskInfo->bossID;
+		FightProxy::shared()->mBossID = DungeonsProxy::shared()->getCurTaskStatic()->bossID;
 		int life = UserProxy::shared()->userVO.lifeCur;
 
 		if(life <= 0)
@@ -149,16 +148,16 @@ void TaskBoss::onDoItBtnClick(CCObject* pSender, CCControlEvent pCCControlEvent)
 		}
 		else
 		{
-			NetController::shared()->dungeonExplore(DungeonsProxy::shared()->getCurDungeonsID(),
-				DungeonsProxy::shared()->getCurFloorID(), DungeonsProxy::shared()->getCurTaskID());
-			FightProxy::shared()->dungeons = DungeonsProxy::shared()->getCurDungeonsID();
-			FightProxy::shared()->floor = DungeonsProxy::shared()->getCurFloorID();
-			FightProxy::shared()->task = DungeonsProxy::shared()->getCurTaskID();
+			NetController::shared()->dungeonExplore(DungeonsProxy::shared()->getCurDungeon(),
+				DungeonsProxy::shared()->getCurFloor(), DungeonsProxy::shared()->getCurTask());
+			FightProxy::shared()->mDungeons = DungeonsProxy::shared()->getCurDungeon();
+			FightProxy::shared()->mFloor = DungeonsProxy::shared()->getCurFloor();
+			FightProxy::shared()->mTask = DungeonsProxy::shared()->getCurTask();
 		}
 	}
 	else
 	{
-		mTaskDesc->setDesc(DUNPROXY->getDesc(mCurStep));
+		mTaskDesc->setDesc(DungeonsProxy::shared()->getDesc(mCurStep));
 		if (mCurStep == 5)
 		{
 			mDoItBtn->setTitleForState(ccs(gls("180")), CCControlStateNormal);

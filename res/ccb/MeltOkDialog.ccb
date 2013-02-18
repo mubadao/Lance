@@ -530,7 +530,7 @@
 						<key>value</key>
 						<array>
 							<real>462</real>
-							<real>364</real>
+							<real>363</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -652,7 +652,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>btn_30.png</string>
+							<string>btn_31.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -675,7 +675,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>btn_30_d.png</string>
+							<string>btn_31_d.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -698,7 +698,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>btn_30.png</string>
+							<string>btn_31.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -781,7 +781,7 @@
 						<string>BlockCCControl</string>
 						<key>value</key>
 						<array>
-							<string>onCanselBtnClick</string>
+							<string>onCancelBtnClick</string>
 							<integer>1</integer>
 							<integer>32</integer>
 						</array>
@@ -870,9 +870,9 @@
 						<string>Color3</string>
 						<key>value</key>
 						<array>
-							<integer>255</integer>
 							<integer>254</integer>
-							<integer>255</integer>
+							<integer>250</integer>
+							<integer>0</integer>
 						</array>
 					</dict>
 					<dict>
@@ -893,9 +893,9 @@
 						<string>Color3</string>
 						<key>value</key>
 						<array>
-							<integer>255</integer>
 							<integer>254</integer>
-							<integer>255</integer>
+							<integer>250</integer>
+							<integer>0</integer>
 						</array>
 					</dict>
 					<dict>
@@ -922,8 +922,6 @@
 						</array>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>

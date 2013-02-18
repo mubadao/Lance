@@ -49,21 +49,19 @@ void BuyMoneyItem::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
 void BuyMoneyItem::setData(int index)
 {
 	mIndex = index;
-	BuyMoneyStaticList list = StaticShop::shared()->getBuyMoneyStaticList();
-	mMoney->setString(fls("186", list[index]->money));
+	mMoney->setString(fls("186", StaticShop::shared()->mBuyMoney[index].money));
 	
-	NSString* cost = [[ShopIAPHelper sharedHelper] getItemCost:[NSString stringWithFormat:@"%s", list[index]->identifier]];
+	NSString* cost = [[ShopIAPHelper sharedHelper] getItemCost:[NSString stringWithFormat:@"%s", StaticShop::shared()->mBuyMoney[index].identifier.c_str()]];
 
 	if (cost != nil)
 		mDollor->setString(fcs("%s", [cost cStringUsingEncoding:NSUTF8StringEncoding]));
 	else
-		mDollor->setString(fls("187", list[index]->dollar));
+		mDollor->setString(fls("187", StaticShop::shared()->mBuyMoney[index].dollar.c_str()));
 }
 
 void BuyMoneyItem::onBuyBtnClick(CCObject* pSender, CCControlEvent pCCControlEvent )
 {
-	BuyMoneyStaticList list = StaticShop::shared()->getBuyMoneyStaticList();
-	[[ShopIAPHelper sharedHelper] purchaseItem:list[mIndex]->id-1];
+	[[ShopIAPHelper sharedHelper] purchaseItem:StaticShop::shared()->mBuyMoney[mIndex].id-1];
 }
 
 BuyMoneyItem* BuyMoneyItem::create(CCObject* pOwer)
