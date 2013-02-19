@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">太空侵略者:異形戰爭</string>
+    <string name="loading">加载中...</string>
+    <string name="submit_failed">提交失敗！</string>
+	<string name="can_not_connect_network">無法連接網絡，請檢查網絡連接！</string>
+</resources>

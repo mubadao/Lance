@@ -2,7 +2,7 @@
 #define _ChallengeItem_H_
 
 #include "Global.h"
-#include "ChanllengeProxy.h"
+#include "ChallengeProxy.h"
 
 class ChallengeItem
 	: public CCNode
@@ -23,7 +23,7 @@ public:
 	virtual bool onAssignCCBMemberVariable(CCObject * pTarget, const char* pMemberVariableName, CCNode* pNode);
 	virtual void onNodeLoaded(CCNode* pNode, CCNodeLoader* pNodeLoader);
 
-	void setData(ChallengeEnemyInfo* data);
+	void refresh();
 
 protected:
 	CCLabelTTF* mName;
@@ -31,8 +31,6 @@ protected:
 	CCLabelTTF* mAttack;
 	CCLabelTTF* mDefense;
 	CCControlButton* mChallengeBtn;
-	
-	ChallengeEnemyInfo* mData;
 	
 	void onChallengeBtnClick(CCObject * pSender, CCControlEvent pCCControlEvent);
 };

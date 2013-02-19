@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<database>
+<objectives>
+	<obj type="score" index="1" value="5000" reward="2000" />
+	<obj type="green" index="1" value="15" reward="100" />      
+	<obj type="last" index="1" value="60" reward="100" />       
+	<obj type="total" index="1" value="100" reward="100"/>      
+	<obj type="yellow" index="1" value="10" reward="100" />
+
+	<obj type="score" index="2" value="30000" reward="100" />
+	<obj type="green" index="2" value="20" reward="100" />
+	<obj type="last" index="2" value="90" reward="100" />
+	<obj type="total" index="2" value="150" reward="100"/>
+	<obj type="yellow" index="2" value="15" reward="100" />
+
+	<obj type="score" index="3" value="70000" reward="100" />
+	<obj type="green" index="3" value="30" reward="100" />      
+	<obj type="last" index="3" value="120" reward="100" />
+	<obj type="total" index="3" value="200" reward="100"/>
+	<obj type="yellow" index="3" value="20" reward="100" />
+
+	<obj type="score" index="4" value="120000" reward="100" />
+	<obj type="green" index="4" value="40" reward="100" />
+	<obj type="last" index="4" value="150" reward="100" />
+	<obj type="total" index="4" value="300" reward="100"/>
+	<obj type="yellow" index="4" value="25" reward="100"/>
+
+	<obj type="score" index="5" value="150000" reward="100" />
+	<obj type="green" index="5" value="50" reward="100" />
+	<obj type="last" index="5" value="180" reward="100" />
+	<obj type="total" index="5" value="400" reward="100"/>
+	<obj type="yellow" index="5" value="50" reward="100"/>
+
+	<obj type="score" index="5" value="200000" reward="100" />
+	<obj type="score" index="5" value="300000" reward="100" />
+	<obj type="score" index="5" value="500000" reward="100" />
+	<obj type="score" index="5" value="1000000" reward="100" />
+	<obj type="score" index="5" value="2000000" reward="100" />
+	<obj type="score" index="5" value="3000000" reward="100" />
+	<obj type="score" index="5" value="5000000" reward="100" />
+</objectives>
+
+<invaders>
+    <inv type="normal1" score="10" filename="normal1" frame="2" />
+    <inv type="normal2" score="50" filename="normal2" frame="2" />
+    <inv type="normal3" score="200" filename="good" frame="2" />
+    <inv type="normal4" score="500" filename="bomb" frame="2" />
+    <inv type="bad" score="0" filename="bad" frame="2" />
+    <inv type="gold" score="10" filename="gold" frame="8" />
+    <inv type="gold2" score="50" filename="gold" frame="8" />
+</invaders>
+    
+<spells>
+    <sp type="freeze" filename="spell_freeze.png" iconname="icon_freeze.png" duration="15" cd1="30" cd2="25" cd3="20" cd4="15" equipCost="500" upgradeCost1="3000" upgradeCost2="6000" upgradeCost3="9000" upgradeCost4="0" />
+    <sp type="shield" filename="spell_shield.png" iconname="icon_shield.png" duration="10" cd1="25" cd2="20" cd3="15" cd4="10" equipCost="1000" upgradeCost1="6000" upgradeCost2="12000" upgradeCost3="18000" upgradeCost4="0" />
+    <sp type="bomb" filename="spell_bomb.png" iconname="icon_bomb.png" duration="0" cd1="15" cd2="10" cd3="5" cd4="0" equipCost="800" upgradeCost1="5000" upgradeCost2="10000" upgradeCost3="15000" upgradeCost4="0" />
+</spells>
+    
+</database>

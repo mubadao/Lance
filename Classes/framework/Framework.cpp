@@ -57,10 +57,11 @@ void Framework::changeState(const string& name)
     if (name == mCurStateName)
         return;
     
+	string newName = name;
 	mLastStateName = mCurStateName;
-	mCurStateName = name;
+	mCurStateName = newName;
     
-	CCLayer* state = mStateManager->getState(name);
+	CCLayer* state = mStateManager->getState(newName);
     assert(state);
     
 	if (mCurState)

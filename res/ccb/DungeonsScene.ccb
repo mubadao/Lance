@@ -179,8 +179,6 @@
 						<string>TaskNormal.ccb</string>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>
@@ -242,9 +240,9 @@
 				<key>displayName</key>
 				<string>MainMenu</string>
 				<key>memberVarAssignmentName</key>
-				<string></string>
+				<string>mMainMenu</string>
 				<key>memberVarAssignmentType</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>properties</key>
 				<array>
 					<dict>

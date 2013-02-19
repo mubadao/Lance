@@ -5,6 +5,7 @@
 #include "TaskDesc.h"
 #include "TaskBoss.h"
 #include "TaskNormal.h"
+#include "MainMenu.h"
 
 class DungeonsScene
 	: public CCLayer
@@ -29,6 +30,7 @@ private:
 	TaskDesc* mTaskDesc;
 	TaskBoss* mTaskBoss;
 	TaskNormal* mTaskNormal;
+	MainMenu* mMainMenu;
 	
 	void _onNotification(CCObject* object);
 	void _playAwardAnim();

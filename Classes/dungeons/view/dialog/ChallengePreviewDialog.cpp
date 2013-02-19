@@ -1,5 +1,5 @@
 #include "ChallengePreviewDialog.h"
-#include "ChanllengeProxy.h"
+#include "ChallengeProxy.h"
 #include "UserProxy.h"
 #include "NetController.h"
 
@@ -61,14 +61,22 @@ SEL_CCControlHandler ChallengePreviewDialog::onResolveCCBCCControlSelector( CCOb
 	return NULL;
 }
 
-void ChallengePreviewDialog::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
+void ChallengePreviewDialog::onNodeLoaded(CCNode* pNode, CCNodeLoader* pNodeLoader)
 {
-	ChallengeEnemyInfo* challengeEnemyInfo = ChanllengeProxy::shared()->mCurChallengeEnemyInfo;
-	mName1->setString(UserProxy::shared()->userVO.name.c_str());
-	mName2->setString(challengeEnemyInfo->name.c_str());
-	mGetGold->setString(fcs("+%d", challengeEnemyInfo->succeedGold));
-	mGetExp->setString(fcs("+%d", challengeEnemyInfo->succeedExp));
-	mLostGold->setString(fcs("-%d", challengeEnemyInfo->failedGold));
+	mChallengeBtn->setDefaultTouchPriority(touch_priority_5);
+	mReturnBtn->setDefaultTouchPriority(touch_priority_5);
+	
+	mName1->setString(fcs("%s%d", gls("Player"), UserProxy::shared()->userVO.gid));
+}
+
+void ChallengePreviewDialog::refresh()
+{
+	ChallengeEnemyInfo* info = (ChallengeEnemyInfo*)getUserData();
+	
+	mName2->setString(fcs("%s%d", gls("Player"), info->gid));
+	mGetGold->setString(fcs("+%d", info->succeedGold));
+	mGetExp->setString(fcs("+%d", info->succeedExp));
+	mLostGold->setString(fcs("-%d", info->failedGold));
 }
 
 void ChallengePreviewDialog::onChallengeBtnClick( CCObject * pSender, CCControlEvent pCCControlEvent )
@@ -77,8 +85,9 @@ void ChallengePreviewDialog::onChallengeBtnClick( CCObject * pSender, CCControlE
 		FRAMEWORK->popup("StaminaLackDialog");
 	else
 	{
-		ChallengeEnemyInfo* challengeEnemyInfo = ChanllengeProxy::shared()->mCurChallengeEnemyInfo;
-		NetController::shared()->challengePlayer(challengeEnemyInfo->gid);
+		ChallengeEnemyInfo* info = (ChallengeEnemyInfo*)getUserData();
+		ChallengeProxy::shared()->mCurChallengeEnemyInfo = info;
+		NetController::shared()->challengePlayer(info->gid);
 	}
 	close();
 }

@@ -98,7 +98,7 @@ void ShopItem::onUseBtnClick( CCObject * pSender, CCControlEvent pCCControlEvent
 		FRAMEWORK->popup("AlertDialog");
 	}
 	else {
-		NetController::shared()->openBox(mData->moneyType, mData->money);
+		NetController::shared()->openBox(mData->moneyType, mData->id);
 	}
 }
 

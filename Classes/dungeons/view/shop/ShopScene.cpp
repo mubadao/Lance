@@ -53,16 +53,6 @@ void ShopScene::refresh()
 	clearList();
 	if (msCurTab == SHOP_TAB_LOTTERY)
 	{
-		xmlBoxList itemList;
-		xmlBoxList& boxStaticList = StaticShop::shared()->mBox;
-		
-		itemList.push_back(boxStaticList[0]);
-		itemList.push_back(boxStaticList[1]);
-		if(ShopProxy::shared()->mRemainderOpenBoxTime == 0)
-			itemList.push_back(boxStaticList[3]);
-		else
-			itemList.push_back(boxStaticList[2]);
-		
 		CCLayer* content = CCLayer::create();
 		CCSize size = CCSizeMake(640, 1230);
 		mScrollView->setContainer(content);
@@ -73,14 +63,15 @@ void ShopScene::refresh()
 		sprite->setPosition(ccp(size.width/2, size.height/2));
 		content->addChild(sprite);
 
-		vector<CCPoint> points;
-		points.push_back(ccp(0, 830));
-		points.push_back(ccp(0, 430));
-		points.push_back(ccp(0, 30));
-		for(int i = 0; i < itemList.size(); i++)
+		xmlBoxList& itemList = StaticShop::shared()->mBox;
+		CCPoint points[3] = { ccp(0, 830), ccp(0, 430), ccp(0, 30) };
+		for(int i = 0; i < 3; i++)
 		{
 			ShopItem* item = ShopItem::create(NULL);
-			item->setData(&itemList[i]);
+			if(i == 2 && ShopProxy::shared()->mRemainderOpenBoxTime == 0)
+				item->setData(&itemList[i + 1]);
+			else
+				item->setData(&itemList[i]);
 			item->setPosition(points[i]);
 			content->addChild(item);
 		}

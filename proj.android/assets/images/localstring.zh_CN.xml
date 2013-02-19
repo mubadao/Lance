@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<strings>
+	<obj id="Objective_Name_Score" value="得分 %d" />
+	<obj id="Objective_Name_Last" value="生存 %d" />
+	<obj id="Objective_Name_Green" value="绿色 %d" />
+	<obj id="Objective_Name_Yellow" value="黄色 %d" />
+	<obj id="Objective_Name_Total" value="总数 %d" />
+	<obj id="Objective_Desc_Score" value="获得 %d 分" />
+	<obj id="Objective_Desc_Last" value="坚持 %d 秒" />
+	<obj id="Objective_Desc_Green" value="消灭 %d 绿色入侵者" />
+	<obj id="Objective_Desc_Yellow" value="消灭 %d 黄色入侵者" />
+	<obj id="Objective_Desc_Total" value="消灭 %d 全部入侵者" />
+	<obj id="Next Mission" value="下一任务" />
+	<obj id="Multiplier" value="倍率" />
+	<obj id="All mission cleared" value="所有任务已完成" />
+	<obj id="Close" value="关闭" />
+	<obj id="Purchasing..." value="购买中..." />
+	<obj id="PurchaseFailed" value="购买失败" />
+	<obj id="PurchaseClosedMsg" value="你关闭了应用内购买功能,请从设定中打开." />
+	<obj id="PurchaseFailedMsg" value="购买失败,请重新尝试" />
+	<obj id="ReviewMsg" value="如果你喜欢 Galaxy Invader, 给我们一份评价吧." />
+	<obj id="EmailMsg" value="如果有任何建议，请给我们发邮件." />
+	<obj id="Review" value="评价" />
+	<obj id="Email" value="反馈" />
+	<obj id="More Coin" value="更多金币" />
+	<obj id="Buy" value="购买" />
+	<obj id="All Invaders" value="全部入侵者" />
+	<obj id="Quit" value="退出" />
+	<obj id="Continue" value="继续" />
+	<obj id="Result" value="结果" />
+	<obj id="Score" value="得分" />
+	<obj id="Survival" value="生存" />
+	<obj id="Free Coin" value="免费金币" />
+	<obj id="Destroy all invaders." value="消灭所有入侵者." />
+	<obj id="Slow down the invaders' move speed." value="大幅降低入侵者的行动速度." />
+	<obj id="Prevent from the destroy invader." value="挡住所有'红色'入侵者." />
+	<obj id="Get 1 extra life permanently." value="永久获得 +1 额外生命." />
+	<obj id="Reduce 'Bomb' countdown time." value="降低 '炸弹' 冷却时间." />
+	<obj id="Reduce 'Freeze' countdown time." value="降低 '冻结' 冷却时间." />
+	<obj id="Reduce 'Shield' countdown time." value="降低 '护盾' 冷却时间." />
+	<obj id="Bomb" value="炸弹" />
+	<obj id="Freeze" value="冻结" />
+	<obj id="Shield" value="护盾" />
+	<obj id="Life" value="生命" />
+	<obj id="Bomb Upgrade" value="炸弹强化" />
+	<obj id="Freeze Upgrade" value="冻结强化" />
+	<obj id="Shield Upgrade" value="护盾强化" />
+	<obj id="Equip Skill" value="装配技能" />
+	<obj id="GO" value="开始" />
+	<obj id="Equip" value="装配" />
+	<obj id="Upgrade" value="升级" />
+	<obj id="Help1" value="1.拖动黑洞消灭掉入侵者." />
+	<obj id="Help2" value="2.撞上 '红色' 入侵者将会损失1条命." />
+	<obj id="Help3" value="3.可以使用技能来提高得分." />
+	<obj id="Tap to continue" value="点击屏幕继续" />
+	<obj id="PushMsg" value="入侵警报, 新入侵者到达, 快去消灭他们!" />
+	<obj id="Current" value="当前" />
+	<obj id="MAX" value="最大" />
+	<obj id="Next" value="下一级" />
+	<obj id="Current Mission" value="当前任务"/>
+	<obj id="QuitMsg" value="确定退出游戏么?" />
+	<obj id="Cancel" value="取消" />
+</strings>

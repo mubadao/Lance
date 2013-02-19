@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="DefaultLocale">
+        <ignore path="src/com/happybluefin/pay/HBPurchaseObserver.java" />
+        <ignore path="src/com/happybluefin/pay/PayGoogle.java" />
+        <ignore path="src/com/happybluefin/pay/google/HBPurchaseObserver.java" />
+    </issue>
+</lint>

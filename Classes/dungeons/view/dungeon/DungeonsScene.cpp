@@ -9,6 +9,7 @@ DungeonsScene::DungeonsScene()
 	: mTaskDesc(NULL)
 	, mTaskBoss(NULL)
 	, mTaskNormal(NULL)
+	, mMainMenu(NULL)
 {	
 	CCLOG("DungeonsScene::%s()", __FUNCTION__);
 }
@@ -22,6 +23,7 @@ DungeonsScene::~DungeonsScene()
 	CC_SAFE_RELEASE(mTaskDesc);
 	CC_SAFE_RELEASE(mTaskBoss);
 	CC_SAFE_RELEASE(mTaskNormal);
+	CC_SAFE_RELEASE(mMainMenu);
 }
 
 bool DungeonsScene::onAssignCCBMemberVariable(CCObject* pTarget, const char* pMemberVariableName, CCNode* pNode)
@@ -29,6 +31,7 @@ bool DungeonsScene::onAssignCCBMemberVariable(CCObject* pTarget, const char* pMe
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mTaskDesc", TaskDesc*, mTaskDesc);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mTaskBoss", TaskBoss*, mTaskBoss);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mTaskNormal", TaskNormal*, mTaskNormal);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mMainMenu", MainMenu*, mMainMenu);
 	return false;
 }
 
@@ -36,6 +39,7 @@ void DungeonsScene::onNodeLoaded(CCNode* pNode, CCNodeLoader* pNodeLoader)
 {
 	CCLOG("DungeonsScene::%s()", __FUNCTION__);
 	mTaskBoss->setTaskDesc(mTaskDesc);
+	mMainMenu->setZOrder(100);
 
 	CCArray* nameList = CCArray::create(
 		ccs(kNCDungeonExplore),
@@ -49,19 +53,19 @@ void DungeonsScene::onNodeLoaded(CCNode* pNode, CCNodeLoader* pNodeLoader)
 
 void DungeonsScene::refresh()
 {
+	mTaskNormal->removeFromParent();
+	mTaskBoss->removeFromParent();
 	if (DungeonsProxy::shared()->getCurTaskStatic()->bossID == -1)
 	{
 		mTaskDesc->refresh();
 		mTaskNormal->refresh();
-		mTaskNormal->setVisible(true);
-		mTaskBoss->setVisible(false);
+		addChild(mTaskNormal);
 	}
 	else
 	{
 		mTaskDesc->refresh();
 		mTaskBoss->refresh();
-		mTaskNormal->setVisible(false);
-		mTaskBoss->setVisible(true);
+		addChild(mTaskBoss);
 	}
 }
 

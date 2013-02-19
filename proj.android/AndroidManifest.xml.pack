@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="com.happybluefin.galaxyinvader"
+      android:versionCode="101"
+      android:versionName="1.0.1">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="com.android.vending.BILLING" />
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+    
+    <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="10"/>
+
+    <application android:label="@string/app_name"
+        android:icon="@drawable/icon"
+        android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+        android:name=".galaxyinvader">
+
+        <!-- 游戏核心各种定义 start -->
+        <activity android:name=".LogoWindow"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".GameWindow"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation" >
+        </activity>
+        
+        <!-- Used for iap -->
+        <service android:name="com.happybluefin.pay.google.BillingService" />
+        <receiver android:name="com.happybluefin.pay.google.BillingReceiver">
+            <intent-filter>
+                <action android:name="com.android.vending.billing.IN_APP_NOTIFY" />
+                <action android:name="com.android.vending.billing.RESPONSE_CODE" />
+                <action android:name="com.android.vending.billing.PURCHASE_STATE_CHANGED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Used for install referral measurement-->
+        <service android:name="com.google.analytics.tracking.android.CampaignTrackingService"/>
+        <receiver android:name="com.google.analytics.tracking.android.CampaignTrackingReceiver" android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>        
+        
+        <!-- AdMob -->
+        <activity android:name="com.google.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
+
+        <!-- 友盟 -->
+        <meta-data android:value="50fd58ef5270155a9b00007a" android:name="UMENG_APPKEY" />
+        <!-- 测试 渠道 -->
+        <meta-data android:value="__UC__" android:name="UMENG_CHANNEL"/>
+
+    </application>
+    <supports-screens android:largeScreens="true"
+                      android:smallScreens="true"
+                      android:anyDensity="true"
+                      android:normalScreens="true"/>
+</manifest> 

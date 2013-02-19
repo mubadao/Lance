@@ -8,7 +8,6 @@ ChallengeItem::ChallengeItem()
 	, mAttack(NULL)
 	, mDefense(NULL)
 	, mChallengeBtn(NULL)
-	, mData(NULL)
 {
 	CCLOG("ChallengeItem::%s()", __FUNCTION__);
 }
@@ -50,26 +49,25 @@ void ChallengeItem::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
 	mDefense->setString(fcs("%s: ???", gls("Defense")));
 }
 
-void ChallengeItem::setData(ChallengeEnemyInfo* data)
+void ChallengeItem::refresh()
 {
-	mData = data;
+	ChallengeEnemyInfo* data = (ChallengeEnemyInfo*)getUserData();
 
-	mName->setString(data->name.c_str());
+	mName->setString(fcs("%s%d", gls("Player"), data->gid));
 	mLevel->setString(fcs("LV.%d", data->level));
 	mAttack->setString(fcs("%s: %d-%d", gls("Attack"), data->atkMin, data->atkMax));
 }
 
 void ChallengeItem::onChallengeBtnClick( CCObject * pSender, CCControlEvent pCCControlEvent )
 {
-    if(UserProxy::shared()->userVO.powerCur <= 0)
-    {
+	if(UserProxy::shared()->userVO.powerCur <= 0)
+	{
 		FRAMEWORK->popup("StaminaLackDialog");
-    }
-    else 
-    {
-        ChanllengeProxy::shared()->mCurChallengeEnemyInfo = mData;
-        FRAMEWORK->popup("ChallengePreviewDialog");
-    }
+	}
+	else 
+	{
+		FRAMEWORK->popup("ChallengePreviewDialog", getUserData());
+	}
 }
 
 ChallengeItem* ChallengeItem::create(CCObject* pOwer)

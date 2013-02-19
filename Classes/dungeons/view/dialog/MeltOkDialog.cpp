@@ -48,7 +48,6 @@ SEL_CCControlHandler MeltOkDialog::onResolveCCBCCControlSelector(CCObject* pTarg
 void MeltOkDialog::onNodeLoaded(CCNode* pNode, CCNodeLoader* pNodeLoader)
 {
 	CCLOG("MeltOkDialog::%s()", __FUNCTION__);
-	mGetEnergy->setString(fcs("%s: %d", gls("131"), _getMeltCost()));
 	
 	mOkBtn->setDefaultTouchPriority(touch_priority_5);
 	mCancelBtn->setDefaultTouchPriority(touch_priority_5);
@@ -59,6 +58,7 @@ void MeltOkDialog::onNodeLoaded(CCNode* pNode, CCNodeLoader* pNodeLoader)
 
 void MeltOkDialog::refresh()
 {
+	mGetEnergy->setString(fcs("%s: %d", gls("131"), _getMeltCost()));
 }
 
 void MeltOkDialog::_onNotification(CCObject* object)
@@ -90,12 +90,6 @@ void MeltOkDialog::onCancelBtnClick(CCObject* pSender, CCControlEvent pCCControl
 
 int MeltOkDialog::_getMeltCost()
 {
-	int cost = 0;
-	vector<int>& selectlList = EquipProxy::shared()->mMeltList;
-	for (int i = 0; i < selectlList.size(); i++)
-	{
-		EquipInfo* equipInfo = EquipProxy::shared()->getEquip(selectlList[i]);
-		cost += StaticItem::shared()->getEquipInfo(equipInfo->baseId)->fusion;
-	}
-	return cost;
+	EquipInfo* equipInfo = (EquipInfo*)getUserData();
+	return StaticItem::shared()->getEquipInfo(equipInfo->baseId)->fusion;;
 }

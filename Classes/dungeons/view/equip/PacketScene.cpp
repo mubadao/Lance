@@ -76,7 +76,7 @@ void PacketScene::_onNotification(CCObject* object)
 			FloatText::shared()->playAnim(gls("195"));
 		else if(name == kNCUnloadEquipage)
 			FloatText::shared()->playAnim(gls("196"));
-		else if(name == kNCSellEquipage)
+		else if(name == kNCSellEquipage || name == kNCFusionEquipage)
 		{
 			mScrollView->setContentOffset(ccp(0, mScrollView->getViewSize().height - mScrollView->getContainer()->getContentSize().height));
 		}

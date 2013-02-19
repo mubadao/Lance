@@ -1,7 +1,6 @@
 #include "ChallengeResultDialog.h"
-#include "ChanllengeProxy.h"
+#include "ChallengeProxy.h"
 #include "UserProxy.h"
-//#include "NetController.h"
 
 ChallengeResultDialog::ChallengeResultDialog()
 	: mName1(NULL)
@@ -53,7 +52,7 @@ bool ChallengeResultDialog::onAssignCCBMemberVariable( CCObject * pTarget, const
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mGoldIcon", CCSprite *, mGoldIcon);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mExpIcon", CCSprite *, mExpIcon);
 	CCB_CCLABELTTF_GLUE(this, "mVs", mVs, gls("82"));
-	CCB_CONTROLBUTTON_GLUE(this, "mReturnBtn", mCloseBtn, gls("77"));
+	CCB_CONTROLBUTTON_GLUE(this, "mCloseBtn", mCloseBtn, gls("77"));
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mSelfAttack", CCLabelTTF *, mSelfAttack);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mSelfDefense", CCLabelTTF *, mSelfDefense);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "mSelfLife", CCLabelTTF *, mSelfLife);
@@ -78,34 +77,38 @@ void ChallengeResultDialog::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLo
 {
 //    CCArray* nameList = CCArray::create(ccs(kNCGetChallengeList),NULL);
 //	RegisterObservers(this, nameList, callfuncO_selector(ChallengeResultDialog::_onNotification));
+	
+	mCloseBtn->setDefaultTouchPriority(touch_priority_5);
 
-	ChallengeResult& challengeResult = ChanllengeProxy::shared()->mChallengeResult;
-	ChallengeEnemyInfo* challengeEnemyInfo = ChanllengeProxy::shared()->mCurChallengeEnemyInfo;
+	ChallengeResult& challengeResult = ChallengeProxy::shared()->mChallengeResult;
+	ChallengeEnemyInfo* challengeEnemyInfo = ChallengeProxy::shared()->mCurChallengeEnemyInfo;
 	UserVO& userVO = UserProxy::shared()->userVO;
 
-	mName1->setString(userVO.name.c_str());
-	mName2->setString(challengeEnemyInfo->name.c_str());
+//	mName1->setString(userVO.name.c_str());
+//	mName2->setString(challengeEnemyInfo->name.c_str());
+	mName1->setString(fcs("%s%d", gls("Player"), userVO.gid));
+	mName2->setString(fcs("%s%d", gls("Player"), challengeEnemyInfo->gid));
 	
 	if(challengeResult.result == 1)
 	{
 		mTitle->setString(gls("battle_succeed"));
 		mGetGold->setString(fcs("+%d", challengeEnemyInfo->succeedGold));
 		mGetExp->setString(fcs("+%d", challengeEnemyInfo->succeedExp));
-		mGoldIcon->setPosition(ccp(193,208));
-		mGetGold->setPosition(ccp(210,208));
+		mGoldIcon->setPosition(ccp(386, 416));
+		mGetGold->setPosition(ccp(420, 416));
 	}
 	else
 	{
 		mTitle->setString(gls("battle_failed"));
 		mGetGold->setString(fcs("-%d", challengeEnemyInfo->failedGold));
-		mGoldIcon->setPosition(ccp(136,208));
-		mGetGold->setPosition(ccp(152,208));
+		mGoldIcon->setPosition(ccp(272, 416));
+		mGetGold->setPosition(ccp(304, 416));
 		mGetExp->setVisible(false);
 		mExpIcon->setVisible(false);
 	}
 	
 	mSelfAttack->setString(fcs("%s: %d--%d", gls("Attack"), userVO.atkMin, userVO.atkMax));
-	mSelfDefense->setString(fcs("%s: %d--%d", gls("Defense"), userVO.atkMin, userVO.defMax));
+	mSelfDefense->setString(fcs("%s: %d--%d", gls("Defense"), userVO.defMin, userVO.defMax));
 	mSelfLife->setString(fcs("%s: %d", gls("93"), userVO.life));
 	
 	mOtherAttack->setString(fcs("%s: %d--%d", gls("Attack"), challengeEnemyInfo->atkMin, challengeEnemyInfo->atkMax));

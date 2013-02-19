@@ -92,7 +92,7 @@ void TaskBoss::refresh()
 	xmlEquipInfo* itemStatic = StaticItem::shared()->getEquipInfo(taskInfo->drop);
 	xmlBossInfo* bossInfo = StaticRole::shared()->getBossInfo(taskInfo->bossID);
 	
-	mBossName->setString(gls(fcs("%boss04d", bossInfo->id)));
+	mBossName->setString(gls(fcs("boss%04d", bossInfo->id)));
 	mBossAttack->setString(fcs("%s: %d-%d", gls("Attack"), bossInfo->atk_min, bossInfo->atk_max));
 	mBossDefense->setString(fcs("%s: %d-%d", gls("Defense"), bossInfo->def_min, bossInfo->def_max));
 	mBossLife->setString(fcs("%s: %d", gls("Life"), bossInfo->life));

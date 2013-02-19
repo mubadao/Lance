@@ -23,6 +23,7 @@
 #include "PlayerDetailSceneLoader.h"
 #include "ShopSceneLoader.h"
 #include "ChallengeSceneLoader.h"
+#include "EquipMergeSceneLoader.h"
 
 // Dialog
 #include "MainTools.h"
@@ -43,6 +44,9 @@
 #include "MeltOkDialogLoader.h"
 #include "MeltResultDialogLoader.h"
 #include "ChallengePreviewDialogLoader.h"
+#include "ChallengeResultDialogLoader.h"
+#include "XiLianOkDialogLoader.h"
+#include "StaminaLackDialogLoader.h"
 
 SceneManager::SceneManager()
 {
@@ -112,6 +116,12 @@ CCLayer* SceneManager::getState(const string& name)
 		pLoaderLibrary->registerCCNodeLoader("UserInfo", UserInfoLoader::loader());
 		pLoaderLibrary->registerCCNodeLoader("MainMenu", MainMenuLoader::loader());
 		pLoaderLibrary->registerCCNodeLoader("ChallengeScene", ChallengeSceneLoader::loader());
+	}
+	else if (name == "EquipMergeScene")
+	{
+		pLoaderLibrary->registerCCNodeLoader("MoneyIcon", MoneyIconLoader::loader());
+		pLoaderLibrary->registerCCNodeLoader("EquipIcon", EquipIconLoader::loader());
+		pLoaderLibrary->registerCCNodeLoader("EquipMergeScene", EquipMergeSceneLoader::loader());
 	}
 	
 	CCBReader* ccbReader = new CCBReader(pLoaderLibrary);
@@ -190,11 +200,11 @@ Dialog* SceneManager::getDialog(const string& name)
 	{
 		pLoaderLibrary->registerCCNodeLoader("GetMoneyEventDialog", GetMoneyEventDialogLoader::loader());
 	}
-    else if (name == "MeltOkDialog")
+	else if (name == "MeltOkDialog")
 	{
 		pLoaderLibrary->registerCCNodeLoader("MeltOkDialog", MeltOkDialogLoader::loader());
 	}
-    else if (name == "MeltResultDialog")
+	else if (name == "MeltResultDialog")
 	{
 		pLoaderLibrary->registerCCNodeLoader("MeltResultDialog", MeltResultDialogLoader::loader());
 	}
@@ -205,6 +215,20 @@ Dialog* SceneManager::getDialog(const string& name)
 	else if (name == "ChallengePreviewDialog")
 	{
 		pLoaderLibrary->registerCCNodeLoader("ChallengePreviewDialog", ChallengePreviewDialogLoader::loader());
+	}
+	else if (name == "ChallengeResultDialog")
+	{
+		pLoaderLibrary->registerCCNodeLoader("ChallengeResultDialog", ChallengeResultDialogLoader::loader());
+	}
+	else if (name == "XiLianOkDialog")
+	{
+		pLoaderLibrary->registerCCNodeLoader("MoneyIcon", MoneyIconLoader::loader());
+		pLoaderLibrary->registerCCNodeLoader("XiLianOkDialog", XiLianOkDialogLoader::loader());
+	}
+	else if (name == "StaminaLackDialog")
+	{
+		pLoaderLibrary->registerCCNodeLoader("MoneyIcon", MoneyIconLoader::loader());
+		pLoaderLibrary->registerCCNodeLoader("StaminaLackDialog", StaminaLackDialogLoader::loader());
 	}
 	
 	CCBReader* ccbReader = new CCBReader(pLoaderLibrary);

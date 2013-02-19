@@ -66,7 +66,7 @@ void ChallengeScene::onNodeLoaded( CCNode * pNode, CCNodeLoader * pNodeLoader )
 
 void ChallengeScene::_refresh()
 {
-	ChallengeEnemyList& list = ChanllengeProxy::shared()->mChallengeEnemyList;
+	ChallengeEnemyList& list = ChallengeProxy::shared()->mChallengeEnemyList;
 	CCPoint contentPos = ccp(0, list.size() * 176 + 100);
 	mScrollView->setContentSize(CCSizeMake(640, contentPos.y));
 	mScrollView->setContentOffset(ccp(0, mScrollView->getViewSize().height - contentPos.y));
@@ -75,7 +75,8 @@ void ChallengeScene::_refresh()
 	for(int i = 0; i < list.size(); i++)
 	{
 		ChallengeItem* item = ChallengeItem::create(NULL);
-		item->setData(&list[i]);
+		item->setUserData(&list[i]);
+		item->refresh();
 		item->setPosition(ccp(0, contentPos.y - ((i + 1) * 176)));
 		mScrollView->getContainer()->addChild(item);
 	}

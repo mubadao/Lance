@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Galaxy Invader:Alien War</string>
+    <string name="loading">loading...</string>
+    <string name="submit_failed">Submit failed!</string>
+	<string name="can_not_connect_network">network connection error, please check your network connection setting!</string>
+</resources>

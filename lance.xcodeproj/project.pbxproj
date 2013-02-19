@@ -253,7 +253,7 @@
 		EEBE7FD5169D53D70052A4D3 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EEBE7FD1169D53D70052A4D3 /* Icon.png */; };
 		EEBE7FD6169D53D70052A4D3 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EEBE7FD2169D53D70052A4D3 /* Icon@2x.png */; };
 		EEDBBA7C16BD7CEC0070C1E7 /* Global.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEDBBA7B16BD7CEC0070C1E7 /* Global.cpp */; };
-		EEF6935D16C01063000557FA /* ChanllengeProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEF692A516C01063000557FA /* ChanllengeProxy.cpp */; };
+		EEF6935D16C01063000557FA /* ChallengeProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEF692A516C01063000557FA /* ChallengeProxy.cpp */; };
 		EEF6935E16C01063000557FA /* DungeonsProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEF692A716C01063000557FA /* DungeonsProxy.cpp */; };
 		EEF6936016C01063000557FA /* FightProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEF692AB16C01063000557FA /* FightProxy.cpp */; };
 		EEF6936116C01063000557FA /* EquipProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEF692AD16C01063000557FA /* EquipProxy.cpp */; };
@@ -873,8 +873,8 @@
 		EEBE7FD2169D53D70052A4D3 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "proj.ios/Icon@2x.png"; sourceTree = SOURCE_ROOT; };
 		EEBE7FD7169D53E60052A4D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = proj.ios/Info.plist; sourceTree = SOURCE_ROOT; };
 		EEDBBA7B16BD7CEC0070C1E7 /* Global.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Global.cpp; sourceTree = "<group>"; };
-		EEF692A516C01063000557FA /* ChanllengeProxy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChanllengeProxy.cpp; sourceTree = "<group>"; };
-		EEF692A616C01063000557FA /* ChanllengeProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChanllengeProxy.h; sourceTree = "<group>"; };
+		EEF692A516C01063000557FA /* ChallengeProxy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChallengeProxy.cpp; sourceTree = "<group>"; };
+		EEF692A616C01063000557FA /* ChallengeProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeProxy.h; sourceTree = "<group>"; };
 		EEF692A716C01063000557FA /* DungeonsProxy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DungeonsProxy.cpp; sourceTree = "<group>"; };
 		EEF692A816C01063000557FA /* DungeonsProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DungeonsProxy.h; sourceTree = "<group>"; };
 		EEF692AB16C01063000557FA /* FightProxy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FightProxy.cpp; sourceTree = "<group>"; };
@@ -2176,8 +2176,8 @@
 		EEF692A416C01063000557FA /* proxy */ = {
 			isa = PBXGroup;
 			children = (
-				EEF692A516C01063000557FA /* ChanllengeProxy.cpp */,
-				EEF692A616C01063000557FA /* ChanllengeProxy.h */,
+				EEF692A516C01063000557FA /* ChallengeProxy.cpp */,
+				EEF692A616C01063000557FA /* ChallengeProxy.h */,
 				EEF692A716C01063000557FA /* DungeonsProxy.cpp */,
 				EEF692A816C01063000557FA /* DungeonsProxy.h */,
 				EEF692AB16C01063000557FA /* FightProxy.cpp */,
@@ -2689,7 +2689,7 @@
 				EE03DD9416BBA0430023B46D /* json_value.cpp in Sources */,
 				EE03DD9616BBA0430023B46D /* json_writer.cpp in Sources */,
 				EEDBBA7C16BD7CEC0070C1E7 /* Global.cpp in Sources */,
-				EEF6935D16C01063000557FA /* ChanllengeProxy.cpp in Sources */,
+				EEF6935D16C01063000557FA /* ChallengeProxy.cpp in Sources */,
 				EEF6935E16C01063000557FA /* DungeonsProxy.cpp in Sources */,
 				EEF6936016C01063000557FA /* FightProxy.cpp in Sources */,
 				EEF6936116C01063000557FA /* EquipProxy.cpp in Sources */,

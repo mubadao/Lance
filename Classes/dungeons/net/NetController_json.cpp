@@ -683,8 +683,8 @@ void NetController::_parseFindChallengePlayer(void* params)
 {
 	Json::Value& data = (Json::Value&)*params;
 	
-	ChanllengeProxy::shared()->clearChallengeEnemyList();
-	ChallengeEnemyList& challengeEnemyList = ChanllengeProxy::shared()->mChallengeEnemyList;
+	ChallengeProxy::shared()->clearChallengeEnemyList();
+	ChallengeEnemyList& challengeEnemyList = ChallengeProxy::shared()->mChallengeEnemyList;
 	Json::Value& playerList = data["playerList"];
 	for (int i = 0; i < playerList.size(); i++)
 	{
@@ -698,8 +698,8 @@ void NetController::_parseGetChallengeList(void* params)
 {
 	Json::Value& data = (Json::Value&)*params;
 
-	ChanllengeProxy::shared()->clearChallengeEnemyList();
-	ChallengeEnemyList& challengeEnemyList = ChanllengeProxy::shared()->mChallengeEnemyList;
+	ChallengeProxy::shared()->clearChallengeEnemyList();
+	ChallengeEnemyList& challengeEnemyList = ChallengeProxy::shared()->mChallengeEnemyList;
 	Json::Value& playerList = data["playerList"];
 	for (int i = 0; i < playerList.size(); i++)
 	{
@@ -713,8 +713,8 @@ void NetController::_parseGetChallengeEnemyList(void* params)
 {
 	Json::Value& data = (Json::Value&)*params;
 
-	ChanllengeProxy::shared()->clearChallengeEnemyList();
-	ChallengeEnemyList& challengeEnemyList = ChanllengeProxy::shared()->mChallengeEnemyList;
+	ChallengeProxy::shared()->clearChallengeEnemyList();
+	ChallengeEnemyList& challengeEnemyList = ChallengeProxy::shared()->mChallengeEnemyList;
 	Json::Value& playerList = data["challengeEnemyList"];
 	for (int i = 0; i < playerList.size(); i++)
 	{
@@ -806,7 +806,7 @@ void NetController::_parseChallengePlayer(void* params)
 	Json::Value& data = (Json::Value&)*params;
 	Json::Value& challenge = data["challenge"];
 
-	ChallengeResult& challengeResult = ChanllengeProxy::shared()->mChallengeResult;
+	ChallengeResult& challengeResult = ChallengeProxy::shared()->mChallengeResult;
 	//1: 玩家为获胜方, 2: 对手为获胜方
 	challengeResult.result = _readJsonInt(challenge["win"]);
 	Json::Value& roundInfo = challenge["round"];

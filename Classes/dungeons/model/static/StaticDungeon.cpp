@@ -10,10 +10,11 @@ xmlDungeonInfo* StaticDungeon::getDungeonInfo(int dungeonID)
 
 xmlTaskInfo* StaticDungeon::getTaskInfo(int dungeonID, int floorID, int taskID)
 {
-	xmlFloorInfo* floorInfo = getFloorInfo(dungeonID, floorID);
-	if (taskID >= floorInfo->taskList.size())
-		assert(false);
-	return &taskMap[floorInfo->taskList[taskID]];
+//	xmlFloorInfo* floorInfo = getFloorInfo(dungeonID, floorID);
+//	if (taskID >= floorInfo->taskList.size())
+//		assert(false);
+//	return &taskMap[floorInfo->taskList[taskID]];
+	return &taskMap[taskID];
 }
 
 xmlFloorInfo* StaticDungeon::getFloorInfo(int dungeonID, int floorID)
